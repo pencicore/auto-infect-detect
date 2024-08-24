@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2024-08-24
  */
 @RestController
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/diseasesubtype")
+public class DiseasesubtypeController {
 
 }

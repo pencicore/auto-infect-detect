@@ -1,6 +1,6 @@
 package com.infect.mapper;
 
-import com.infect.entity.User;
+import com.infect.entity.Diagnosisresults;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author author
  * @since 2024-08-24
  */
-public interface UserMapper extends BaseMapper<User> {
+public interface DiagnosisresultsMapper extends BaseMapper<Diagnosisresults> {
 
 }
