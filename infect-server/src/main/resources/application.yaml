@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: infect-server
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/project?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 594741
+logging:
+  level:
+    com.infect: debug
+  pattern:
+    dateformat: HH:mm:ss
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml
+
+mybatis-plus:
+  type-aliases-package: com.infect.entity
+  configuration:
+    map-underscore-to-camel-case: false
+    cache-enabled: false
+    default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
+  global-config:
+    db-config:
+      id-type: auto
+      update-strategy: not_null
+  mapper-locations: classpath:/mapper/*.xml
