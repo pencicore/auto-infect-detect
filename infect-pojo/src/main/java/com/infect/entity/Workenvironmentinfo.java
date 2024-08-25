@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author author
@@ -30,67 +30,66 @@ public class Workenvironmentinfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "EnvironmentID", type = IdType.AUTO)
-    private Integer EnvironmentID;
+    private Integer environmentId;
 
-    private Integer UserID;
+    private Integer userId;
 
-    private String YearMonth;
+    private String yearMonth;
 
-    private LocalDateTime SubmissionTime;
+    private LocalDateTime submissionTime;
 
-    private Integer WorkStationAltitude;
+    private Integer workStationAltitude;
 
-    private String WorkStationName;
+    private String workStationName;
 
-    private Integer DormitoryBuildingNumber;
+    private Integer dormitoryBuildingNumber;
 
-    private Integer DormitoryRoomNumber;
+    private Integer dormitoryRoomNumber;
 
-    private Integer DormitoryOccupants;
+    private Integer dormitoryOccupants;
 
-    private BigDecimal DormitoryArea;
+    private BigDecimal dormitoryArea;
 
-    private BigDecimal WindowOpenArea;
+    private BigDecimal windowOpenArea;
 
-    private String VentilationCondition;
+    private String ventilationCondition;
 
-    private Integer AvgWorkRoomPeople;
+    private Integer avgWorkRoomPeople;
 
-    private Integer AvgWorkFaceToFace;
+    private Integer avgWorkFaceToFace;
 
-    private Integer AvgWorkPhysicalContact;
+    private Integer avgWorkPhysicalContact;
 
-    private Integer AvgBreakfastRoomPeople;
+    private Integer avgBreakfastRoomPeople;
 
-    private Integer AvgBreakfastFaceToFace;
+    private Integer avgBreakfastFaceToFace;
 
-    private Integer AvgBreakfastPhysicalContact;
+    private Integer avgBreakfastPhysicalContact;
 
-    private Integer AvgLunchRoomPeople;
+    private Integer avgLunchRoomPeople;
 
-    private Integer AvgLunchFaceToFace;
+    private Integer avgLunchFaceToFace;
 
-    private Integer AvgLunchPhysicalContact;
+    private Integer avgLunchPhysicalContact;
 
-    private Integer AvgDinnerRoomPeople;
+    private Integer avgDinnerRoomPeople;
 
-    private Integer AvgDinnerFaceToFace;
+    private Integer avgDinnerFaceToFace;
 
-    private Integer AvgDinnerPhysicalContact;
+    private Integer avgDinnerPhysicalContact;
 
-    private Integer CollectiveActivitiesCount;
+    private Integer collectiveActivitiesCount;
 
-    private Integer AvgActivityRoomPeople;
+    private Integer avgActivityRoomPeople;
 
-    private Integer AvgActivityFaceToFace;
+    private Integer avgActivityFaceToFace;
 
-    private Integer AvgActivityPhysicalContact;
+    private Integer avgActivityPhysicalContact;
 
-    private BigDecimal AvgMonthlyPressure;
+    private BigDecimal avgMonthlyPressure;
 
-    private BigDecimal MaxTemperature;
+    private BigDecimal maxTemperature;
 
-    private BigDecimal MinTemperature;
-
+    private BigDecimal minTemperature;
 
 }

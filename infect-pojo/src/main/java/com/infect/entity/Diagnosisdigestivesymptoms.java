@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author author
@@ -28,53 +28,51 @@ public class Diagnosisdigestivesymptoms implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "DiagnosisDigestiveSymptomID", type = IdType.AUTO)
-    private Integer DiagnosisDigestiveSymptomID;
+    private Integer diagnosisDigestiveSymptomId;
 
-    private Integer DiagnosisResultsID;
+    private Integer diagnosisResultsId;
 
-    private Boolean IsDiarrheaFrequencyGEThreeTimesPerDay;
+    private Boolean isDiarrheaFrequencyGEThreeTimesPerDay;
 
-    private Integer DiarrheaTimesPerDay;
+    private Integer diarrheaTimesPerDay;
 
-    private Boolean HasStoolType1;
+    private Boolean hasStoolType1;
 
     @ApiModelProperty(value = "粪便性状1描述")
-    private String StoolType1Detail;
+    private String stoolType1Detail;
 
-    private Boolean HasStoolType2;
+    private Boolean hasStoolType2;
 
     @ApiModelProperty(value = "粪便性状2描述")
-    private String StoolType2Detail;
+    private String stoolType2Detail;
 
     @ApiModelProperty(value = "腹泻方式")
-    private String DiarrheaMode;
+    private String diarrheaMode;
 
     @ApiModelProperty(value = "粪便量")
-    private String StoolAmount;
+    private String stoolAmount;
 
     @ApiModelProperty(value = "粪便气味")
-    private String StoolOdor;
+    private String stoolOdor;
 
-    private Boolean HasVomiting;
+    private Boolean hasVomiting;
 
     @ApiModelProperty(value = "呕吐方式")
-    private String VomitingMode;
+    private String vomitingMode;
 
-    private Boolean HasNausea;
+    private Boolean hasNausea;
 
-    private Boolean HasAppetiteLoss;
+    private Boolean hasAppetiteLoss;
 
-    private Boolean HasAbdominalDistension;
+    private Boolean hasAbdominalDistension;
 
-    private Boolean HasAbdominalPain;
+    private Boolean hasAbdominalPain;
 
-    private Boolean HasBorborygmus;
+    private Boolean hasBorborygmus;
 
-    private Boolean HasUpperAbdominalDiscomfort;
+    private Boolean hasUpperAbdominalDiscomfort;
 
-    private Boolean HasConstipation;
+    private Boolean hasConstipation;
 
-    private Boolean HasOliguriaOrAnuria;
-
-
+    private Boolean hasOliguriaOrAnuria;
 }

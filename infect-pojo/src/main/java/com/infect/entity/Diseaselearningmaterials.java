@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author author
@@ -29,27 +29,26 @@ public class Diseaselearningmaterials implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "MaterialID", type = IdType.AUTO)
-    private Integer MaterialID;
+    private Integer materialId;
 
-    private Integer DiseaseTypeID;
+    private Integer diseaseTypeId;
 
-    private String DiseaseTypeName;
+    private String diseaseTypeName;
 
-    private String Title;
+    private String title;
 
-    private String MaterialType;
+    private String materialType;
 
-    private String FilePath;
+    private String filePath;
 
-    private String Link;
+    private String link;
 
-    private Integer SequenceNumber;
+    private Integer sequenceNumber;
 
-    private LocalDateTime PublishDate;
+    private LocalDateTime publishDate;
 
-    private Boolean IsDeleted;
+    private Boolean isDeleted;
 
-    private LocalDateTime DeletedDate;
-
+    private LocalDateTime deletedDate;
 
 }

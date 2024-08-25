@@ -2,8 +2,8 @@ package com.infect.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.time.LocalDate;
 import com.baomidou.mybatisplus.annotation.TableId;
+import java.time.LocalDate;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author author
@@ -29,45 +29,43 @@ public class Diagnosisresults implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "DiagnosisResultsID", type = IdType.AUTO)
-    private Integer DiagnosisResultsID;
+    private Integer diagnosisResultsId;
 
-    private Integer UserID;
+    private Integer userId;
 
-    private LocalDate SubmissionTime;
+    private LocalDate submissionTime;
 
-    private Integer SubmissionUserID;
+    private Integer submissionUserId;
 
-    private String SubmissionUserName;
+    private String submissionUserName;
 
-    private String SubmissionUserType;
+    private String submissionUserType;
 
-    private String DiseaseType;
+    private String diseaseType;
 
-    private String OtherDiseaseName;
+    private String otherDiseaseName;
 
-    private String PlagueSubtype;
+    private String plagueSubtype;
 
-    private String AnthraxSubtype;
+    private String anthraxSubtype;
 
-    private String DiscoveryMethod;
+    private String discoveryMethod;
 
-    private String OtherDiscoveryMethodName;
+    private String otherDiscoveryMethodName;
 
-    private String DiseaseOutcome;
+    private String diseaseOutcome;
 
-    private String HospitalName;
+    private String hospitalName;
 
-    private LocalDate AdmissionDate;
+    private LocalDate admissionDate;
 
-    private LocalDate DischargeDate;
+    private LocalDate dischargeDate;
 
-    private LocalDate DeathDate;
+    private LocalDate deathDate;
 
-    private String AdmissionSymptomsAndSigns;
+    private String admissionSymptomsAndSigns;
 
-    private String RegistrationClassification;
+    private String registrationClassification;
 
-    private String OtherRegistrationDetails;
-
-
+    private String otherRegistrationDetails;
 }

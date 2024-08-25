@@ -10,19 +10,19 @@ import java.io.Serializable;
 @ApiModel(value = "信息" ,description = "员工登录时传递得数据模型")
 public class UserRegisterDTO implements Serializable {
 
-    @ApiModelProperty(value = "电话号码",example = "28328495177")
+    @ApiModelProperty(value = "电话号码",example = "28328495177", required = true)
     private String phoneNumber;
 
-    @ApiModelProperty(value = "姓名",example = "黄兵")
+    @ApiModelProperty(value = "姓名",example = "黄兵",required = true)
     private String name;
 
-    @ApiModelProperty(value = "人员身份",example = "铁路职工")
+    @ApiModelProperty(value = "人员身份",example = "铁路职工", required = true)
     private String userType;
 
     @ApiModelProperty("是否激活")
     private Boolean isActived;
 
-    @ApiModelProperty(value = "密码",example = "12345678")
+    @ApiModelProperty(value = "密码",example = "12345678", required = true)
     private String password;
 
 }

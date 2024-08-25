@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ * Entity representing a hospital.
  * </p>
  *
  * @author author
@@ -22,19 +22,18 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("hospital")
-@ApiModel(value="Hospital对象", description="")
+@ApiModel(value="Hospital对象", description="Entity representing a hospital.")
 public class Hospital implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "HospitalID", type = IdType.AUTO)
-    private Integer HospitalID;
+    private Integer hospitalId;
 
-    private String HospitalName;
+    private String hospitalName;
 
-    private String HospitalPhoneNumber;
+    private String hospitalPhoneNumber;
 
-    private String Address;
-
+    private String address;
 
 }

@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author author
@@ -29,17 +29,15 @@ public class Aisymptomweighting implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "SymptomWeightingID", type = IdType.AUTO)
-    private Integer SymptomWeightingID;
+    private Integer symptomWeightingId;
 
-    private Integer DiseaseTypeID;
+    private Integer diseaseTypeId;
 
-    private String DiseaseTypeName;
+    private String diseaseTypeName;
 
-    private String TableName;
+    private String tableName;
 
-    private String SymptomFieldName;
+    private String symptomFieldName;
 
-    private BigDecimal WeightScore;
-
-
+    private BigDecimal weightScore;
 }

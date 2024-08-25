@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author author
@@ -30,17 +30,15 @@ public class Aidiseasescoring implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "ScoringID", type = IdType.AUTO)
-    private Integer ScoringID;
+    private Integer scoringId;
 
-    private Integer StatusID;
+    private Integer statusId;
 
-    private LocalDate SymptomTime;
+    private LocalDate symptomTime;
 
-    private Integer DiseaseTypeID;
+    private Integer diseaseTypeId;
 
-    private String DiseaseTypeName;
+    private String diseaseTypeName;
 
-    private BigDecimal Score;
-
-
+    private BigDecimal score;
 }

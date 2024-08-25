@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author author
@@ -29,15 +29,14 @@ public class Labtestfiles implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "FileID", type = IdType.AUTO)
-    private Integer FileID;
+    private Integer fileId;
 
-    private Integer LabTestReportID;
+    private Integer labTestReportId;
 
-    private String SpecimenType;
+    private String specimenType;
 
-    private String FileType;
+    private String fileType;
 
-    private Blob FileData;
-
+    private Blob fileData;
 
 }

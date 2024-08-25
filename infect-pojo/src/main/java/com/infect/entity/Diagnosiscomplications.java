@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author author
@@ -28,103 +28,101 @@ public class Diagnosiscomplications implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "DiagnosisComplicationID", type = IdType.AUTO)
-    private Integer DiagnosisComplicationID;
+    private Integer diagnosisComplicationId;
 
-    private Integer DiagnosisResultsID;
+    private Integer diagnosisResultsId;
 
-    private Boolean HasComplications;
+    private Boolean hasComplications;
 
-    private Boolean HasViralPneumonia;
+    private Boolean hasViralPneumonia;
 
-    private Boolean HasBacterialPneumonia;
+    private Boolean hasBacterialPneumonia;
 
-    private Boolean HasFungalPneumonia;
+    private Boolean hasFungalPneumonia;
 
-    private Boolean HasRespiratoryFailure;
+    private Boolean hasRespiratoryFailure;
 
-    private Boolean HasARDS;
+    private Boolean hasArds;
 
-    private Boolean HasDIC;
+    private Boolean hasDic;
 
-    private Boolean HasToxicShock;
+    private Boolean hasToxicShock;
 
-    private Boolean HasMeningitis;
+    private Boolean hasMeningitis;
 
-    private Boolean HasEncephalitis;
+    private Boolean hasEncephalitis;
 
-    private Boolean HasBacteremia;
+    private Boolean hasBacteremia;
 
-    private Boolean HasMyocarditis;
+    private Boolean hasMyocarditis;
 
-    private Boolean HasAcuteLungInjury;
+    private Boolean hasAcuteLungInjury;
 
-    private Boolean HasAcuteKidneyInjury;
+    private Boolean hasAcuteKidneyInjury;
 
-    private Boolean HasEpilepsy;
+    private Boolean hasEpilepsy;
 
-    private Boolean HasToxicHepatitis;
+    private Boolean hasToxicHepatitis;
 
-    private Boolean HasFluidOverload;
+    private Boolean hasFluidOverload;
 
-    private Boolean HasSuperinfection;
+    private Boolean hasSuperinfection;
 
-    private Boolean HasHypoxemia;
+    private Boolean hasHypoxemia;
 
-    private Boolean HasSepticShock;
+    private Boolean hasSepticShock;
 
-    private Boolean HasMetabolicAcidosis;
+    private Boolean hasMetabolicAcidosis;
 
-    private Boolean HasElectrolyteImbalance;
+    private Boolean hasElectrolyteImbalance;
 
-    private Boolean HasHemolysis;
+    private Boolean hasHemolysis;
 
-    private Boolean HasGastrointestinalBleeding;
+    private Boolean hasGastrointestinalBleeding;
 
-    private Boolean HasCoagulationDisorder;
+    private Boolean hasCoagulationDisorder;
 
-    private Boolean HasMultipleOrganFailure;
+    private Boolean hasMultipleOrganFailure;
 
-    private Boolean HasBronchitis;
+    private Boolean hasBronchitis;
 
-    private Boolean HasBronchopneumonia;
+    private Boolean hasBronchopneumonia;
 
-    private Boolean HasAnemia;
+    private Boolean hasAnemia;
 
-    private Boolean HasHepatosplenomegaly;
+    private Boolean hasHepatosplenomegaly;
 
-    private Boolean HasBrainEdema;
+    private Boolean hasBrainEdema;
 
-    private Boolean HasHUS;
+    private Boolean hasHus;
 
-    private Boolean HasHematemesis;
+    private Boolean hasHematemesis;
 
-    private Boolean HasMelena;
+    private Boolean hasMelena;
 
-    private Boolean HasHemoptysis;
+    private Boolean hasHemoptysis;
 
-    private Boolean HasAbdominalHemorrhage;
+    private Boolean hasAbdominalHemorrhage;
 
-    private Boolean HasNasalBleeding;
+    private Boolean hasNasalBleeding;
 
-    private Boolean HasVaginalBleeding;
+    private Boolean hasVaginalBleeding;
 
-    private Boolean HasHypertensiveEncephalopathy;
+    private Boolean hasHypertensiveEncephalopathy;
 
-    private Boolean HasIntracranialHemorrhage;
+    private Boolean hasIntracranialHemorrhage;
 
-    private Boolean HasPulmonaryEdema;
+    private Boolean hasPulmonaryEdema;
 
-    private Boolean HasSecondaryInfection;
+    private Boolean hasSecondaryInfection;
 
-    private Boolean HasSpontaneousRenalRupture;
+    private Boolean hasSpontaneousRenalRupture;
 
-    private Boolean HasMyocardialDamage;
+    private Boolean hasMyocardialDamage;
 
-    private Boolean HasLiverDamage;
+    private Boolean hasLiverDamage;
 
-    private Boolean OtherComplications;
+    private Boolean otherComplications;
 
-    private String OtherComplicationsName;
-
-
+    private String otherComplicationsName;
 }

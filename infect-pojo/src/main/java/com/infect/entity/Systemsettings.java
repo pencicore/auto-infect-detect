@@ -3,8 +3,6 @@ package com.infect.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import java.sql.Blob;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -14,33 +12,22 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- *
+ * 
  * </p>
  *
  * @author author
- * @since 2024-08-24
+ * @since 2024-08-25
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("diagnosisreports")
-@ApiModel(value="Diagnosisreports对象", description="")
-public class Diagnosisreports implements Serializable {
+@TableName("systemsettings")
+@ApiModel(value="Systemsettings对象", description="")
+public class Systemsettings implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "ReportID", type = IdType.AUTO)
-    private Integer reportId;
+    private Boolean isAI;
 
-    private Integer diagnosisResultsId;
 
-    private String reportType;
-
-    private Blob file;
-
-    private String fileName;
-
-    private String fileType;
-
-    private LocalDateTime uploadDate;
 }

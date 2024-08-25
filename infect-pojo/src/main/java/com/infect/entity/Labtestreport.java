@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author author
@@ -29,21 +29,20 @@ public class Labtestreport implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "LabTestReportID", type = IdType.AUTO)
-    private Integer LabTestReportID;
+    private Integer labTestReportId;
 
-    private Integer UserID;
+    private Integer userId;
 
-    private LocalDate UploadDate;
+    private LocalDate uploadDate;
 
-    private Boolean IsVirusAntigenTestDone;
+    private Boolean isVirusAntigenTestDone;
 
-    private Boolean IsVirusNucleicAcidTestDone;
+    private Boolean isVirusNucleicAcidTestDone;
 
-    private Boolean IsVirusCultureIsolationDone;
+    private Boolean isVirusCultureIsolationDone;
 
-    private Boolean IsSerologicalTestDone;
+    private Boolean isSerologicalTestDone;
 
-    private String PathogenicTestResults;
-
+    private String pathogenicTestResults;
 
 }

@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author author
@@ -28,19 +28,17 @@ public class Diagnosisexaminations implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "ExaminationID", type = IdType.AUTO)
-    private Integer ExaminationID;
+    private Integer examinationId;
 
-    private Integer DiagnosisResultsID;
+    private Integer diagnosisResultsId;
 
-    private Boolean HasBloodTest;
+    private Boolean hasBloodTest;
 
-    private Boolean HasUrineTest;
+    private Boolean hasUrineTest;
 
-    private Boolean HasStoolTest;
+    private Boolean hasStoolTest;
 
-    private Boolean HasImaging;
+    private Boolean hasImaging;
 
-    private Boolean HasUltrasound;
-
-
+    private Boolean hasUltrasound;
 }

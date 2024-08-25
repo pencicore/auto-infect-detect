@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author author
@@ -29,81 +29,80 @@ public class Generalsymptoms implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "GeneralSymptomsID", type = IdType.AUTO)
-    private Integer GeneralSymptomsID;
+    private Integer generalSymptomsId;
 
-    private Integer StatusID;
+    private Integer statusId;
 
-    private Boolean HasFever;
+    private Boolean hasFever;
 
-    private BigDecimal HighestTemperature;
+    private BigDecimal highestTemperature;
 
-    private Integer FeverDuration;
+    private Integer feverDuration;
 
-    private Boolean HasChills;
+    private Boolean hasChills;
 
-    private Boolean HasSweating;
+    private Boolean hasSweating;
 
-    private Boolean HasFatigue;
+    private Boolean hasFatigue;
 
-    private Boolean HasHeadache;
+    private Boolean hasHeadache;
 
-    private Boolean HasMusclePain;
+    private Boolean hasMusclePain;
 
-    private Boolean HasJointPain;
+    private Boolean hasJointPain;
 
-    private Boolean HasLymphNodeSwelling;
+    private Boolean hasLymphNodeSwelling;
 
-    private Boolean HasLymphNodeSwellingGroin;
+    private Boolean hasLymphNodeSwellingGroin;
 
-    private Boolean HasLymphNodeSwellingArmpit;
+    private Boolean hasLymphNodeSwellingArmpit;
 
-    private Boolean HasLymphNodeSwellingSubclavian;
+    private Boolean hasLymphNodeSwellingSubclavian;
 
-    private Boolean HasLymphNodeSwellingNeck;
+    private Boolean hasLymphNodeSwellingNeck;
 
-    private Boolean HasLymphNodeSwellingElbow;
+    private Boolean hasLymphNodeSwellingElbow;
 
-    private Boolean HasLymphNodeSwellingPopliteal;
+    private Boolean hasLymphNodeSwellingPopliteal;
 
-    private Boolean HasCyanosis;
+    private Boolean hasCyanosis;
 
     private Boolean hasSubcutaneousAndMucosalBleedingSpots;
 
-    private Boolean HasPainfulRedRash;
+    private Boolean hasPainfulRedRash;
 
-    private Boolean HasBloodBlisters;
+    private Boolean hasBloodBlisters;
 
-    private Boolean HasSkinUlcer;
+    private Boolean hasSkinUlcer;
 
-    private Boolean HasCongestiveOrPetechialRash;
+    private Boolean hasCongestiveOrPetechialRash;
 
-    private Boolean HasDehydration;
+    private Boolean hasDehydration;
 
-    private String Dehydration;
+    private String dehydration;
 
-    private Boolean HasItchyRash;
+    private Boolean hasItchyRash;
 
-    private Boolean ItchyRashOnFingers;
+    private Boolean itchyRashOnFingers;
 
-    private Boolean ItchyRashOnBackOfHands;
+    private Boolean itchyRashOnBackOfHands;
 
-    private Boolean ItchyRashOnUpperLimbs;
+    private Boolean itchyRashOnUpperLimbs;
 
-    private Boolean ItchyRashOnLowerLimbs;
+    private Boolean itchyRashOnLowerLimbs;
 
-    private Boolean ItchyRashOnFeet;
+    private Boolean itchyRashOnFeet;
 
-    private Boolean ItchyRashOnFace;
+    private Boolean itchyRashOnFace;
 
-    private Boolean ItchyRashOnOther;
+    private Boolean itchyRashOnOther;
 
-    private Boolean HasEdema;
+    private Boolean hasEdema;
 
-    private Boolean HasNightSweats;
+    private Boolean hasNightSweats;
 
-    private Boolean HasWeightLoss;
+    private Boolean hasWeightLoss;
 
-    private Boolean HasExhaustion;
-
+    private Boolean hasExhaustion;
 
 }

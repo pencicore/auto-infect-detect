@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author author
@@ -29,31 +29,29 @@ public class Diagnosispersonalinfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "DiagnosisPersonalInfoID", type = IdType.AUTO)
-    private Integer DiagnosisPersonalInfoID;
+    private Integer diagnosisPersonalInfoId;
 
-    private Integer DiagnosisResultsID;
+    private Integer diagnosisResultsId;
 
-    private BigDecimal Height;
+    private BigDecimal height;
 
-    private BigDecimal Weight;
+    private BigDecimal weight;
 
-    private String BloodPressure;
+    private String bloodPressure;
 
-    private BigDecimal BloodSugarFasting;
+    private BigDecimal bloodSugarFasting;
 
-    private BigDecimal BloodSugarRandom;
+    private BigDecimal bloodSugarRandom;
 
-    private BigDecimal CholesterolTotal;
+    private BigDecimal cholesterolTotal;
 
-    private BigDecimal Triglycerides;
+    private BigDecimal triglycerides;
 
-    private BigDecimal CholesterolLipid;
+    private BigDecimal cholesterolLipid;
 
     private BigDecimal hdl;
 
     private BigDecimal ldl;
 
-    private BigDecimal BloodOxygen;
-
-
+    private BigDecimal bloodOxygen;
 }

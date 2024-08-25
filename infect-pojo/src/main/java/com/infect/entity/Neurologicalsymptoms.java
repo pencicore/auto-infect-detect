@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author author
@@ -28,37 +28,36 @@ public class Neurologicalsymptoms implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "NeurologicalSymptomsID", type = IdType.AUTO)
-    private Integer NeurologicalSymptomsID;
+    private Integer neurologicalSymptomsId;
 
-    private Integer StatusID;
+    private Integer statusId;
 
-    private Boolean HasDelirium;
+    private Boolean hasDelirium;
 
-    private Boolean HasConvulsion;
+    private Boolean hasConvulsion;
 
-    private Boolean HasDrowsiness;
+    private Boolean hasDrowsiness;
 
-    private Boolean HasComa;
+    private Boolean hasComa;
 
-    private Boolean HasStiffNeck;
+    private Boolean hasStiffNeck;
 
-    private Boolean HasRestlessness;
+    private Boolean hasRestlessness;
 
-    private Boolean HasMuscleParalysisNeckShoulder;
+    private Boolean hasMuscleParalysisNeckShoulder;
 
-    private Boolean HasMuscleParalysisLimbs;
+    private Boolean hasMuscleParalysisLimbs;
 
-    private Boolean HasSwallowingDifficulty;
+    private Boolean hasSwallowingDifficulty;
 
-    private Boolean HasSpeechDisorder;
+    private Boolean hasSpeechDisorder;
 
-    private Boolean HasConsciousnessDisorder;
+    private Boolean hasConsciousnessDisorder;
 
-    private Boolean HasDizziness;
+    private Boolean hasDizziness;
 
-    private Boolean HasTinnitus;
+    private Boolean hasTinnitus;
 
-    private Boolean HasHearingLoss;
-
+    private Boolean hasHearingLoss;
 
 }

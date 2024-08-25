@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author author
@@ -28,39 +28,37 @@ public class Diagnosisrespiratorysymptoms implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "DiagnosisRespiratorySymptomID", type = IdType.AUTO)
-    private Integer DiagnosisRespiratorySymptomID;
+    private Integer diagnosisRespiratorySymptomId;
 
-    private Integer DiagnosisResultsID;
+    private Integer diagnosisResultsId;
 
-    private Boolean HasCough;
+    private Boolean hasCough;
 
-    private Boolean HasSputum;
+    private Boolean hasSputum;
 
-    private Boolean HasBloodySputum;
+    private Boolean hasBloodySputum;
 
-    private Boolean HasHemoptysis;
+    private Boolean hasHemoptysis;
 
-    private Boolean HasSoreThroat;
+    private Boolean hasSoreThroat;
 
-    private Boolean HasDryThroat;
+    private Boolean hasDryThroat;
 
-    private Boolean HasNasalCongestion;
+    private Boolean hasNasalCongestion;
 
-    private Boolean HasRunnyNose;
+    private Boolean hasRunnyNose;
 
-    private Boolean HasPharyngealHyperemia;
+    private Boolean hasPharyngealHyperemia;
 
-    private Boolean HasChestTightness;
+    private Boolean hasChestTightness;
 
-    private Boolean HasShortnessOfBreath;
+    private Boolean hasShortnessOfBreath;
 
-    private Boolean HasBreathingDifficulty;
+    private Boolean hasBreathingDifficulty;
 
-    private Boolean HasHoarseness;
+    private Boolean hasHoarseness;
 
-    private Boolean HasBronchitis;
+    private Boolean hasBronchitis;
 
-    private Boolean HasLungRales;
-
-
+    private Boolean hasLungRales;
 }

@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author author
@@ -29,19 +29,18 @@ public class Userfeedback implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "FeedbackID", type = IdType.AUTO)
-    private Integer FeedbackID;
+    private Integer feedbackId;
 
-    private Integer UserID;
+    private Integer userId;
 
-    private String Name;
+    private String name;
 
-    private String PhoneNumber;
+    private String phoneNumber;
 
-    private String FeedbackTitle;
+    private String feedbackTitle;
 
-    private String FeedbackText;
+    private String feedbackText;
 
-    private LocalDateTime FeedbackDate;
-
+    private LocalDateTime feedbackDate;
 
 }

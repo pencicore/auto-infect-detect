@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author author
@@ -31,31 +31,29 @@ public class Dailyhealthstatus implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "StatusID", type = IdType.AUTO)
-    private Integer StatusID;
+    private Integer statusId;
 
-    private Integer UserID;
+    private Integer userId;
 
-    private LocalDate CheckInDate;
+    private LocalDate checkInDate;
 
-    private LocalTime CheckInTime;
+    private LocalTime checkInTime;
 
-    private Boolean IsHealth;
+    private Boolean isHealth;
 
-    private String DiseaseTypeName;
+    private String diseaseTypeName;
 
-    private String DiagnosisDiseaseTypeName;
+    private String diagnosisDiseaseTypeName;
 
-    private BigDecimal Longitude;
+    private BigDecimal longitude;
 
-    private BigDecimal Latitude;
+    private BigDecimal latitude;
 
-    private String Province;
+    private String province;
 
-    private String City;
+    private String city;
 
-    private String County;
+    private String county;
 
-    private String LocationName;
-
-
+    private String locationName;
 }

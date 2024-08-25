@@ -2,8 +2,8 @@ package com.infect.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.time.LocalDate;
 import com.baomidou.mybatisplus.annotation.TableId;
+import java.time.LocalDate;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author author
@@ -29,125 +29,124 @@ public class Riskfactorsandexposure implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "RiskFactorsAndExposureID", type = IdType.AUTO)
-    private Integer RiskFactorsAndExposureID;
+    private Integer riskFactorsAndExposureId;
 
-    private Integer StatusID;
+    private Integer statusId;
 
-    private String ContactWithFeverPatient;
+    private String contactWithFeverPatient;
 
-    private String ContactWithDiarrheaPatient;
+    private String contactWithDiarrheaPatient;
 
-    private String ContactWithRashPatient;
+    private String contactWithRashPatient;
 
-    private String ContactWithTuberculosisPatient;
+    private String contactWithTuberculosisPatient;
 
-    private Boolean IsGroupDining;
+    private Boolean isGroupDining;
 
-    private Boolean IsDiningOut;
+    private Boolean isDiningOut;
 
-    private Boolean IsDiningUnclear;
+    private Boolean isDiningUnclear;
 
-    private Boolean HasDrinkingRawWater;
+    private Boolean hasDrinkingRawWater;
 
-    private Boolean HasEatingRawFood;
+    private Boolean hasEatingRawFood;
 
-    private Boolean HasEatingColdCookedFood;
+    private Boolean hasEatingColdCookedFood;
 
-    private Boolean HasEatingSeafood;
+    private Boolean hasEatingSeafood;
 
-    private String FoodNames;
+    private String foodNames;
 
-    private String DiningPlace;
+    private String diningPlace;
 
-    private String GroupOutbreak;
+    private String groupOutbreak;
 
-    private String OutdoorStayOrWorkWithinMonth;
+    private String outdoorStayOrWorkWithinMonth;
 
-    private String WildActivityHistory;
+    private String wildActivityHistory;
 
-    private String OtherWildActivityName;
+    private String otherWildActivityName;
 
-    private String PlagueArea;
+    private String plagueArea;
 
-    private String SpecificPlagueLocation;
+    private String specificPlagueLocation;
 
-    private String AnthraxArea;
+    private String anthraxArea;
 
-    private String SpecificAnthraxLocation;
+    private String specificAnthraxLocation;
 
-    private String MalariaArea;
+    private String malariaArea;
 
-    private String SpecificMalariaLocation;
+    private String specificMalariaLocation;
 
-    private String ContactWithAnimalProducts;
+    private String contactWithAnimalProducts;
 
-    private LocalDate ContactDate;
+    private LocalDate contactDate;
 
-    private String ContactWithAnimals;
+    private String contactWithAnimals;
 
-    private String ContactPlace;
+    private String contactPlace;
 
-    private Boolean HasContactWithRat;
+    private Boolean hasContactWithRat;
 
-    private Boolean HasContactWithMarmot;
+    private Boolean hasContactWithMarmot;
 
-    private Boolean HasContactWithLice;
+    private Boolean hasContactWithLice;
 
-    private Boolean HasContactWithFlea;
+    private Boolean hasContactWithFlea;
 
-    private Boolean HasContactWithCat;
+    private Boolean hasContactWithCat;
 
-    private Boolean HasContactWithBird;
+    private Boolean hasContactWithBird;
 
-    private Boolean HasContactWithPig;
+    private Boolean hasContactWithPig;
 
-    private Boolean HasContactWithHorse;
+    private Boolean hasContactWithHorse;
 
-    private Boolean HasContactWithMule;
+    private Boolean hasContactWithMule;
 
-    private Boolean HasContactWithDonkey;
+    private Boolean hasContactWithDonkey;
 
-    private Boolean HasContactWithCow;
+    private Boolean hasContactWithCow;
 
-    private Boolean HasContactWithSheep;
+    private Boolean hasContactWithSheep;
 
-    private Boolean HasContactWithDog;
+    private Boolean hasContactWithDog;
 
-    private Boolean HasContactWithRabbit;
+    private Boolean hasContactWithRabbit;
 
-    private Boolean HasContactWithWolf;
+    private Boolean hasContactWithWolf;
 
-    private Boolean HasContactWithTiger;
+    private Boolean hasContactWithTiger;
 
-    private Boolean HasContactWithOtherAnimal;
+    private Boolean hasContactWithOtherAnimal;
 
-    private String OtherAnimalName;
+    private String otherAnimalName;
 
-    private Boolean IsHillyOrMountainous;
+    private Boolean isHillyOrMountainous;
 
-    private Boolean IsPlain;
+    private Boolean isPlain;
 
-    private Boolean IsOtherResidenceType;
+    private Boolean isOtherResidenceType;
 
-    private Boolean HasMosquitoBite;
+    private Boolean hasMosquitoBite;
 
-    private String TickBite;
+    private String tickBite;
 
-    private String FleaBite;
+    private String fleaBite;
 
-    private String ContactWithRatIn2Months;
+    private String contactWithRatIn2Months;
 
-    private String RatContactMethod;
+    private String ratContactMethod;
 
-    private String EatenFoodContaminatedByRatFeces;
+    private String eatenFoodContaminatedByRatFeces;
 
-    private String DrunkWaterFromDitchesOrPonds;
+    private String drunkWaterFromDitchesOrPonds;
 
-    private String RestedNearRatHoles;
+    private String restedNearRatHoles;
 
-    private String RatOrRatDroppingsAtWorkplace;
+    private String ratOrRatDroppingsAtWorkplace;
 
-    private String ContactWithPatientExcreta;
-
+    private String contactWithPatientExcreta;
 
 }

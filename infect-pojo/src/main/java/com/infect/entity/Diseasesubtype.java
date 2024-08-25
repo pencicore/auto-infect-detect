@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author author
@@ -28,11 +28,10 @@ public class Diseasesubtype implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "SubtypeID", type = IdType.AUTO)
-    private Integer SubtypeID;
+    private Integer subtypeId;
 
-    private Integer DiseaseTypeID;
+    private Integer diseaseTypeId;
 
-    private String SubtypeName;
-
+    private String subtypeName;
 
 }

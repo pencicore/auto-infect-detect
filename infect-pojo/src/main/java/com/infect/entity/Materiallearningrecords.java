@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author author
@@ -29,13 +29,12 @@ public class Materiallearningrecords implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "RecordID", type = IdType.AUTO)
-    private Integer RecordID;
+    private Integer recordId;
 
-    private Integer UserID;
+    private Integer userId;
 
-    private Integer MaterialID;
+    private Integer materialId;
 
-    private LocalDateTime ClickedDate;
-
+    private LocalDateTime clickedDate;
 
 }

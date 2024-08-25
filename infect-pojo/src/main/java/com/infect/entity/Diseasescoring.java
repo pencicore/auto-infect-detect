@@ -3,8 +3,8 @@ package com.infect.entity;
 import java.math.BigDecimal;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.time.LocalDate;
 import com.baomidou.mybatisplus.annotation.TableId;
+import java.time.LocalDate;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author author
@@ -30,17 +30,16 @@ public class Diseasescoring implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "ScoringID", type = IdType.AUTO)
-    private Integer ScoringID;
+    private Integer scoringId;
 
-    private Integer StatusID;
+    private Integer statusId;
 
-    private LocalDate SymptomTime;
+    private LocalDate symptomTime;
 
-    private Integer DiseaseTypeID;
+    private Integer diseaseTypeId;
 
-    private String DiseaseTypeName;
+    private String diseaseTypeName;
 
-    private BigDecimal Score;
-
+    private BigDecimal score;
 
 }

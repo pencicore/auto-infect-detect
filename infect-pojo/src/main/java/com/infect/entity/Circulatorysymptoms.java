@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author author
@@ -28,19 +28,17 @@ public class Circulatorysymptoms implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "CirculatorySymptomsID", type = IdType.AUTO)
-    private Integer CirculatorySymptomsID;
+    private Integer circulatorySymptomsId;
 
-    private Integer StatusID;
+    private Integer statusId;
 
-    private Boolean HasArrhythmia;
+    private Boolean hasArrhythmia;
 
-    private Boolean HasChestPain;
+    private Boolean hasChestPain;
 
-    private Boolean HasRapidPulse;
+    private Boolean hasRapidPulse;
 
-    private Boolean HasPalpitation;
+    private Boolean hasPalpitation;
 
-    private Boolean HasLowBloodPressure;
-
-
+    private Boolean hasLowBloodPressure;
 }

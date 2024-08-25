@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author author
@@ -28,47 +28,46 @@ public class Digestivesymptoms implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "DigestiveSymptomsID", type = IdType.AUTO)
-    private Integer DigestiveSymptomsID;
+    private Integer digestiveSymptomsId;
 
-    private Integer StatusID;
+    private Integer statusId;
 
-    private Boolean arrheaFrequencyGEThreeTimesPerDay;
+    private Boolean diarrheaFrequencyGEThreeTimesPerDay;
 
-    private Integer DiarrheaTimesPerDay;
+    private Integer diarrheaTimesPerDay;
 
-    private Boolean HasStoolType1;
+    private Boolean hasStoolType1;
 
-    private String StoolType1Detail;
+    private String stoolType1Detail;
 
-    private Boolean HasStoolType2;
+    private Boolean hasStoolType2;
 
-    private String StoolType2Detail;
+    private String stoolType2Detail;
 
-    private String DiarrheaMode;
+    private String diarrheaMode;
 
-    private String StoolAmount;
+    private String stoolAmount;
 
-    private String StoolOdor;
+    private String stoolOdor;
 
-    private Boolean HasVomiting;
+    private Boolean hasVomiting;
 
-    private String VomitingMode;
+    private String vomitingMode;
 
-    private Boolean HasNausea;
+    private Boolean hasNausea;
 
-    private Boolean HasAppetiteLoss;
+    private Boolean hasAppetiteLoss;
 
-    private Boolean HasAbdominalDistension;
+    private Boolean hasAbdominalDistension;
 
-    private Boolean HasAbdominalPain;
+    private Boolean hasAbdominalPain;
 
-    private Boolean HasBorborygmus;
+    private Boolean hasBorborygmus;
 
-    private Boolean HasUpperAbdominalDiscomfort;
+    private Boolean hasUpperAbdominalDiscomfort;
 
-    private Boolean HasConstipation;
+    private Boolean hasConstipation;
 
-    private Boolean HasOliguriaOrAnuria;
-
+    private Boolean hasOliguriaOrAnuria;
 
 }

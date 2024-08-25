@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author author
@@ -28,37 +28,36 @@ public class Localsymptoms implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "LocalSymptomsID", type = IdType.AUTO)
-    private Integer LocalSymptomsID;
+    private Integer localSymptomsId;
 
-    private Integer StatusID;
+    private Integer statusId;
 
-    private Boolean HasConjunctivitis;
+    private Boolean hasConjunctivitis;
 
-    private Boolean HasConjunctivalCongestion;
+    private Boolean hasConjunctivalCongestion;
 
-    private Boolean HasEyelidEdema;
+    private Boolean hasEyelidEdema;
 
-    private Boolean HasSmellTasteLoss;
+    private Boolean hasSmellTasteLoss;
 
-    private Boolean HasFacialRednessOrPallor;
+    private Boolean hasFacialRednessOrPallor;
 
-    private Boolean HasRednessNeckChest;
+    private Boolean hasRednessNeckChest;
 
-    private Boolean HasLipCyanosis;
+    private Boolean hasLipCyanosis;
 
-    private Boolean HasSkinPallorOrBruising;
+    private Boolean hasSkinPallorOrBruising;
 
-    private Boolean HasGumBleeding;
+    private Boolean hasGumBleeding;
 
-    private Boolean HasKidneyPain;
+    private Boolean hasKidneyPain;
 
-    private Boolean HasLowBackPain;
+    private Boolean hasLowBackPain;
 
-    private Boolean HasOrbitalPain;
+    private Boolean hasOrbitalPain;
 
-    private Boolean HasMucosalBleedingInOralOrNasal;
+    private Boolean hasMucosalBleedingInOralOrNasal;
 
-    private Boolean HasSkinBleedingPoints;
-
+    private Boolean hasSkinBleedingPoints;
 
 }
