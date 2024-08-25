@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author author
@@ -29,117 +29,116 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "UserID", type = IdType.AUTO)
-    private Integer UserID;
+    private Integer userId;
 
-    private String Password;
+    private String password;
 
-    private String UserType;
+    private String userType;
 
-    private Boolean IsActived;
+    private Boolean isActived;
 
-    private String Name;
+    private String name;
 
-    private String Gender;
+    private String gender;
 
-    private Boolean IsPregnant;
+    private Boolean isPregnant;
 
-    private Integer PregnancyWeeks;
+    private Integer pregnancyWeeks;
 
-    private String IDNumber;
+    private String idNumber;
 
-    private LocalDate BirthDate;
+    private LocalDate birthDate;
 
-    private Integer Age;
+    private Integer age;
 
-    private String Ethnicity;
+    private String ethnicity;
 
-    private String EducationLevel;
+    private String educationLevel;
 
-    private LocalDate WorkOnPlateauStartDate;
+    private LocalDate workOnPlateauStartDate;
 
-    private String Department;
+    private String department;
 
-    private String SpecificOccupation;
+    private String specificOccupation;
 
-    private String MedicalPersonnelType;
+    private String medicalPersonnelType;
 
-    private String OtherPositionName;
+    private String otherPositionName;
 
-    private String PhoneNumber;
+    private String phoneNumber;
 
-    private String OtherPhoneNumber;
+    private String otherPhoneNumber;
 
-    private Boolean HasMedicalHistory;
+    private Boolean hasMedicalHistory;
 
-    private Boolean HasHypertension;
+    private Boolean hasHypertension;
 
-    private Boolean HasDiabetes;
+    private Boolean hasDiabetes;
 
-    private Boolean HasHyperlipidemia;
+    private Boolean hasHyperlipidemia;
 
-    private Boolean HasHyperuricemia;
+    private Boolean hasHyperuricemia;
 
-    private Boolean HasCoronaryHeartDisease;
+    private Boolean hasCoronaryHeartDisease;
 
-    private Boolean HasStroke;
+    private Boolean hasStroke;
 
-    private Boolean HasOtherCardiovascularDiseases;
+    private Boolean hasOtherCardiovascularDiseases;
 
-    private Boolean HasAsthma;
+    private Boolean hasAsthma;
 
-    private Boolean HasCOPD;
+    private Boolean hasCOPD;
 
-    private Boolean HasPepticUlcer;
+    private Boolean hasPepticUlcer;
 
-    private Boolean HasMalignantTumor;
+    private Boolean hasMalignantTumor;
 
-    private Boolean HasLungCancer;
+    private Boolean hasLungCancer;
 
-    private Boolean HasOtherCancer;
+    private Boolean hasOtherCancer;
 
-    private String OtherCancerName;
+    private String otherCancerName;
 
-    private Boolean HasSevereMentalDisorders;
+    private Boolean hasSevereMentalDisorders;
 
-    private Boolean HasTuberculosis;
+    private Boolean hasTuberculosis;
 
-    private Boolean HasHepatitis;
+    private Boolean hasHepatitis;
 
-    private Boolean HasOccupationalDisease;
+    private Boolean hasOccupationalDisease;
 
-    private Boolean HasChronicKidneyDisease;
+    private Boolean hasChronicKidneyDisease;
 
-    private Boolean HasChronicLiverDisease;
+    private Boolean hasChronicLiverDisease;
 
-    private Boolean HasImmunodeficiency;
+    private Boolean hasImmunodeficiency;
 
-    private Boolean HasTyphus;
+    private Boolean hasTyphus;
 
-    private Boolean IsPostpartumInSixWeeks;
+    private Boolean isPostpartumInSixWeeks;
 
-    private Boolean HasDustExposure;
+    private Boolean hasDustExposure;
 
-    private Boolean HasOtherDiseases;
+    private Boolean hasOtherDiseases;
 
-    private String OtherDiseasesName;
+    private String otherDiseasesName;
 
-    private String SmokingStatus;
+    private String smokingStatus;
 
-    private String DrinkingStatus;
+    private String drinkingStatus;
 
-    private Integer Height;
+    private Integer height;
 
-    private Integer Weight;
+    private Integer weight;
 
-    private Boolean IsVaccinatedForCOVID;
+    private Boolean isVaccinatedForCOVID;
 
-    private Boolean IsVaccinatedForFlu;
+    private Boolean isVaccinatedForFlu;
 
-    private Boolean IsVaccinatedForPlague;
+    private Boolean isVaccinatedForPlague;
 
-    private Boolean IsVaccinatedForBCG;
+    private Boolean isVaccinatedForBCG;
 
-    private Boolean IsVaccinatedForHepatitis;
-
+    private Boolean isVaccinatedForHepatitis;
 
 }
