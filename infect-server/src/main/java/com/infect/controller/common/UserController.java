@@ -2,10 +2,12 @@ package com.infect.controller.common;
 
 
 import cn.hutool.core.bean.BeanUtil;
+import com.infect.dto.UserLoginDTO;
 import com.infect.dto.UserRegisterDTO;
 import com.infect.entity.User;
 import com.infect.result.Result;
 import com.infect.service.IUserService;
+import com.infect.vo.UserLoginVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -41,9 +43,16 @@ public class UserController {
             userRegisterDTO.setIsActived(false);
         }
         User user = BeanUtil.copyProperties(userRegisterDTO, User.class);
-        log.info(user.toString());
         userService.save(user);
         return Result.success();
+    }
+
+    @ApiOperation(value = "员工登录")
+    @PostMapping("/login")
+    public Result<UserLoginVO> login(@RequestBody UserLoginDTO userLoginDTO){
+        log.info("用户登录：{}",userLoginDTO);
+        UserLoginVO userLoginVO = userService.login(userLoginDTO);
+        return Result.success(userLoginVO);
     }
 
 }

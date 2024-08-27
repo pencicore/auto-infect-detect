@@ -1,7 +1,9 @@
 package com.infect.service;
 
+import com.infect.dto.UserLoginDTO;
 import com.infect.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.infect.vo.UserLoginVO;
 
 /**
  * <p>
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IUserService extends IService<User> {
 
+    UserLoginVO login(UserLoginDTO userLoginDTO);
 }
