@@ -1,45 +1,15 @@
-package com.infect.entity;
+package com.infect.dto;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDate;
-import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+
+import java.time.LocalDate;
 
 @Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
-@TableName("diagnosisresults")
-@ApiModel(value = "Diagnosisresults对象", description = "诊断结果实体")
-public class Diagnosisresults implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
-    @ApiModelProperty(value = "诊断结果ID，自增", hidden = true)
-    @TableId(value = "DiagnosisResultsID", type = IdType.AUTO)
-    private Integer diagnosisResultsId;
-
-    @ApiModelProperty(value = "用户ID", required = true, example = "123")
-    private Integer userId;
-
-    @ApiModelProperty(value = "提交时间", hidden = true)
-    private LocalDate submissionTime;
-
-    @ApiModelProperty(value = "提交用户ID", hidden = true)
-    private Integer submissionUserId;
-
-    @ApiModelProperty(value = "提交用户名", required = true, example = "张三")
-    private String submissionUserName;
-
-    @ApiModelProperty(value = "提交用户类型", required = true, example = "铁路职工")
-    private String submissionUserType;
-
+@ApiModel(value = "铁路工人诊断结果数据传输实体")
+public class DiagnosisResultsEmpDTO {
     @ApiModelProperty(value = "诊断的疾病类型", required = true, example = "新型冠状病毒感染")
     private String diseaseType;
 
@@ -81,4 +51,5 @@ public class Diagnosisresults implements Serializable {
 
     @ApiModelProperty(value = "登记分类其他详情", example = "复发病例")
     private String otherRegistrationDetails;
+
 }

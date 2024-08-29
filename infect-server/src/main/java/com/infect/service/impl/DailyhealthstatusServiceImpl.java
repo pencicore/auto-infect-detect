@@ -90,6 +90,8 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
     @Transactional
     @Override
     public void saveAllSymptoms(AllSymptomsDTO allSymptomsDTO) {
+        //TODO 这里先暂时暴力处理，后期优化
+
         // 提交全身症状信息
         saveGeneralSymptoms(allSymptomsDTO.getGeneralsymptoms());
         // 提交呼吸系统症状信息

@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author author
@@ -13,4 +13,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IWorkenvironmentinfoService extends IService<Workenvironmentinfo> {
 
+    void saveWorkEnvironmentInfo(Workenvironmentinfo workenvironmentinfo);
+
+    Workenvironmentinfo getWorkEnvironmentInfo(Integer currentId, String yearMonth);
 }

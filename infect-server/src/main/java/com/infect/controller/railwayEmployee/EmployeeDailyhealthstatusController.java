@@ -11,6 +11,7 @@ import com.infect.vo.DailyhealthstatusGetVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -43,7 +44,7 @@ public class EmployeeDailyhealthstatusController {
     }
 
     @ApiOperation(value = "铁路工人签到")
-    @PostMapping("/status")
+    @PostMapping("/status/today")
     public Result userCheckIn(@RequestBody RailwayEmployeeCheckInDTO railwayEmployeeCheckInDTO){
         log.info("用户{}今日签到：{}", BaseContext.getCurrentId(), railwayEmployeeCheckInDTO);
 
@@ -54,6 +55,7 @@ public class EmployeeDailyhealthstatusController {
     @ApiOperation(value = "根据id和日期查询铁路工人今日打卡情况")
     @GetMapping("/status/daily")
     public Result<DailyhealthstatusGetVO> getDailyCheckIn(
+            @ApiParam(value = "查询时间", required = true, example = "2024-08-29")
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date){
         log.info("查询用户{}在{}打卡情况", BaseContext.getCurrentId(),date);
 
