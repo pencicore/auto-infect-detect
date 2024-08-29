@@ -2,6 +2,7 @@ package com.infect.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.infect.constants.JwtConstant;
+import com.infect.dto.ChangePasswordDTO;
 import com.infect.dto.UserLoginDTO;
 import com.infect.entity.User;
 import com.infect.enums.UserEnumConstants;
@@ -9,6 +10,7 @@ import com.infect.mapper.UserMapper;
 import com.infect.properties.JwtProperties;
 import com.infect.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.infect.utils.BaseContext;
 import com.infect.utils.JwtUtil;
 import com.infect.vo.UserLoginVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,12 +92,35 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         else {
             return null;
         }
+
         Map<String,Object> map=new HashMap();
         map.put(JwtConstant.UserId,user.getUserId().toString());
         String jwt= JwtUtil.createJWT(secretKey,ttl,map);
-        System.out.println(jwt);
         userLoginVO.setToken(jwt);
 
+        //将密码设置为空
+        userLoginVO.getUser().setPassword("hello");
+
         return userLoginVO;
+    }
+
+    @Override
+    public boolean changePassword(ChangePasswordDTO changePasswordDTO) {
+        //检查原密码是否正确
+        LambdaQueryWrapper<User> wrapper=new LambdaQueryWrapper<User>()
+                .eq(User::getUserId, BaseContext.getCurrentId())
+                .eq(User::getPassword, changePasswordDTO.getOldPassword());
+        Long count=userMapper.selectCount(wrapper);
+        if(count==0) {
+            return false;
+        }
+
+        //修改密码为新密码
+        User user=new User();
+        user.setUserId(BaseContext.getCurrentId());
+        user.setPassword(changePasswordDTO.getNewPassword());
+        userMapper.updateById(user);
+
+        return true;
     }
 }

@@ -12,5 +12,4 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2024-08-24
  */
 public interface IRespiratorysymptomsService extends IService<Respiratorysymptoms> {
-
 }

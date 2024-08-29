@@ -11,7 +11,7 @@ import lombok.Data;
 public class UserLoginVO {
 
     @ApiModelProperty(value = "是否完善信息",example = "true")
-    private boolean isInformationComplete;
+    private boolean informationComplete;
 
     @ApiModelProperty(value = "token(JWT)",example = "一个jwt")
     private String token;
