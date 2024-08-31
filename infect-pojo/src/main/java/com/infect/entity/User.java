@@ -141,4 +141,10 @@ public class User implements Serializable {
 
     private Boolean isVaccinatedForHepatitis;
 
+    private String emergencyContactName;
+
+    private String emergencyContactPhoneNumber;
+
+    private String emergencyContactRelation;
+
 }

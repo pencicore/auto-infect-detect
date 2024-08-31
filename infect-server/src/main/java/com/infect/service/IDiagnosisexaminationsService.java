@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IDiagnosisexaminationsService extends IService<Diagnosisexaminations> {
 
+    void saveDiagnosisExaminations(Integer userId, Diagnosisexaminations diagnosisexaminations);
 }

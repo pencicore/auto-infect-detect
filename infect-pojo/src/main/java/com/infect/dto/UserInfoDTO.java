@@ -165,4 +165,13 @@ public class UserInfoDTO {
 
     @ApiModelProperty(value = "肝炎疫苗接种情况", required = true, example = "true")
     private Boolean isVaccinatedForHepatitis;
+
+    @ApiModelProperty(value = "紧急联系人姓名", required = true, example = "mary")
+    private String emergencyContactName;
+
+    @ApiModelProperty(value = "紧急联系人电话", required = true, example = "12345678912")
+    private String emergencyContactPhoneNumber;
+
+    @ApiModelProperty(value = "紧急联系人关系", required = true, example = "朋友")
+    private String emergencyContactRelation;
 }

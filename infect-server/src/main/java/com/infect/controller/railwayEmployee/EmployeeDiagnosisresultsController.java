@@ -2,6 +2,7 @@ package com.infect.controller.railwayEmployee;
 
 
 import cn.hutool.core.bean.BeanUtil;
+import com.infect.dto.AllDiagnosisAndResultDTO;
 import com.infect.dto.DiagnosisResultsEmpDTO;
 import com.infect.entity.Diagnosisresults;
 import com.infect.enums.DiagnosisResultsEnumConstants;
@@ -37,7 +38,7 @@ public class EmployeeDiagnosisresultsController {
     private IDiagnosisresultsService diagnosisresultsService;
 
     @ApiOperation(value = "铁路工人自己提交诊断结果，不可修改")
-    @PostMapping()
+    @PostMapping("/result")
     public Result saveDiagnosisResult(@RequestBody DiagnosisResultsEmpDTO diagnosisResultsEmpDTO) {
         log.info("用户（铁路工人）{}自己提交诊断结果：{}", BaseContext.getCurrentId(), diagnosisResultsEmpDTO);
         diagnosisresultsService.saveDiagnosisResult(diagnosisResultsEmpDTO, BaseContext.getCurrentId(), BaseContext.getCurrentId());
@@ -53,5 +54,13 @@ public class EmployeeDiagnosisresultsController {
         Diagnosisresults diagnosisresults = diagnosisresultsService.getDiagnosisResult(date, BaseContext.getCurrentId());
         return Result.success(diagnosisresults);
     }
+
+    @ApiOperation(value = "铁路工人提交诊断结果和所有诊断症状信息")
+    @PostMapping("/all")
+    public Result saveDiagnosisAll(@RequestBody AllDiagnosisAndResultDTO allDiagnosisAndResultDTO) {
+        //TODO
+        return Result.success();
+    }
+
 
 }

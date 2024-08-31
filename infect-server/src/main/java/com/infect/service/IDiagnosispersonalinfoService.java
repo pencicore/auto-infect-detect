@@ -1,11 +1,11 @@
 package com.infect.service;
 
-import com.infect.entity.Diagnosispersonalinfo;
+import com.infect.entity.*;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>
- *  服务类
+ * 诊断个人信息服务类
  * </p>
  *
  * @author author
@@ -13,4 +13,21 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IDiagnosispersonalinfoService extends IService<Diagnosispersonalinfo> {
 
+    void saveDiagnosisPersonal(Integer userId, Diagnosispersonalinfo diagnosispersonalinfo);
+
+    void saveDiagnosisGeneralSymptoms(Integer userId, Diagnosisgeneralsymptoms diagnosisGeneralSymptoms);
+
+    void saveDiagnosisRespiratorySymptoms(Integer userId, Diagnosisrespiratorysymptoms diagnosisRespiratorySymptoms);
+
+    void saveDiagnosisDigestiveSymptoms(Integer userId, Diagnosisdigestivesymptoms diagnosisDigestiveSymptoms);
+
+    void saveDiagnosisCirculatorySymptoms(Integer userId, Diagnosiscirculatorysymptoms diagnosisCirculatorySymptoms);
+
+    void saveDiagnosisNeurologicalSymptoms(Integer userId, Diagnosisneurologicalsymptoms diagnosisNeurologicalSymptoms);
+
+    void saveDiagnosisLocalSymptoms(Integer userId, Diagnosislocalsymptoms diagnosisLocalSymptoms);
+
+    void saveDiagnosisOtherSymptoms(Integer userId, Diagnosisothersymptoms diagnosisOtherSymptoms);
+
+    void saveDiagnosisComplications(Integer userId, Diagnosiscomplications diagnosisComplications);
 }
