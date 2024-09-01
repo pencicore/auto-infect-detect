@@ -25,3 +25,18 @@ mybatis-plus:
       id-type: auto
       update-strategy: not_null
   mapper-locations: classpath:/mapper/*.xml
+
+infect:
+  jwt:
+    token-name: token
+    railway-employee-secret-key: railway_employee
+    railway-employee-ttl: 72000000
+    admin-secret-key: admin
+    admin-ttl: 72000000
+    cdc-staff-secret-key: cdc_staff
+    cdc-staff-ttl: 72000000
+    medical-staff-secret-key: medical_staff
+    medical-staff-ttl: 72000000
+  path:
+    diagnosis-file-path: /path/diagnosis
+
