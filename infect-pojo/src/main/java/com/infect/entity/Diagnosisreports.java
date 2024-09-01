@@ -8,8 +8,7 @@ import java.sql.Blob;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 /**
@@ -25,6 +24,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @TableName("diagnosisreports")
 @ApiModel(value="Diagnosisreports对象", description="")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Diagnosisreports implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -36,9 +38,11 @@ public class Diagnosisreports implements Serializable {
 
     private String reportType;
 
-    private Blob file;
+//    private Blob file;
 
     private String fileName;
+
+    private String filePath;
 
     private String fileType;
 

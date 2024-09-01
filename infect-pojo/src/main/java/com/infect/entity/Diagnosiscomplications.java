@@ -31,7 +31,7 @@ public class Diagnosiscomplications implements Serializable {
     @TableId(value = "DiagnosisComplicationID", type = IdType.AUTO)
     private Integer diagnosisComplicationId;
 
-    @ApiModelProperty(value = "诊断结果ID", required = true, example = "1")
+    @ApiModelProperty(value = "诊断结果ID", hidden = true)
     private Integer diagnosisResultsId;
 
     @ApiModelProperty(value = "是否有并发症", required = true, example = "true")

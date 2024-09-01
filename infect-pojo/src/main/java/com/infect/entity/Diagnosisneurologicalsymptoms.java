@@ -31,7 +31,7 @@ public class Diagnosisneurologicalsymptoms implements Serializable {
     @ApiModelProperty(value = "神经系统症状ID，自增", required = true, hidden = true)
     private Integer diagnosisNeurologicalSymptomId;
 
-    @ApiModelProperty(value = "诊断结果ID，关联DiagnosisResults表", required = true, example = "1")
+    @ApiModelProperty(value = "诊断结果ID，关联DiagnosisResults表", hidden = true)
     private Integer diagnosisResultsId;
 
     @ApiModelProperty(value = "是否儋妄", required = true, example = "false")

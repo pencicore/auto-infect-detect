@@ -20,11 +20,11 @@ public class Diagnosisgeneralsymptoms implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "全身症状ID", example = "1", required = true)
+    @ApiModelProperty(value = "全身症状ID", hidden = true)
     @TableId(value = "DiagnosisGeneralSymptomID", type = IdType.AUTO)
     private Integer diagnosisGeneralSymptomId;
 
-    @ApiModelProperty(value = "诊断结果ID，关联DiagnosisResults表", example = "1", required = true)
+    @ApiModelProperty(value = "诊断结果ID，关联DiagnosisResults表", hidden = true)
     private Integer diagnosisResultsId;
 
     @ApiModelProperty(value = "是否发热", example = "true", required = true)

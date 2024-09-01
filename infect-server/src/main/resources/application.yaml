@@ -37,5 +37,6 @@ infect:
     cdc-staff-ttl: 72000000
     medical-staff-secret-key: medical_staff
     medical-staff-ttl: 72000000
-
+  path:
+    diagnosis-file-path: /path/diagnosis
 

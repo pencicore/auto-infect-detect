@@ -37,6 +37,8 @@ public class Labtestfiles implements Serializable {
 
     private String fileType;
 
-    private Blob fileData;
+    private String fileName;
+
+    private String filePath;
 
 }
