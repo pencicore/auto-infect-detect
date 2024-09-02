@@ -34,12 +34,12 @@ public class EmployeeDiagnosisController {
     @PostMapping("/file")
     public Result<Integer> uploadReportFile(@ModelAttribute DiagnosisReportsDTO diagnosisReportsDTO){
         log.info("用户（铁路工人）{}提交诊断报告文件：{}",BaseContext.getCurrentId(),diagnosisReportsDTO);
-        myDiagnosisService.uploadReportFile(diagnosisReportsDTO);
-        return Result.success();
+        Integer reportId = myDiagnosisService.uploadReportFile(diagnosisReportsDTO);
+        return Result.success(reportId);
     }
 
     @ApiOperation(value = "铁路工人提交诊断结果和所有诊断症状信息")
-    @PostMapping("/all")
+    @PostMapping("/result")
     public Result saveDiagnosis(@RequestBody AllDiagnosisAndResultDTO allDiagnosisAndResultDTO) {
         log.info("用户（铁路工人）{}提交诊断结果和所有诊断症状信息：{}",BaseContext.getCurrentId(),allDiagnosisAndResultDTO);
         myDiagnosisService.saveDiagnosis(BaseContext.getCurrentId(),allDiagnosisAndResultDTO);

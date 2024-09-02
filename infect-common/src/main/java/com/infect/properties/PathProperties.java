@@ -9,4 +9,5 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "infect.path")
 public class PathProperties {
     private String diagnosisFilePath;
+    private String labTestFilePath;
 }

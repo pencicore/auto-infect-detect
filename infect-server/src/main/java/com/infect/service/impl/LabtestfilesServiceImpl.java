@@ -1,5 +1,6 @@
 package com.infect.service.impl;
 
+import com.infect.dto.LabTestFileDTO;
 import com.infect.entity.Labtestfiles;
 import com.infect.mapper.LabtestfilesMapper;
 import com.infect.service.ILabtestfilesService;

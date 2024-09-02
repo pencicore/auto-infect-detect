@@ -6,6 +6,10 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 594741
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
 logging:
   level:
     com.infect: debug
@@ -30,13 +34,14 @@ infect:
   jwt:
     token-name: token
     railway-employee-secret-key: railway_employee
-    railway-employee-ttl: 72000000
+    railway-employee-ttl: 72000000123
     admin-secret-key: admin
-    admin-ttl: 72000000
+    admin-ttl: 72000000123
     cdc-staff-secret-key: cdc_staff
-    cdc-staff-ttl: 72000000
+    cdc-staff-ttl: 72000000123
     medical-staff-secret-key: medical_staff
-    medical-staff-ttl: 72000000
+    medical-staff-ttl: 72000000123
   path:
-    diagnosis-file-path: /path/diagnosis
+    diagnosis-file-path: diagnosisReports
+    lab-test-file-path: labTestFilePath
 

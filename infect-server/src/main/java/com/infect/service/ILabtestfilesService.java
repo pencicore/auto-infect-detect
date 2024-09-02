@@ -1,5 +1,6 @@
 package com.infect.service;
 
+import com.infect.dto.LabTestFileDTO;
 import com.infect.entity.Labtestfiles;
 import com.baomidou.mybatisplus.extension.service.IService;
 
