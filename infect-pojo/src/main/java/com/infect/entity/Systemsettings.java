@@ -6,9 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 /**
  * <p>
@@ -18,9 +15,8 @@ import lombok.experimental.Accessors;
  * @author author
  * @since 2024-08-25
  */
-@Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
+//@EqualsAndHashCode(callSuper = false)
+//@Accessors(chain = true)
 @TableName("systemsettings")
 @ApiModel(value="Systemsettings对象", description="")
 public class Systemsettings implements Serializable {
@@ -29,5 +25,11 @@ public class Systemsettings implements Serializable {
 
     private Boolean isAI;
 
+    public Boolean getAI() {
+        return isAI;
+    }
 
+    public void setAI(Boolean AI) {
+        isAI = AI;
+    }
 }

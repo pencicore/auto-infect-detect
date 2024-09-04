@@ -8,10 +8,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
-
 /**
  * <p>
  *
@@ -20,9 +16,8 @@ import lombok.experimental.Accessors;
  * @author author
  * @since 2024-08-24
  */
-@Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
+//@EqualsAndHashCode(callSuper = false)
+//@Accessors(chain = true)
 @TableName("aidiseasescoring")
 @ApiModel(value="Aidiseasescoring对象", description="")
 public class Aidiseasescoring implements Serializable {
@@ -41,4 +36,52 @@ public class Aidiseasescoring implements Serializable {
     private String diseaseTypeName;
 
     private BigDecimal score;
+
+    public Integer getScoringId() {
+        return scoringId;
+    }
+
+    public void setScoringId(Integer scoringId) {
+        this.scoringId = scoringId;
+    }
+
+    public Integer getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(Integer statusId) {
+        this.statusId = statusId;
+    }
+
+    public LocalDate getSymptomTime() {
+        return symptomTime;
+    }
+
+    public void setSymptomTime(LocalDate symptomTime) {
+        this.symptomTime = symptomTime;
+    }
+
+    public Integer getDiseaseTypeId() {
+        return diseaseTypeId;
+    }
+
+    public void setDiseaseTypeId(Integer diseaseTypeId) {
+        this.diseaseTypeId = diseaseTypeId;
+    }
+
+    public String getDiseaseTypeName() {
+        return diseaseTypeName;
+    }
+
+    public void setDiseaseTypeName(String diseaseTypeName) {
+        this.diseaseTypeName = diseaseTypeName;
+    }
+
+    public BigDecimal getScore() {
+        return score;
+    }
+
+    public void setScore(BigDecimal score) {
+        this.score = score;
+    }
 }

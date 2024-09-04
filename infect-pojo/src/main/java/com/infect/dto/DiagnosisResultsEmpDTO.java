@@ -3,11 +3,9 @@ package com.infect.dto;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
 
 import java.time.LocalDate;
 
-@Data
 @ApiModel(value = "铁路工人诊断结果数据传输实体")
 public class DiagnosisResultsEmpDTO {
     @ApiModelProperty(value = "诊断的疾病类型", required = true, example = "新型冠状病毒感染")
@@ -52,4 +50,115 @@ public class DiagnosisResultsEmpDTO {
     @ApiModelProperty(value = "登记分类其他详情", example = "复发病例")
     private String otherRegistrationDetails;
 
+    public String getDiseaseType() {
+        return diseaseType;
+    }
+
+    public void setDiseaseType(String diseaseType) {
+        this.diseaseType = diseaseType;
+    }
+
+    public String getOtherDiseaseName() {
+        return otherDiseaseName;
+    }
+
+    public void setOtherDiseaseName(String otherDiseaseName) {
+        this.otherDiseaseName = otherDiseaseName;
+    }
+
+    public String getPlagueSubtype() {
+        return plagueSubtype;
+    }
+
+    public void setPlagueSubtype(String plagueSubtype) {
+        this.plagueSubtype = plagueSubtype;
+    }
+
+    public String getAnthraxSubtype() {
+        return anthraxSubtype;
+    }
+
+    public void setAnthraxSubtype(String anthraxSubtype) {
+        this.anthraxSubtype = anthraxSubtype;
+    }
+
+    public String getDiscoveryMethod() {
+        return discoveryMethod;
+    }
+
+    public void setDiscoveryMethod(String discoveryMethod) {
+        this.discoveryMethod = discoveryMethod;
+    }
+
+    public String getOtherDiscoveryMethodName() {
+        return otherDiscoveryMethodName;
+    }
+
+    public void setOtherDiscoveryMethodName(String otherDiscoveryMethodName) {
+        this.otherDiscoveryMethodName = otherDiscoveryMethodName;
+    }
+
+    public String getDiseaseOutcome() {
+        return diseaseOutcome;
+    }
+
+    public void setDiseaseOutcome(String diseaseOutcome) {
+        this.diseaseOutcome = diseaseOutcome;
+    }
+
+    public String getHospitalName() {
+        return hospitalName;
+    }
+
+    public void setHospitalName(String hospitalName) {
+        this.hospitalName = hospitalName;
+    }
+
+    public LocalDate getAdmissionDate() {
+        return admissionDate;
+    }
+
+    public void setAdmissionDate(LocalDate admissionDate) {
+        this.admissionDate = admissionDate;
+    }
+
+    public LocalDate getDischargeDate() {
+        return dischargeDate;
+    }
+
+    public void setDischargeDate(LocalDate dischargeDate) {
+        this.dischargeDate = dischargeDate;
+    }
+
+    public LocalDate getDeathDate() {
+        return deathDate;
+    }
+
+    public void setDeathDate(LocalDate deathDate) {
+        this.deathDate = deathDate;
+    }
+
+    public String getAdmissionSymptomsAndSigns() {
+        return admissionSymptomsAndSigns;
+    }
+
+    public void setAdmissionSymptomsAndSigns(String admissionSymptomsAndSigns) {
+        this.admissionSymptomsAndSigns = admissionSymptomsAndSigns;
+    }
+
+    public String getRegistrationClassification() {
+        return registrationClassification;
+    }
+
+    public void setRegistrationClassification(String registrationClassification) {
+        this.registrationClassification = registrationClassification;
+    }
+
+    public String getOtherRegistrationDetails() {
+        return otherRegistrationDetails;
+    }
+
+    public void setOtherRegistrationDetails(String otherRegistrationDetails) {
+        this.otherRegistrationDetails = otherRegistrationDetails;
+    }
 }

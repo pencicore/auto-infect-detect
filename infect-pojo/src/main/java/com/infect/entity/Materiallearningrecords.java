@@ -7,9 +7,6 @@ import java.time.LocalDateTime;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 /**
  * <p>
@@ -19,9 +16,8 @@ import lombok.experimental.Accessors;
  * @author author
  * @since 2024-08-24
  */
-@Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
+//@EqualsAndHashCode(callSuper = false)
+//@Accessors(chain = true)
 @TableName("materiallearningrecords")
 @ApiModel(value="Materiallearningrecords对象", description="")
 public class Materiallearningrecords implements Serializable {
@@ -37,4 +33,35 @@ public class Materiallearningrecords implements Serializable {
 
     private LocalDateTime clickedDate;
 
+    public Integer getRecordId() {
+        return recordId;
+    }
+
+    public void setRecordId(Integer recordId) {
+        this.recordId = recordId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getMaterialId() {
+        return materialId;
+    }
+
+    public void setMaterialId(Integer materialId) {
+        this.materialId = materialId;
+    }
+
+    public LocalDateTime getClickedDate() {
+        return clickedDate;
+    }
+
+    public void setClickedDate(LocalDateTime clickedDate) {
+        this.clickedDate = clickedDate;
+    }
 }

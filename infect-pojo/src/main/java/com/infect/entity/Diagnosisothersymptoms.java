@@ -6,9 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 /**
  * <p>
@@ -18,9 +15,8 @@ import lombok.experimental.Accessors;
  * @author author
  * @since 2024-08-24
  */
-@Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
+//@EqualsAndHashCode(callSuper = false)
+//@Accessors(chain = true)
 @TableName("diagnosisothersymptoms")
 @ApiModel(value = "Diagnosisothersymptoms对象", description = "诊断其他症状表")
 public class Diagnosisothersymptoms implements Serializable {
@@ -54,4 +50,76 @@ public class Diagnosisothersymptoms implements Serializable {
 
     @ApiModelProperty(value = "其他症状", required = true, example = "头痛、恶心")
     private String otherSymptomsName;
+
+    public Integer getDiagnosisOtherSymptomId() {
+        return diagnosisOtherSymptomId;
+    }
+
+    public void setDiagnosisOtherSymptomId(Integer diagnosisOtherSymptomId) {
+        this.diagnosisOtherSymptomId = diagnosisOtherSymptomId;
+    }
+
+    public Integer getDiagnosisResultsId() {
+        return diagnosisResultsId;
+    }
+
+    public void setDiagnosisResultsId(Integer diagnosisResultsId) {
+        this.diagnosisResultsId = diagnosisResultsId;
+    }
+
+    public Boolean getHasSuddenOnset() {
+        return hasSuddenOnset;
+    }
+
+    public void setHasSuddenOnset(Boolean hasSuddenOnset) {
+        this.hasSuddenOnset = hasSuddenOnset;
+    }
+
+    public Boolean getHasRapidProgress() {
+        return hasRapidProgress;
+    }
+
+    public void setHasRapidProgress(Boolean hasRapidProgress) {
+        this.hasRapidProgress = hasRapidProgress;
+    }
+
+    public Boolean getHasPeriodicAttack() {
+        return hasPeriodicAttack;
+    }
+
+    public void setHasPeriodicAttack(Boolean hasPeriodicAttack) {
+        this.hasPeriodicAttack = hasPeriodicAttack;
+    }
+
+    public Boolean getHasForcedPosture() {
+        return hasForcedPosture;
+    }
+
+    public void setHasForcedPosture(Boolean hasForcedPosture) {
+        this.hasForcedPosture = hasForcedPosture;
+    }
+
+    public Boolean getHasCalfMusclePain() {
+        return hasCalfMusclePain;
+    }
+
+    public void setHasCalfMusclePain(Boolean hasCalfMusclePain) {
+        this.hasCalfMusclePain = hasCalfMusclePain;
+    }
+
+    public Boolean getHasOtherSymptoms() {
+        return hasOtherSymptoms;
+    }
+
+    public void setHasOtherSymptoms(Boolean hasOtherSymptoms) {
+        this.hasOtherSymptoms = hasOtherSymptoms;
+    }
+
+    public String getOtherSymptomsName() {
+        return otherSymptomsName;
+    }
+
+    public void setOtherSymptomsName(String otherSymptomsName) {
+        this.otherSymptomsName = otherSymptomsName;
+    }
 }

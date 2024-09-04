@@ -7,9 +7,7 @@ import java.time.LocalDate;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+
 
 /**
  * <p>
@@ -19,9 +17,8 @@ import lombok.experimental.Accessors;
  * @author author
  * @since 2024-08-24
  */
-@Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
+//@EqualsAndHashCode(callSuper = false)
+//@Accessors(chain = true)
 @TableName("riskfactorsandexposure")
 @ApiModel(value = "Riskfactorsandexposure对象", description = "风险因素与暴露信息")
 public class Riskfactorsandexposure implements Serializable {
@@ -207,4 +204,484 @@ public class Riskfactorsandexposure implements Serializable {
 
     @ApiModelProperty(value = "发病前1月内是否接触过病人排泄物（血、尿、便等）", allowableValues = "是,否,不清楚", example = "是", required = true)
     private String contactWithPatientExcreta;
+
+    public Integer getRiskFactorsAndExposureId() {
+        return riskFactorsAndExposureId;
+    }
+
+    public void setRiskFactorsAndExposureId(Integer riskFactorsAndExposureId) {
+        this.riskFactorsAndExposureId = riskFactorsAndExposureId;
+    }
+
+    public Integer getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(Integer statusId) {
+        this.statusId = statusId;
+    }
+
+    public String getContactWithFeverPatient() {
+        return contactWithFeverPatient;
+    }
+
+    public void setContactWithFeverPatient(String contactWithFeverPatient) {
+        this.contactWithFeverPatient = contactWithFeverPatient;
+    }
+
+    public String getContactWithDiarrheaPatient() {
+        return contactWithDiarrheaPatient;
+    }
+
+    public void setContactWithDiarrheaPatient(String contactWithDiarrheaPatient) {
+        this.contactWithDiarrheaPatient = contactWithDiarrheaPatient;
+    }
+
+    public String getContactWithRashPatient() {
+        return contactWithRashPatient;
+    }
+
+    public void setContactWithRashPatient(String contactWithRashPatient) {
+        this.contactWithRashPatient = contactWithRashPatient;
+    }
+
+    public String getContactWithTuberculosisPatient() {
+        return contactWithTuberculosisPatient;
+    }
+
+    public void setContactWithTuberculosisPatient(String contactWithTuberculosisPatient) {
+        this.contactWithTuberculosisPatient = contactWithTuberculosisPatient;
+    }
+
+    public Boolean getGroupDining() {
+        return isGroupDining;
+    }
+
+    public void setGroupDining(Boolean groupDining) {
+        isGroupDining = groupDining;
+    }
+
+    public Boolean getDiningOut() {
+        return isDiningOut;
+    }
+
+    public void setDiningOut(Boolean diningOut) {
+        isDiningOut = diningOut;
+    }
+
+    public Boolean getDiningUnclear() {
+        return isDiningUnclear;
+    }
+
+    public void setDiningUnclear(Boolean diningUnclear) {
+        isDiningUnclear = diningUnclear;
+    }
+
+    public Boolean getHasDrinkingRawWater() {
+        return hasDrinkingRawWater;
+    }
+
+    public void setHasDrinkingRawWater(Boolean hasDrinkingRawWater) {
+        this.hasDrinkingRawWater = hasDrinkingRawWater;
+    }
+
+    public Boolean getHasEatingRawFood() {
+        return hasEatingRawFood;
+    }
+
+    public void setHasEatingRawFood(Boolean hasEatingRawFood) {
+        this.hasEatingRawFood = hasEatingRawFood;
+    }
+
+    public Boolean getHasEatingColdCookedFood() {
+        return hasEatingColdCookedFood;
+    }
+
+    public void setHasEatingColdCookedFood(Boolean hasEatingColdCookedFood) {
+        this.hasEatingColdCookedFood = hasEatingColdCookedFood;
+    }
+
+    public Boolean getHasEatingSeafood() {
+        return hasEatingSeafood;
+    }
+
+    public void setHasEatingSeafood(Boolean hasEatingSeafood) {
+        this.hasEatingSeafood = hasEatingSeafood;
+    }
+
+    public String getFoodNames() {
+        return foodNames;
+    }
+
+    public void setFoodNames(String foodNames) {
+        this.foodNames = foodNames;
+    }
+
+    public String getDiningPlace() {
+        return diningPlace;
+    }
+
+    public void setDiningPlace(String diningPlace) {
+        this.diningPlace = diningPlace;
+    }
+
+    public String getGroupOutbreak() {
+        return groupOutbreak;
+    }
+
+    public void setGroupOutbreak(String groupOutbreak) {
+        this.groupOutbreak = groupOutbreak;
+    }
+
+    public String getOutdoorStayOrWorkWithinMonth() {
+        return outdoorStayOrWorkWithinMonth;
+    }
+
+    public void setOutdoorStayOrWorkWithinMonth(String outdoorStayOrWorkWithinMonth) {
+        this.outdoorStayOrWorkWithinMonth = outdoorStayOrWorkWithinMonth;
+    }
+
+    public String getWildActivityHistory() {
+        return wildActivityHistory;
+    }
+
+    public void setWildActivityHistory(String wildActivityHistory) {
+        this.wildActivityHistory = wildActivityHistory;
+    }
+
+    public String getOtherWildActivityName() {
+        return otherWildActivityName;
+    }
+
+    public void setOtherWildActivityName(String otherWildActivityName) {
+        this.otherWildActivityName = otherWildActivityName;
+    }
+
+    public String getPlagueArea() {
+        return plagueArea;
+    }
+
+    public void setPlagueArea(String plagueArea) {
+        this.plagueArea = plagueArea;
+    }
+
+    public String getSpecificPlagueLocation() {
+        return specificPlagueLocation;
+    }
+
+    public void setSpecificPlagueLocation(String specificPlagueLocation) {
+        this.specificPlagueLocation = specificPlagueLocation;
+    }
+
+    public String getAnthraxArea() {
+        return anthraxArea;
+    }
+
+    public void setAnthraxArea(String anthraxArea) {
+        this.anthraxArea = anthraxArea;
+    }
+
+    public String getSpecificAnthraxLocation() {
+        return specificAnthraxLocation;
+    }
+
+    public void setSpecificAnthraxLocation(String specificAnthraxLocation) {
+        this.specificAnthraxLocation = specificAnthraxLocation;
+    }
+
+    public String getMalariaArea() {
+        return malariaArea;
+    }
+
+    public void setMalariaArea(String malariaArea) {
+        this.malariaArea = malariaArea;
+    }
+
+    public String getSpecificMalariaLocation() {
+        return specificMalariaLocation;
+    }
+
+    public void setSpecificMalariaLocation(String specificMalariaLocation) {
+        this.specificMalariaLocation = specificMalariaLocation;
+    }
+
+    public String getContactWithAnimalProducts() {
+        return contactWithAnimalProducts;
+    }
+
+    public void setContactWithAnimalProducts(String contactWithAnimalProducts) {
+        this.contactWithAnimalProducts = contactWithAnimalProducts;
+    }
+
+    public LocalDate getContactDate() {
+        return contactDate;
+    }
+
+    public void setContactDate(LocalDate contactDate) {
+        this.contactDate = contactDate;
+    }
+
+    public String getContactWithAnimals() {
+        return contactWithAnimals;
+    }
+
+    public void setContactWithAnimals(String contactWithAnimals) {
+        this.contactWithAnimals = contactWithAnimals;
+    }
+
+    public String getContactPlace() {
+        return contactPlace;
+    }
+
+    public void setContactPlace(String contactPlace) {
+        this.contactPlace = contactPlace;
+    }
+
+    public Boolean getHasContactWithRat() {
+        return hasContactWithRat;
+    }
+
+    public void setHasContactWithRat(Boolean hasContactWithRat) {
+        this.hasContactWithRat = hasContactWithRat;
+    }
+
+    public Boolean getHasContactWithMarmot() {
+        return hasContactWithMarmot;
+    }
+
+    public void setHasContactWithMarmot(Boolean hasContactWithMarmot) {
+        this.hasContactWithMarmot = hasContactWithMarmot;
+    }
+
+    public Boolean getHasContactWithLice() {
+        return hasContactWithLice;
+    }
+
+    public void setHasContactWithLice(Boolean hasContactWithLice) {
+        this.hasContactWithLice = hasContactWithLice;
+    }
+
+    public Boolean getHasContactWithFlea() {
+        return hasContactWithFlea;
+    }
+
+    public void setHasContactWithFlea(Boolean hasContactWithFlea) {
+        this.hasContactWithFlea = hasContactWithFlea;
+    }
+
+    public Boolean getHasContactWithCat() {
+        return hasContactWithCat;
+    }
+
+    public void setHasContactWithCat(Boolean hasContactWithCat) {
+        this.hasContactWithCat = hasContactWithCat;
+    }
+
+    public Boolean getHasContactWithBird() {
+        return hasContactWithBird;
+    }
+
+    public void setHasContactWithBird(Boolean hasContactWithBird) {
+        this.hasContactWithBird = hasContactWithBird;
+    }
+
+    public Boolean getHasContactWithPig() {
+        return hasContactWithPig;
+    }
+
+    public void setHasContactWithPig(Boolean hasContactWithPig) {
+        this.hasContactWithPig = hasContactWithPig;
+    }
+
+    public Boolean getHasContactWithHorse() {
+        return hasContactWithHorse;
+    }
+
+    public void setHasContactWithHorse(Boolean hasContactWithHorse) {
+        this.hasContactWithHorse = hasContactWithHorse;
+    }
+
+    public Boolean getHasContactWithMule() {
+        return hasContactWithMule;
+    }
+
+    public void setHasContactWithMule(Boolean hasContactWithMule) {
+        this.hasContactWithMule = hasContactWithMule;
+    }
+
+    public Boolean getHasContactWithDonkey() {
+        return hasContactWithDonkey;
+    }
+
+    public void setHasContactWithDonkey(Boolean hasContactWithDonkey) {
+        this.hasContactWithDonkey = hasContactWithDonkey;
+    }
+
+    public Boolean getHasContactWithCow() {
+        return hasContactWithCow;
+    }
+
+    public void setHasContactWithCow(Boolean hasContactWithCow) {
+        this.hasContactWithCow = hasContactWithCow;
+    }
+
+    public Boolean getHasContactWithSheep() {
+        return hasContactWithSheep;
+    }
+
+    public void setHasContactWithSheep(Boolean hasContactWithSheep) {
+        this.hasContactWithSheep = hasContactWithSheep;
+    }
+
+    public Boolean getHasContactWithDog() {
+        return hasContactWithDog;
+    }
+
+    public void setHasContactWithDog(Boolean hasContactWithDog) {
+        this.hasContactWithDog = hasContactWithDog;
+    }
+
+    public Boolean getHasContactWithRabbit() {
+        return hasContactWithRabbit;
+    }
+
+    public void setHasContactWithRabbit(Boolean hasContactWithRabbit) {
+        this.hasContactWithRabbit = hasContactWithRabbit;
+    }
+
+    public Boolean getHasContactWithWolf() {
+        return hasContactWithWolf;
+    }
+
+    public void setHasContactWithWolf(Boolean hasContactWithWolf) {
+        this.hasContactWithWolf = hasContactWithWolf;
+    }
+
+    public Boolean getHasContactWithTiger() {
+        return hasContactWithTiger;
+    }
+
+    public void setHasContactWithTiger(Boolean hasContactWithTiger) {
+        this.hasContactWithTiger = hasContactWithTiger;
+    }
+
+    public Boolean getHasContactWithOtherAnimal() {
+        return hasContactWithOtherAnimal;
+    }
+
+    public void setHasContactWithOtherAnimal(Boolean hasContactWithOtherAnimal) {
+        this.hasContactWithOtherAnimal = hasContactWithOtherAnimal;
+    }
+
+    public String getOtherAnimalName() {
+        return otherAnimalName;
+    }
+
+    public void setOtherAnimalName(String otherAnimalName) {
+        this.otherAnimalName = otherAnimalName;
+    }
+
+    public Boolean getHillyOrMountainous() {
+        return isHillyOrMountainous;
+    }
+
+    public void setHillyOrMountainous(Boolean hillyOrMountainous) {
+        isHillyOrMountainous = hillyOrMountainous;
+    }
+
+    public Boolean getPlain() {
+        return isPlain;
+    }
+
+    public void setPlain(Boolean plain) {
+        isPlain = plain;
+    }
+
+    public Boolean getOtherResidenceType() {
+        return isOtherResidenceType;
+    }
+
+    public void setOtherResidenceType(Boolean otherResidenceType) {
+        isOtherResidenceType = otherResidenceType;
+    }
+
+    public Boolean getHasMosquitoBite() {
+        return hasMosquitoBite;
+    }
+
+    public void setHasMosquitoBite(Boolean hasMosquitoBite) {
+        this.hasMosquitoBite = hasMosquitoBite;
+    }
+
+    public String getTickBite() {
+        return tickBite;
+    }
+
+    public void setTickBite(String tickBite) {
+        this.tickBite = tickBite;
+    }
+
+    public String getFleaBite() {
+        return fleaBite;
+    }
+
+    public void setFleaBite(String fleaBite) {
+        this.fleaBite = fleaBite;
+    }
+
+    public String getContactWithRatIn2Months() {
+        return contactWithRatIn2Months;
+    }
+
+    public void setContactWithRatIn2Months(String contactWithRatIn2Months) {
+        this.contactWithRatIn2Months = contactWithRatIn2Months;
+    }
+
+    public String getRatContactMethod() {
+        return ratContactMethod;
+    }
+
+    public void setRatContactMethod(String ratContactMethod) {
+        this.ratContactMethod = ratContactMethod;
+    }
+
+    public String getEatenFoodContaminatedByRatFeces() {
+        return eatenFoodContaminatedByRatFeces;
+    }
+
+    public void setEatenFoodContaminatedByRatFeces(String eatenFoodContaminatedByRatFeces) {
+        this.eatenFoodContaminatedByRatFeces = eatenFoodContaminatedByRatFeces;
+    }
+
+    public String getDrunkWaterFromDitchesOrPonds() {
+        return drunkWaterFromDitchesOrPonds;
+    }
+
+    public void setDrunkWaterFromDitchesOrPonds(String drunkWaterFromDitchesOrPonds) {
+        this.drunkWaterFromDitchesOrPonds = drunkWaterFromDitchesOrPonds;
+    }
+
+    public String getRestedNearRatHoles() {
+        return restedNearRatHoles;
+    }
+
+    public void setRestedNearRatHoles(String restedNearRatHoles) {
+        this.restedNearRatHoles = restedNearRatHoles;
+    }
+
+    public String getRatOrRatDroppingsAtWorkplace() {
+        return ratOrRatDroppingsAtWorkplace;
+    }
+
+    public void setRatOrRatDroppingsAtWorkplace(String ratOrRatDroppingsAtWorkplace) {
+        this.ratOrRatDroppingsAtWorkplace = ratOrRatDroppingsAtWorkplace;
+    }
+
+    public String getContactWithPatientExcreta() {
+        return contactWithPatientExcreta;
+    }
+
+    public void setContactWithPatientExcreta(String contactWithPatientExcreta) {
+        this.contactWithPatientExcreta = contactWithPatientExcreta;
+    }
 }

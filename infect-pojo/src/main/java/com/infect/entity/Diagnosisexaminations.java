@@ -6,9 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 /**
  * <p>
@@ -18,9 +15,8 @@ import lombok.experimental.Accessors;
  * @author author
  * @since 2024-08-24
  */
-@Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
+//@EqualsAndHashCode(callSuper = false)
+//@Accessors(chain = true)
 @TableName("diagnosisexaminations")
 @ApiModel(value="Diagnosisexaminations对象", description="诊断检查项目")
 public class Diagnosisexaminations implements Serializable {
@@ -48,4 +44,60 @@ public class Diagnosisexaminations implements Serializable {
 
     @ApiModelProperty(value = "是否进行B超", example = "false", required = true)
     private Boolean hasUltrasound;
+
+    public Integer getExaminationId() {
+        return examinationId;
+    }
+
+    public void setExaminationId(Integer examinationId) {
+        this.examinationId = examinationId;
+    }
+
+    public Integer getDiagnosisResultsId() {
+        return diagnosisResultsId;
+    }
+
+    public void setDiagnosisResultsId(Integer diagnosisResultsId) {
+        this.diagnosisResultsId = diagnosisResultsId;
+    }
+
+    public Boolean getHasBloodTest() {
+        return hasBloodTest;
+    }
+
+    public void setHasBloodTest(Boolean hasBloodTest) {
+        this.hasBloodTest = hasBloodTest;
+    }
+
+    public Boolean getHasUrineTest() {
+        return hasUrineTest;
+    }
+
+    public void setHasUrineTest(Boolean hasUrineTest) {
+        this.hasUrineTest = hasUrineTest;
+    }
+
+    public Boolean getHasStoolTest() {
+        return hasStoolTest;
+    }
+
+    public void setHasStoolTest(Boolean hasStoolTest) {
+        this.hasStoolTest = hasStoolTest;
+    }
+
+    public Boolean getHasImaging() {
+        return hasImaging;
+    }
+
+    public void setHasImaging(Boolean hasImaging) {
+        this.hasImaging = hasImaging;
+    }
+
+    public Boolean getHasUltrasound() {
+        return hasUltrasound;
+    }
+
+    public void setHasUltrasound(Boolean hasUltrasound) {
+        this.hasUltrasound = hasUltrasound;
+    }
 }

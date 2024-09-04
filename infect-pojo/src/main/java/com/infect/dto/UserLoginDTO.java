@@ -2,9 +2,8 @@ package com.infect.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
 
-@Data
+
 @ApiModel("登录")
 public class UserLoginDTO {
 
@@ -13,4 +12,20 @@ public class UserLoginDTO {
 
     @ApiModelProperty(value = "密码",example = "12345678", required = true)
     private String password;
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

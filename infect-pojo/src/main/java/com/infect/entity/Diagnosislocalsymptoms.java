@@ -6,10 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
-
 /**
  * <p>
  * Diagnosislocalsymptoms 实体类
@@ -18,9 +14,8 @@ import lombok.experimental.Accessors;
  * @author author
  * @since 2024-08-24
  */
-@Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
+//@EqualsAndHashCode(callSuper = false)
+//@Accessors(chain = true)
 @TableName("diagnosislocalsymptoms")
 @ApiModel(value = "Diagnosislocalsymptoms对象", description = "诊断局部症状表")
 public class Diagnosislocalsymptoms implements Serializable {
@@ -81,4 +76,148 @@ public class Diagnosislocalsymptoms implements Serializable {
 
     @ApiModelProperty(value = "是否腋下/上臂/胸部或其他部位有皮肤出血点", required = true, example = "true")
     private Boolean hasSkinBleedingPoints;
+
+    public Integer getDiagnosisLocalSymptomId() {
+        return diagnosisLocalSymptomId;
+    }
+
+    public void setDiagnosisLocalSymptomId(Integer diagnosisLocalSymptomId) {
+        this.diagnosisLocalSymptomId = diagnosisLocalSymptomId;
+    }
+
+    public Integer getDiagnosisResultsId() {
+        return diagnosisResultsId;
+    }
+
+    public void setDiagnosisResultsId(Integer diagnosisResultsId) {
+        this.diagnosisResultsId = diagnosisResultsId;
+    }
+
+    public Boolean getHasConjunctivitis() {
+        return hasConjunctivitis;
+    }
+
+    public void setHasConjunctivitis(Boolean hasConjunctivitis) {
+        this.hasConjunctivitis = hasConjunctivitis;
+    }
+
+    public Boolean getHasConjunctivalCongestion() {
+        return hasConjunctivalCongestion;
+    }
+
+    public void setHasConjunctivalCongestion(Boolean hasConjunctivalCongestion) {
+        this.hasConjunctivalCongestion = hasConjunctivalCongestion;
+    }
+
+    public Boolean getHasEyelidEdema() {
+        return hasEyelidEdema;
+    }
+
+    public void setHasEyelidEdema(Boolean hasEyelidEdema) {
+        this.hasEyelidEdema = hasEyelidEdema;
+    }
+
+    public Boolean getHasSmellTasteLoss() {
+        return hasSmellTasteLoss;
+    }
+
+    public void setHasSmellTasteLoss(Boolean hasSmellTasteLoss) {
+        this.hasSmellTasteLoss = hasSmellTasteLoss;
+    }
+
+    public Boolean getHasFacialRednessOrPallor() {
+        return hasFacialRednessOrPallor;
+    }
+
+    public void setHasFacialRednessOrPallor(Boolean hasFacialRednessOrPallor) {
+        this.hasFacialRednessOrPallor = hasFacialRednessOrPallor;
+    }
+
+    public Boolean getHasRednessNeckChest() {
+        return hasRednessNeckChest;
+    }
+
+    public void setHasRednessNeckChest(Boolean hasRednessNeckChest) {
+        this.hasRednessNeckChest = hasRednessNeckChest;
+    }
+
+    public Boolean getHasLipCyanosis() {
+        return hasLipCyanosis;
+    }
+
+    public void setHasLipCyanosis(Boolean hasLipCyanosis) {
+        this.hasLipCyanosis = hasLipCyanosis;
+    }
+
+    public Boolean getHasSkinPallorOrBruising() {
+        return hasSkinPallorOrBruising;
+    }
+
+    public void setHasSkinPallorOrBruising(Boolean hasSkinPallorOrBruising) {
+        this.hasSkinPallorOrBruising = hasSkinPallorOrBruising;
+    }
+
+    public Boolean getHasGumBleeding() {
+        return hasGumBleeding;
+    }
+
+    public void setHasGumBleeding(Boolean hasGumBleeding) {
+        this.hasGumBleeding = hasGumBleeding;
+    }
+
+    public Boolean getHasKidneyPain() {
+        return hasKidneyPain;
+    }
+
+    public void setHasKidneyPain(Boolean hasKidneyPain) {
+        this.hasKidneyPain = hasKidneyPain;
+    }
+
+    public Boolean getHasLowBackPain() {
+        return hasLowBackPain;
+    }
+
+    public void setHasLowBackPain(Boolean hasLowBackPain) {
+        this.hasLowBackPain = hasLowBackPain;
+    }
+
+    public Boolean getHasOrbitalPain() {
+        return hasOrbitalPain;
+    }
+
+    public void setHasOrbitalPain(Boolean hasOrbitalPain) {
+        this.hasOrbitalPain = hasOrbitalPain;
+    }
+
+    public Boolean getHasHepatomegaly() {
+        return hasHepatomegaly;
+    }
+
+    public void setHasHepatomegaly(Boolean hasHepatomegaly) {
+        this.hasHepatomegaly = hasHepatomegaly;
+    }
+
+    public Boolean getHasSplenomegaly() {
+        return hasSplenomegaly;
+    }
+
+    public void setHasSplenomegaly(Boolean hasSplenomegaly) {
+        this.hasSplenomegaly = hasSplenomegaly;
+    }
+
+    public Boolean getHasMucosalBleedingInOralOrNasal() {
+        return hasMucosalBleedingInOralOrNasal;
+    }
+
+    public void setHasMucosalBleedingInOralOrNasal(Boolean hasMucosalBleedingInOralOrNasal) {
+        this.hasMucosalBleedingInOralOrNasal = hasMucosalBleedingInOralOrNasal;
+    }
+
+    public Boolean getHasSkinBleedingPoints() {
+        return hasSkinBleedingPoints;
+    }
+
+    public void setHasSkinBleedingPoints(Boolean hasSkinBleedingPoints) {
+        this.hasSkinBleedingPoints = hasSkinBleedingPoints;
+    }
 }

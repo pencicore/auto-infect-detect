@@ -7,13 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
-@Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
 @TableName("diagnosisgeneralsymptoms")
 @ApiModel(value = "DiagnosisGeneralSymptoms对象", description = "诊断全身症状表")
 public class Diagnosisgeneralsymptoms implements Serializable {
@@ -179,4 +173,428 @@ public class Diagnosisgeneralsymptoms implements Serializable {
 
     @ApiModelProperty(value = "是否Brudzinski征", example = "true", required = true)
     private Boolean hasBrudzinskiSign;
+
+    public Integer getDiagnosisGeneralSymptomId() {
+        return diagnosisGeneralSymptomId;
+    }
+
+    public void setDiagnosisGeneralSymptomId(Integer diagnosisGeneralSymptomId) {
+        this.diagnosisGeneralSymptomId = diagnosisGeneralSymptomId;
+    }
+
+    public Integer getDiagnosisResultsId() {
+        return diagnosisResultsId;
+    }
+
+    public void setDiagnosisResultsId(Integer diagnosisResultsId) {
+        this.diagnosisResultsId = diagnosisResultsId;
+    }
+
+    public Boolean getHasFever() {
+        return hasFever;
+    }
+
+    public void setHasFever(Boolean hasFever) {
+        this.hasFever = hasFever;
+    }
+
+    public BigDecimal getHighestTemperature() {
+        return highestTemperature;
+    }
+
+    public void setHighestTemperature(BigDecimal highestTemperature) {
+        this.highestTemperature = highestTemperature;
+    }
+
+    public Integer getFeverDuration() {
+        return feverDuration;
+    }
+
+    public void setFeverDuration(Integer feverDuration) {
+        this.feverDuration = feverDuration;
+    }
+
+    public Boolean getHasChills() {
+        return hasChills;
+    }
+
+    public void setHasChills(Boolean hasChills) {
+        this.hasChills = hasChills;
+    }
+
+    public Boolean getHasSweating() {
+        return hasSweating;
+    }
+
+    public void setHasSweating(Boolean hasSweating) {
+        this.hasSweating = hasSweating;
+    }
+
+    public Boolean getHasFatigue() {
+        return hasFatigue;
+    }
+
+    public void setHasFatigue(Boolean hasFatigue) {
+        this.hasFatigue = hasFatigue;
+    }
+
+    public Boolean getHasHeadache() {
+        return hasHeadache;
+    }
+
+    public void setHasHeadache(Boolean hasHeadache) {
+        this.hasHeadache = hasHeadache;
+    }
+
+    public Boolean getHasMusclePain() {
+        return hasMusclePain;
+    }
+
+    public void setHasMusclePain(Boolean hasMusclePain) {
+        this.hasMusclePain = hasMusclePain;
+    }
+
+    public Boolean getHasJointPain() {
+        return hasJointPain;
+    }
+
+    public void setHasJointPain(Boolean hasJointPain) {
+        this.hasJointPain = hasJointPain;
+    }
+
+    public Boolean getHasLymphNodeSwelling() {
+        return hasLymphNodeSwelling;
+    }
+
+    public void setHasLymphNodeSwelling(Boolean hasLymphNodeSwelling) {
+        this.hasLymphNodeSwelling = hasLymphNodeSwelling;
+    }
+
+    public Boolean getHasLymphNodeSwellingGroin() {
+        return hasLymphNodeSwellingGroin;
+    }
+
+    public void setHasLymphNodeSwellingGroin(Boolean hasLymphNodeSwellingGroin) {
+        this.hasLymphNodeSwellingGroin = hasLymphNodeSwellingGroin;
+    }
+
+    public Boolean getHasLymphNodeSwellingArmpit() {
+        return hasLymphNodeSwellingArmpit;
+    }
+
+    public void setHasLymphNodeSwellingArmpit(Boolean hasLymphNodeSwellingArmpit) {
+        this.hasLymphNodeSwellingArmpit = hasLymphNodeSwellingArmpit;
+    }
+
+    public Boolean getHasLymphNodeSwellingSubclavian() {
+        return hasLymphNodeSwellingSubclavian;
+    }
+
+    public void setHasLymphNodeSwellingSubclavian(Boolean hasLymphNodeSwellingSubclavian) {
+        this.hasLymphNodeSwellingSubclavian = hasLymphNodeSwellingSubclavian;
+    }
+
+    public Boolean getHasLymphNodeSwellingNeck() {
+        return hasLymphNodeSwellingNeck;
+    }
+
+    public void setHasLymphNodeSwellingNeck(Boolean hasLymphNodeSwellingNeck) {
+        this.hasLymphNodeSwellingNeck = hasLymphNodeSwellingNeck;
+    }
+
+    public Boolean getHasLymphNodeSwellingElbow() {
+        return hasLymphNodeSwellingElbow;
+    }
+
+    public void setHasLymphNodeSwellingElbow(Boolean hasLymphNodeSwellingElbow) {
+        this.hasLymphNodeSwellingElbow = hasLymphNodeSwellingElbow;
+    }
+
+    public Boolean getHasLymphNodeSwellingPopliteal() {
+        return hasLymphNodeSwellingPopliteal;
+    }
+
+    public void setHasLymphNodeSwellingPopliteal(Boolean hasLymphNodeSwellingPopliteal) {
+        this.hasLymphNodeSwellingPopliteal = hasLymphNodeSwellingPopliteal;
+    }
+
+    public Boolean getHasCyanosis() {
+        return hasCyanosis;
+    }
+
+    public void setHasCyanosis(Boolean hasCyanosis) {
+        this.hasCyanosis = hasCyanosis;
+    }
+
+    public Boolean getHasSubcutaneousAndMucosalBleedingSpots() {
+        return hasSubcutaneousAndMucosalBleedingSpots;
+    }
+
+    public void setHasSubcutaneousAndMucosalBleedingSpots(Boolean hasSubcutaneousAndMucosalBleedingSpots) {
+        this.hasSubcutaneousAndMucosalBleedingSpots = hasSubcutaneousAndMucosalBleedingSpots;
+    }
+
+    public Boolean getHasSevereAnemia() {
+        return hasSevereAnemia;
+    }
+
+    public void setHasSevereAnemia(Boolean hasSevereAnemia) {
+        this.hasSevereAnemia = hasSevereAnemia;
+    }
+
+    public Boolean getHasPainfulRedRash() {
+        return hasPainfulRedRash;
+    }
+
+    public void setHasPainfulRedRash(Boolean hasPainfulRedRash) {
+        this.hasPainfulRedRash = hasPainfulRedRash;
+    }
+
+    public Boolean getHasBloodBlisters() {
+        return hasBloodBlisters;
+    }
+
+    public void setHasBloodBlisters(Boolean hasBloodBlisters) {
+        this.hasBloodBlisters = hasBloodBlisters;
+    }
+
+    public Boolean getHasSkinUlcer() {
+        return hasSkinUlcer;
+    }
+
+    public void setHasSkinUlcer(Boolean hasSkinUlcer) {
+        this.hasSkinUlcer = hasSkinUlcer;
+    }
+
+    public Boolean getHasSubcutaneousAndMucosalBleedingCavity() {
+        return hasSubcutaneousAndMucosalBleedingCavity;
+    }
+
+    public void setHasSubcutaneousAndMucosalBleedingCavity(Boolean hasSubcutaneousAndMucosalBleedingCavity) {
+        this.hasSubcutaneousAndMucosalBleedingCavity = hasSubcutaneousAndMucosalBleedingCavity;
+    }
+
+    public Boolean getHasCongestiveOrPetechialRash() {
+        return hasCongestiveOrPetechialRash;
+    }
+
+    public void setHasCongestiveOrPetechialRash(Boolean hasCongestiveOrPetechialRash) {
+        this.hasCongestiveOrPetechialRash = hasCongestiveOrPetechialRash;
+    }
+
+    public Boolean getHasDehydration() {
+        return hasDehydration;
+    }
+
+    public void setHasDehydration(Boolean hasDehydration) {
+        this.hasDehydration = hasDehydration;
+    }
+
+    public String getDehydrationSeverity() {
+        return dehydrationSeverity;
+    }
+
+    public void setDehydrationSeverity(String dehydrationSeverity) {
+        this.dehydrationSeverity = dehydrationSeverity;
+    }
+
+    public Boolean getHasItchyRash() {
+        return hasItchyRash;
+    }
+
+    public void setHasItchyRash(Boolean hasItchyRash) {
+        this.hasItchyRash = hasItchyRash;
+    }
+
+    public Boolean getItchyRashOnFingers() {
+        return itchyRashOnFingers;
+    }
+
+    public void setItchyRashOnFingers(Boolean itchyRashOnFingers) {
+        this.itchyRashOnFingers = itchyRashOnFingers;
+    }
+
+    public Boolean getItchyRashOnBackOfHands() {
+        return itchyRashOnBackOfHands;
+    }
+
+    public void setItchyRashOnBackOfHands(Boolean itchyRashOnBackOfHands) {
+        this.itchyRashOnBackOfHands = itchyRashOnBackOfHands;
+    }
+
+    public Boolean getItchyRashOnUpperLimbs() {
+        return itchyRashOnUpperLimbs;
+    }
+
+    public void setItchyRashOnUpperLimbs(Boolean itchyRashOnUpperLimbs) {
+        this.itchyRashOnUpperLimbs = itchyRashOnUpperLimbs;
+    }
+
+    public Boolean getItchyRashOnLowerLimbs() {
+        return itchyRashOnLowerLimbs;
+    }
+
+    public void setItchyRashOnLowerLimbs(Boolean itchyRashOnLowerLimbs) {
+        this.itchyRashOnLowerLimbs = itchyRashOnLowerLimbs;
+    }
+
+    public Boolean getItchyRashOnFeet() {
+        return itchyRashOnFeet;
+    }
+
+    public void setItchyRashOnFeet(Boolean itchyRashOnFeet) {
+        this.itchyRashOnFeet = itchyRashOnFeet;
+    }
+
+    public Boolean getItchyRashOnFace() {
+        return itchyRashOnFace;
+    }
+
+    public void setItchyRashOnFace(Boolean itchyRashOnFace) {
+        this.itchyRashOnFace = itchyRashOnFace;
+    }
+
+    public Boolean getItchyRashOnOther() {
+        return itchyRashOnOther;
+    }
+
+    public void setItchyRashOnOther(Boolean itchyRashOnOther) {
+        this.itchyRashOnOther = itchyRashOnOther;
+    }
+
+    public Boolean getHasEdema() {
+        return hasEdema;
+    }
+
+    public void setHasEdema(Boolean hasEdema) {
+        this.hasEdema = hasEdema;
+    }
+
+    public Boolean getHasNightSweats() {
+        return hasNightSweats;
+    }
+
+    public void setHasNightSweats(Boolean hasNightSweats) {
+        this.hasNightSweats = hasNightSweats;
+    }
+
+    public Boolean getHasWeightLoss() {
+        return hasWeightLoss;
+    }
+
+    public void setHasWeightLoss(Boolean hasWeightLoss) {
+        this.hasWeightLoss = hasWeightLoss;
+    }
+
+    public Boolean getHasExhaustion() {
+        return hasExhaustion;
+    }
+
+    public void setHasExhaustion(Boolean hasExhaustion) {
+        this.hasExhaustion = hasExhaustion;
+    }
+
+    public Boolean getHasWhiteBloodCells() {
+        return hasWhiteBloodCells;
+    }
+
+    public void setHasWhiteBloodCells(Boolean hasWhiteBloodCells) {
+        this.hasWhiteBloodCells = hasWhiteBloodCells;
+    }
+
+    public Boolean getHasBloodPressureDrop() {
+        return hasBloodPressureDrop;
+    }
+
+    public void setHasBloodPressureDrop(Boolean hasBloodPressureDrop) {
+        this.hasBloodPressureDrop = hasBloodPressureDrop;
+    }
+
+    public Integer getLowestBloodPressure() {
+        return lowestBloodPressure;
+    }
+
+    public void setLowestBloodPressure(Integer lowestBloodPressure) {
+        this.lowestBloodPressure = lowestBloodPressure;
+    }
+
+    public Boolean getHasShockSyndrome() {
+        return hasShockSyndrome;
+    }
+
+    public void setHasShockSyndrome(Boolean hasShockSyndrome) {
+        this.hasShockSyndrome = hasShockSyndrome;
+    }
+
+    public Boolean getHasHighIntracranialPressure() {
+        return hasHighIntracranialPressure;
+    }
+
+    public void setHasHighIntracranialPressure(Boolean hasHighIntracranialPressure) {
+        this.hasHighIntracranialPressure = hasHighIntracranialPressure;
+    }
+
+    public Boolean getHasTurbidCerebrospinalFluid() {
+        return hasTurbidCerebrospinalFluid;
+    }
+
+    public void setHasTurbidCerebrospinalFluid(Boolean hasTurbidCerebrospinalFluid) {
+        this.hasTurbidCerebrospinalFluid = hasTurbidCerebrospinalFluid;
+    }
+
+    public Boolean getHasBleeding() {
+        return hasBleeding;
+    }
+
+    public void setHasBleeding(Boolean hasBleeding) {
+        this.hasBleeding = hasBleeding;
+    }
+
+    public Integer getBleedingVolume() {
+        return bleedingVolume;
+    }
+
+    public void setBleedingVolume(Integer bleedingVolume) {
+        this.bleedingVolume = bleedingVolume;
+    }
+
+    public String getBleedingCavity() {
+        return bleedingCavity;
+    }
+
+    public void setBleedingCavity(String bleedingCavity) {
+        this.bleedingCavity = bleedingCavity;
+    }
+
+    public Boolean getHasPlasmaLeakage() {
+        return hasPlasmaLeakage;
+    }
+
+    public void setHasPlasmaLeakage(Boolean hasPlasmaLeakage) {
+        this.hasPlasmaLeakage = hasPlasmaLeakage;
+    }
+
+    public Boolean getHasOtherOrganDamage() {
+        return hasOtherOrganDamage;
+    }
+
+    public void setHasOtherOrganDamage(Boolean hasOtherOrganDamage) {
+        this.hasOtherOrganDamage = hasOtherOrganDamage;
+    }
+
+    public Boolean getHasKernigSign() {
+        return hasKernigSign;
+    }
+
+    public void setHasKernigSign(Boolean hasKernigSign) {
+        this.hasKernigSign = hasKernigSign;
+    }
+
+    public Boolean getHasBrudzinskiSign() {
+        return hasBrudzinskiSign;
+    }
+
+    public void setHasBrudzinskiSign(Boolean hasBrudzinskiSign) {
+        this.hasBrudzinskiSign = hasBrudzinskiSign;
+    }
 }

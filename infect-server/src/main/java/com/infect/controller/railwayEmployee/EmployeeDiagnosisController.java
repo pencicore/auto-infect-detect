@@ -8,12 +8,10 @@ import com.infect.service.*;
 import com.infect.utils.BaseContext;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @Api(tags = "健康状况，录入诊断信息相关接口")
-@Slf4j
 @RestController
 @RequestMapping("/railwayemployee/diagnosis")
 public class EmployeeDiagnosisController {
@@ -33,7 +31,7 @@ public class EmployeeDiagnosisController {
     @ApiOperation(value = "铁路工人提交诊断报告文件")
     @PostMapping("/file")
     public Result<Integer> uploadReportFile(@ModelAttribute DiagnosisReportsDTO diagnosisReportsDTO){
-        log.info("用户（铁路工人）{}提交诊断报告文件：{}",BaseContext.getCurrentId(),diagnosisReportsDTO);
+//        log.info("用户（铁路工人）{}提交诊断报告文件：{}",BaseContext.getCurrentId(),diagnosisReportsDTO);
         Integer reportId = myDiagnosisService.uploadReportFile(diagnosisReportsDTO);
         return Result.success(reportId);
     }
@@ -41,7 +39,7 @@ public class EmployeeDiagnosisController {
     @ApiOperation(value = "铁路工人提交诊断结果和所有诊断症状信息")
     @PostMapping("/result")
     public Result saveDiagnosis(@RequestBody AllDiagnosisAndResultDTO allDiagnosisAndResultDTO) {
-        log.info("用户（铁路工人）{}提交诊断结果和所有诊断症状信息：{}",BaseContext.getCurrentId(),allDiagnosisAndResultDTO);
+//        log.info("用户（铁路工人）{}提交诊断结果和所有诊断症状信息：{}",BaseContext.getCurrentId(),allDiagnosisAndResultDTO);
         myDiagnosisService.saveDiagnosis(BaseContext.getCurrentId(),allDiagnosisAndResultDTO);
         return Result.success();
     }

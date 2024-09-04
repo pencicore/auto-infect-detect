@@ -11,7 +11,6 @@ import com.infect.vo.DailyhealthstatusGetVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 
 @Api(tags = "打卡和监控功能相关接口")
-@Slf4j
+//@Slf4j
 @RestController
 @RequestMapping("/railwayemployee/checkin")
 public class EmployeeCheckInController {
@@ -33,7 +32,7 @@ public class EmployeeCheckInController {
     @ApiOperation(value = "铁路工人签到")
     @PostMapping("/checkin")
     public Result userCheckIn(@RequestBody RailwayEmployeeCheckInDTO railwayEmployeeCheckInDTO){
-        log.info("用户{}今日签到：{}", BaseContext.getCurrentId(), railwayEmployeeCheckInDTO);
+//        log.info("用户{}今日签到：{}", BaseContext.getCurrentId(), railwayEmployeeCheckInDTO);
 
         dailyhealthstatusService.userCheckIn(railwayEmployeeCheckInDTO);
         return Result.success();
@@ -44,7 +43,7 @@ public class EmployeeCheckInController {
     public Result<DailyhealthstatusGetVO> getDailyCheckIn(
             @ApiParam(value = "查询时间", required = true, example = "2024-08-29")
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date){
-        log.info("查询用户{}在{}打卡情况", BaseContext.getCurrentId(),date);
+//        log.info("查询用户{}在{}打卡情况", BaseContext.getCurrentId(),date);
 
         DailyhealthstatusGetVO dailyhealthstatusGetVO = dailyhealthstatusService.getDailyCheckIn(date);
         return Result.success(dailyhealthstatusGetVO);
@@ -53,7 +52,7 @@ public class EmployeeCheckInController {
     @ApiOperation(value = "提交/修改当月工作环境信息")
     @PostMapping("/month")
     public Result saveWorkEnvironmentInfo(@RequestBody Workenvironmentinfo workenvironmentinfo) {
-        log.info("用户{}提交当月工作环境信息：{}", BaseContext.getCurrentId(), workenvironmentinfo);
+//        log.info("用户{}提交当月工作环境信息：{}", BaseContext.getCurrentId(), workenvironmentinfo);
         workenvironmentinfoService.saveWorkEnvironmentInfo(workenvironmentinfo);
 
         return Result.success();
@@ -62,7 +61,7 @@ public class EmployeeCheckInController {
     @ApiOperation(value = "一次性提交所有症状信息")
     @PostMapping("/all")
     public Result saveAllSymptoms(@RequestBody AllSymptomsDTO allSymptomsDTO){
-        log.info("用户{}提交所有症状信息：{}", BaseContext.getCurrentId(),allSymptomsDTO);
+//        log.info("用户{}提交所有症状信息：{}", BaseContext.getCurrentId(),allSymptomsDTO);
 
         dailyhealthstatusService.saveAllSymptoms(allSymptomsDTO);
         return Result.success();

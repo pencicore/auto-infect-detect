@@ -10,7 +10,6 @@ import com.infect.service.IUserService;
 import com.infect.vo.UserLoginVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "员工相关接口")
 @RestController
 @RequestMapping("/user")
-@Slf4j
 public class UserController {
 
     @Autowired
@@ -38,7 +36,7 @@ public class UserController {
     @ApiOperation(value = "员工注册")
     @PostMapping("/register")
     public Result register(@RequestBody UserRegisterDTO userRegisterDTO){
-        log.info("用户注册：{}",userRegisterDTO);
+//        log.info("用户注册：{}",userRegisterDTO);
         if(userRegisterDTO.getIsActived() == null){
             userRegisterDTO.setIsActived(false);
         }
@@ -50,9 +48,11 @@ public class UserController {
     @ApiOperation(value = "员工登录")
     @PostMapping("/login")
     public Result<UserLoginVO> login(@RequestBody UserLoginDTO userLoginDTO){
-        log.info("用户登录：{}",userLoginDTO);
+//        log.info("用户登录：{}",userLoginDTO);
         UserLoginVO userLoginVO = userService.login(userLoginDTO);
+        if (userLoginVO == null){
+            return Result.error("用户名或密码错误");
+        }
         return Result.success(userLoginVO);
     }
-
 }

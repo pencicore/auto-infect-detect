@@ -182,15 +182,12 @@ public class DiagnosisServiceImpl implements MyDiagnosisService {
         }
         String fileType = originalFileName.substring(index + 1);
 
-        // 创建报告文件实体类
-        Diagnosisreports diagnosisreports = Diagnosisreports.builder()
-                .reportType(diagnosisReportsDTO.getReportType())
-                .fileType(fileType)
-                .fileName(originalFileName)
-                .filePath(saveDir + File.separator + uniqueFileName)
-                .uploadDate(LocalDateTime.now())
-                .build();
-
+        Diagnosisreports diagnosisreports = new Diagnosisreports();
+        diagnosisreports.setReportType(diagnosisReportsDTO.getReportType());
+        diagnosisreports.setFileType(fileType);
+        diagnosisreports.setFileName(originalFileName);
+        diagnosisreports.setFilePath(saveDir + File.separator + uniqueFileName);
+        diagnosisreports.setUploadDate(LocalDateTime.now());
         // 保存报告文件信息
         diagnosisreportsMapper.insert(diagnosisreports);
 

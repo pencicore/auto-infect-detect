@@ -73,16 +73,12 @@ public class LabTestServiceImpl implements MyLabTestService {
             throw new RuntimeException("File type extraction failed");
         }
         String fileType = originalFileName.substring(index + 1);
-
-        // 创建报告文件实体类
-        Labtestfiles labtestfiles = Labtestfiles.builder()
-                .labTestReportId(-1)
-                .specimenType(labTestFileDTO.getLabTestType())
-                .fileType(fileType)
-                .fileName(originalFileName)
-                .filePath(saveDir + File.separator + uniqueFileName)
-                .build();
-
+        Labtestfiles labtestfiles = new Labtestfiles();
+        labtestfiles.setSpecimenType(labTestFileDTO.getLabTestType());
+        labtestfiles.setFileName(originalFileName);
+        labtestfiles.setFilePath(saveDir + File.separator + uniqueFileName);
+        labtestfiles.setFileType(fileType);
+        labtestfiles.setLabTestReportId(-1);
         // 保存报告文件信息
         labtestfilesMapper.insert(labtestfiles);
 

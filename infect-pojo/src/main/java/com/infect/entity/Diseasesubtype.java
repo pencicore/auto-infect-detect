@@ -5,10 +5,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+
 
 /**
  * <p>
@@ -18,9 +15,8 @@ import lombok.experimental.Accessors;
  * @author author
  * @since 2024-08-24
  */
-@Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
+//@EqualsAndHashCode(callSuper = false)
+//@Accessors(chain = true)
 @TableName("diseasesubtype")
 @ApiModel(value="Diseasesubtype对象", description="")
 public class Diseasesubtype implements Serializable {
@@ -34,4 +30,27 @@ public class Diseasesubtype implements Serializable {
 
     private String subtypeName;
 
+    public Integer getSubtypeId() {
+        return subtypeId;
+    }
+
+    public void setSubtypeId(Integer subtypeId) {
+        this.subtypeId = subtypeId;
+    }
+
+    public Integer getDiseaseTypeId() {
+        return diseaseTypeId;
+    }
+
+    public void setDiseaseTypeId(Integer diseaseTypeId) {
+        this.diseaseTypeId = diseaseTypeId;
+    }
+
+    public String getSubtypeName() {
+        return subtypeName;
+    }
+
+    public void setSubtypeName(String subtypeName) {
+        this.subtypeName = subtypeName;
+    }
 }

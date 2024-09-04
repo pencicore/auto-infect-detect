@@ -7,14 +7,9 @@ import java.time.LocalDate;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
-@Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
+//@EqualsAndHashCode(callSuper = false)
+//@Accessors(chain = true)
 @TableName("diagnosisresults")
 @ApiModel(value = "Diagnosisresults对象", description = "诊断结果实体")
 public class Diagnosisresults implements Serializable {
@@ -81,4 +76,164 @@ public class Diagnosisresults implements Serializable {
 
     @ApiModelProperty(value = "登记分类其他详情", example = "复发病例")
     private String otherRegistrationDetails;
+
+    public Integer getDiagnosisResultsId() {
+        return diagnosisResultsId;
+    }
+
+    public void setDiagnosisResultsId(Integer diagnosisResultsId) {
+        this.diagnosisResultsId = diagnosisResultsId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public LocalDate getSubmissionTime() {
+        return submissionTime;
+    }
+
+    public void setSubmissionTime(LocalDate submissionTime) {
+        this.submissionTime = submissionTime;
+    }
+
+    public Integer getSubmissionUserId() {
+        return submissionUserId;
+    }
+
+    public void setSubmissionUserId(Integer submissionUserId) {
+        this.submissionUserId = submissionUserId;
+    }
+
+    public String getSubmissionUserName() {
+        return submissionUserName;
+    }
+
+    public void setSubmissionUserName(String submissionUserName) {
+        this.submissionUserName = submissionUserName;
+    }
+
+    public String getSubmissionUserType() {
+        return submissionUserType;
+    }
+
+    public void setSubmissionUserType(String submissionUserType) {
+        this.submissionUserType = submissionUserType;
+    }
+
+    public String getDiseaseType() {
+        return diseaseType;
+    }
+
+    public void setDiseaseType(String diseaseType) {
+        this.diseaseType = diseaseType;
+    }
+
+    public String getOtherDiseaseName() {
+        return otherDiseaseName;
+    }
+
+    public void setOtherDiseaseName(String otherDiseaseName) {
+        this.otherDiseaseName = otherDiseaseName;
+    }
+
+    public String getPlagueSubtype() {
+        return plagueSubtype;
+    }
+
+    public void setPlagueSubtype(String plagueSubtype) {
+        this.plagueSubtype = plagueSubtype;
+    }
+
+    public String getAnthraxSubtype() {
+        return anthraxSubtype;
+    }
+
+    public void setAnthraxSubtype(String anthraxSubtype) {
+        this.anthraxSubtype = anthraxSubtype;
+    }
+
+    public String getDiscoveryMethod() {
+        return discoveryMethod;
+    }
+
+    public void setDiscoveryMethod(String discoveryMethod) {
+        this.discoveryMethod = discoveryMethod;
+    }
+
+    public String getOtherDiscoveryMethodName() {
+        return otherDiscoveryMethodName;
+    }
+
+    public void setOtherDiscoveryMethodName(String otherDiscoveryMethodName) {
+        this.otherDiscoveryMethodName = otherDiscoveryMethodName;
+    }
+
+    public String getDiseaseOutcome() {
+        return diseaseOutcome;
+    }
+
+    public void setDiseaseOutcome(String diseaseOutcome) {
+        this.diseaseOutcome = diseaseOutcome;
+    }
+
+    public String getHospitalName() {
+        return hospitalName;
+    }
+
+    public void setHospitalName(String hospitalName) {
+        this.hospitalName = hospitalName;
+    }
+
+    public LocalDate getAdmissionDate() {
+        return admissionDate;
+    }
+
+    public void setAdmissionDate(LocalDate admissionDate) {
+        this.admissionDate = admissionDate;
+    }
+
+    public LocalDate getDischargeDate() {
+        return dischargeDate;
+    }
+
+    public void setDischargeDate(LocalDate dischargeDate) {
+        this.dischargeDate = dischargeDate;
+    }
+
+    public LocalDate getDeathDate() {
+        return deathDate;
+    }
+
+    public void setDeathDate(LocalDate deathDate) {
+        this.deathDate = deathDate;
+    }
+
+    public String getAdmissionSymptomsAndSigns() {
+        return admissionSymptomsAndSigns;
+    }
+
+    public void setAdmissionSymptomsAndSigns(String admissionSymptomsAndSigns) {
+        this.admissionSymptomsAndSigns = admissionSymptomsAndSigns;
+    }
+
+    public String getRegistrationClassification() {
+        return registrationClassification;
+    }
+
+    public void setRegistrationClassification(String registrationClassification) {
+        this.registrationClassification = registrationClassification;
+    }
+
+    public String getOtherRegistrationDetails() {
+        return otherRegistrationDetails;
+    }
+
+    public void setOtherRegistrationDetails(String otherRegistrationDetails) {
+        this.otherRegistrationDetails = otherRegistrationDetails;
+    }
 }

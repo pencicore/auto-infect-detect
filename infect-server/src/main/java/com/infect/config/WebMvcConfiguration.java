@@ -1,7 +1,6 @@
 package com.infect.config;
 
 import com.infect.interceptor.JwtTokenRailwayEmployeeInterceptor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,14 +16,13 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
 @Configuration
-@Slf4j
 public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 
     @Autowired
     private JwtTokenRailwayEmployeeInterceptor jwtTokenRailwayEmployeeInterceptor;
 
     protected void addInterceptors(InterceptorRegistry registry) {
-        log.info("开始注册自定义拦截器...");
+//        log.info("开始注册自定义拦截器...");
         registry.addInterceptor(jwtTokenRailwayEmployeeInterceptor)
                 .addPathPatterns("/railwayemployee/**");
     }

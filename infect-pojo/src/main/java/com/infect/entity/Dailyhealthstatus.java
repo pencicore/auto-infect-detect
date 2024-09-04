@@ -9,9 +9,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 /**
  * <p>
@@ -21,9 +18,8 @@ import lombok.experimental.Accessors;
  * @author author
  * @since 2024-08-24
  */
-@Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
+//@EqualsAndHashCode(callSuper = false)
+//@Accessors(chain = true)
 @TableName("dailyhealthstatus")
 @ApiModel(value="Dailyhealthstatus对象", description="用户每日健康状态记录")
 public class Dailyhealthstatus implements Serializable {
@@ -69,4 +65,108 @@ public class Dailyhealthstatus implements Serializable {
 
     @ApiModelProperty(value = "位置名称，如详细地址信息或地标", required = true, example = "天安门广场")
     private String locationName;
+
+    public Integer getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(Integer statusId) {
+        this.statusId = statusId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public LocalDate getCheckInDate() {
+        return checkInDate;
+    }
+
+    public void setCheckInDate(LocalDate checkInDate) {
+        this.checkInDate = checkInDate;
+    }
+
+    public LocalTime getCheckInTime() {
+        return checkInTime;
+    }
+
+    public void setCheckInTime(LocalTime checkInTime) {
+        this.checkInTime = checkInTime;
+    }
+
+    public Boolean getHealth() {
+        return isHealth;
+    }
+
+    public void setHealth(Boolean health) {
+        isHealth = health;
+    }
+
+    public String getDiseaseTypeName() {
+        return diseaseTypeName;
+    }
+
+    public void setDiseaseTypeName(String diseaseTypeName) {
+        this.diseaseTypeName = diseaseTypeName;
+    }
+
+    public String getDiagnosisDiseaseTypeName() {
+        return diagnosisDiseaseTypeName;
+    }
+
+    public void setDiagnosisDiseaseTypeName(String diagnosisDiseaseTypeName) {
+        this.diagnosisDiseaseTypeName = diagnosisDiseaseTypeName;
+    }
+
+    public BigDecimal getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(BigDecimal longitude) {
+        this.longitude = longitude;
+    }
+
+    public BigDecimal getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(BigDecimal latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCounty() {
+        return county;
+    }
+
+    public void setCounty(String county) {
+        this.county = county;
+    }
+
+    public String getLocationName() {
+        return locationName;
+    }
+
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
+    }
 }

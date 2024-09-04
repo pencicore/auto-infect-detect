@@ -6,9 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 /**
  * <p>
@@ -18,9 +15,8 @@ import lombok.experimental.Accessors;
  * @author author
  * @since 2024-08-24
  */
-@Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
+//@EqualsAndHashCode(callSuper = false)
+//@Accessors(chain = true)
 @TableName("diagnosiscomplications")
 @ApiModel(value = "DiagnosisComplications对象", description = "诊断并发症表")
 public class Diagnosiscomplications implements Serializable {
@@ -174,4 +170,396 @@ public class Diagnosiscomplications implements Serializable {
 
     @ApiModelProperty(value = "其他并发症名称", required = true, example = "其他症状描述")
     private String otherComplicationsName;
+
+    public Integer getDiagnosisComplicationId() {
+        return diagnosisComplicationId;
+    }
+
+    public void setDiagnosisComplicationId(Integer diagnosisComplicationId) {
+        this.diagnosisComplicationId = diagnosisComplicationId;
+    }
+
+    public Integer getDiagnosisResultsId() {
+        return diagnosisResultsId;
+    }
+
+    public void setDiagnosisResultsId(Integer diagnosisResultsId) {
+        this.diagnosisResultsId = diagnosisResultsId;
+    }
+
+    public Boolean getHasComplications() {
+        return hasComplications;
+    }
+
+    public void setHasComplications(Boolean hasComplications) {
+        this.hasComplications = hasComplications;
+    }
+
+    public Boolean getHasViralPneumonia() {
+        return hasViralPneumonia;
+    }
+
+    public void setHasViralPneumonia(Boolean hasViralPneumonia) {
+        this.hasViralPneumonia = hasViralPneumonia;
+    }
+
+    public Boolean getHasBacterialPneumonia() {
+        return hasBacterialPneumonia;
+    }
+
+    public void setHasBacterialPneumonia(Boolean hasBacterialPneumonia) {
+        this.hasBacterialPneumonia = hasBacterialPneumonia;
+    }
+
+    public Boolean getHasFungalPneumonia() {
+        return hasFungalPneumonia;
+    }
+
+    public void setHasFungalPneumonia(Boolean hasFungalPneumonia) {
+        this.hasFungalPneumonia = hasFungalPneumonia;
+    }
+
+    public Boolean getHasRespiratoryFailure() {
+        return hasRespiratoryFailure;
+    }
+
+    public void setHasRespiratoryFailure(Boolean hasRespiratoryFailure) {
+        this.hasRespiratoryFailure = hasRespiratoryFailure;
+    }
+
+    public Boolean getHasArds() {
+        return hasArds;
+    }
+
+    public void setHasArds(Boolean hasArds) {
+        this.hasArds = hasArds;
+    }
+
+    public Boolean getHasDic() {
+        return hasDic;
+    }
+
+    public void setHasDic(Boolean hasDic) {
+        this.hasDic = hasDic;
+    }
+
+    public Boolean getHasToxicShock() {
+        return hasToxicShock;
+    }
+
+    public void setHasToxicShock(Boolean hasToxicShock) {
+        this.hasToxicShock = hasToxicShock;
+    }
+
+    public Boolean getHasMeningitis() {
+        return hasMeningitis;
+    }
+
+    public void setHasMeningitis(Boolean hasMeningitis) {
+        this.hasMeningitis = hasMeningitis;
+    }
+
+    public Boolean getHasEncephalitis() {
+        return hasEncephalitis;
+    }
+
+    public void setHasEncephalitis(Boolean hasEncephalitis) {
+        this.hasEncephalitis = hasEncephalitis;
+    }
+
+    public Boolean getHasBacteremia() {
+        return hasBacteremia;
+    }
+
+    public void setHasBacteremia(Boolean hasBacteremia) {
+        this.hasBacteremia = hasBacteremia;
+    }
+
+    public Boolean getHasMyocarditis() {
+        return hasMyocarditis;
+    }
+
+    public void setHasMyocarditis(Boolean hasMyocarditis) {
+        this.hasMyocarditis = hasMyocarditis;
+    }
+
+    public Boolean getHasAcuteLungInjury() {
+        return hasAcuteLungInjury;
+    }
+
+    public void setHasAcuteLungInjury(Boolean hasAcuteLungInjury) {
+        this.hasAcuteLungInjury = hasAcuteLungInjury;
+    }
+
+    public Boolean getHasAcuteKidneyInjury() {
+        return hasAcuteKidneyInjury;
+    }
+
+    public void setHasAcuteKidneyInjury(Boolean hasAcuteKidneyInjury) {
+        this.hasAcuteKidneyInjury = hasAcuteKidneyInjury;
+    }
+
+    public Boolean getHasEpilepsy() {
+        return hasEpilepsy;
+    }
+
+    public void setHasEpilepsy(Boolean hasEpilepsy) {
+        this.hasEpilepsy = hasEpilepsy;
+    }
+
+    public Boolean getHasToxicHepatitis() {
+        return hasToxicHepatitis;
+    }
+
+    public void setHasToxicHepatitis(Boolean hasToxicHepatitis) {
+        this.hasToxicHepatitis = hasToxicHepatitis;
+    }
+
+    public Boolean getHasFluidOverload() {
+        return hasFluidOverload;
+    }
+
+    public void setHasFluidOverload(Boolean hasFluidOverload) {
+        this.hasFluidOverload = hasFluidOverload;
+    }
+
+    public Boolean getHasSuperinfection() {
+        return hasSuperinfection;
+    }
+
+    public void setHasSuperinfection(Boolean hasSuperinfection) {
+        this.hasSuperinfection = hasSuperinfection;
+    }
+
+    public Boolean getHasHypoxemia() {
+        return hasHypoxemia;
+    }
+
+    public void setHasHypoxemia(Boolean hasHypoxemia) {
+        this.hasHypoxemia = hasHypoxemia;
+    }
+
+    public Boolean getHasSepticShock() {
+        return hasSepticShock;
+    }
+
+    public void setHasSepticShock(Boolean hasSepticShock) {
+        this.hasSepticShock = hasSepticShock;
+    }
+
+    public Boolean getHasMetabolicAcidosis() {
+        return hasMetabolicAcidosis;
+    }
+
+    public void setHasMetabolicAcidosis(Boolean hasMetabolicAcidosis) {
+        this.hasMetabolicAcidosis = hasMetabolicAcidosis;
+    }
+
+    public Boolean getHasElectrolyteImbalance() {
+        return hasElectrolyteImbalance;
+    }
+
+    public void setHasElectrolyteImbalance(Boolean hasElectrolyteImbalance) {
+        this.hasElectrolyteImbalance = hasElectrolyteImbalance;
+    }
+
+    public Boolean getHasHemolysis() {
+        return hasHemolysis;
+    }
+
+    public void setHasHemolysis(Boolean hasHemolysis) {
+        this.hasHemolysis = hasHemolysis;
+    }
+
+    public Boolean getHasGastrointestinalBleeding() {
+        return hasGastrointestinalBleeding;
+    }
+
+    public void setHasGastrointestinalBleeding(Boolean hasGastrointestinalBleeding) {
+        this.hasGastrointestinalBleeding = hasGastrointestinalBleeding;
+    }
+
+    public Boolean getHasCoagulationDisorder() {
+        return hasCoagulationDisorder;
+    }
+
+    public void setHasCoagulationDisorder(Boolean hasCoagulationDisorder) {
+        this.hasCoagulationDisorder = hasCoagulationDisorder;
+    }
+
+    public Boolean getHasMultipleOrganFailure() {
+        return hasMultipleOrganFailure;
+    }
+
+    public void setHasMultipleOrganFailure(Boolean hasMultipleOrganFailure) {
+        this.hasMultipleOrganFailure = hasMultipleOrganFailure;
+    }
+
+    public Boolean getHasBronchitis() {
+        return hasBronchitis;
+    }
+
+    public void setHasBronchitis(Boolean hasBronchitis) {
+        this.hasBronchitis = hasBronchitis;
+    }
+
+    public Boolean getHasBronchopneumonia() {
+        return hasBronchopneumonia;
+    }
+
+    public void setHasBronchopneumonia(Boolean hasBronchopneumonia) {
+        this.hasBronchopneumonia = hasBronchopneumonia;
+    }
+
+    public Boolean getHasAnemia() {
+        return hasAnemia;
+    }
+
+    public void setHasAnemia(Boolean hasAnemia) {
+        this.hasAnemia = hasAnemia;
+    }
+
+    public Boolean getHasHepatosplenomegaly() {
+        return hasHepatosplenomegaly;
+    }
+
+    public void setHasHepatosplenomegaly(Boolean hasHepatosplenomegaly) {
+        this.hasHepatosplenomegaly = hasHepatosplenomegaly;
+    }
+
+    public Boolean getHasBrainEdema() {
+        return hasBrainEdema;
+    }
+
+    public void setHasBrainEdema(Boolean hasBrainEdema) {
+        this.hasBrainEdema = hasBrainEdema;
+    }
+
+    public Boolean getHasHus() {
+        return hasHus;
+    }
+
+    public void setHasHus(Boolean hasHus) {
+        this.hasHus = hasHus;
+    }
+
+    public Boolean getHasHematemesis() {
+        return hasHematemesis;
+    }
+
+    public void setHasHematemesis(Boolean hasHematemesis) {
+        this.hasHematemesis = hasHematemesis;
+    }
+
+    public Boolean getHasMelena() {
+        return hasMelena;
+    }
+
+    public void setHasMelena(Boolean hasMelena) {
+        this.hasMelena = hasMelena;
+    }
+
+    public Boolean getHasHemoptysis() {
+        return hasHemoptysis;
+    }
+
+    public void setHasHemoptysis(Boolean hasHemoptysis) {
+        this.hasHemoptysis = hasHemoptysis;
+    }
+
+    public Boolean getHasAbdominalHemorrhage() {
+        return hasAbdominalHemorrhage;
+    }
+
+    public void setHasAbdominalHemorrhage(Boolean hasAbdominalHemorrhage) {
+        this.hasAbdominalHemorrhage = hasAbdominalHemorrhage;
+    }
+
+    public Boolean getHasNasalBleeding() {
+        return hasNasalBleeding;
+    }
+
+    public void setHasNasalBleeding(Boolean hasNasalBleeding) {
+        this.hasNasalBleeding = hasNasalBleeding;
+    }
+
+    public Boolean getHasVaginalBleeding() {
+        return hasVaginalBleeding;
+    }
+
+    public void setHasVaginalBleeding(Boolean hasVaginalBleeding) {
+        this.hasVaginalBleeding = hasVaginalBleeding;
+    }
+
+    public Boolean getHasHypertensiveEncephalopathy() {
+        return hasHypertensiveEncephalopathy;
+    }
+
+    public void setHasHypertensiveEncephalopathy(Boolean hasHypertensiveEncephalopathy) {
+        this.hasHypertensiveEncephalopathy = hasHypertensiveEncephalopathy;
+    }
+
+    public Boolean getHasIntracranialHemorrhage() {
+        return hasIntracranialHemorrhage;
+    }
+
+    public void setHasIntracranialHemorrhage(Boolean hasIntracranialHemorrhage) {
+        this.hasIntracranialHemorrhage = hasIntracranialHemorrhage;
+    }
+
+    public Boolean getHasPulmonaryEdema() {
+        return hasPulmonaryEdema;
+    }
+
+    public void setHasPulmonaryEdema(Boolean hasPulmonaryEdema) {
+        this.hasPulmonaryEdema = hasPulmonaryEdema;
+    }
+
+    public Boolean getHasSecondaryInfection() {
+        return hasSecondaryInfection;
+    }
+
+    public void setHasSecondaryInfection(Boolean hasSecondaryInfection) {
+        this.hasSecondaryInfection = hasSecondaryInfection;
+    }
+
+    public Boolean getHasSpontaneousRenalRupture() {
+        return hasSpontaneousRenalRupture;
+    }
+
+    public void setHasSpontaneousRenalRupture(Boolean hasSpontaneousRenalRupture) {
+        this.hasSpontaneousRenalRupture = hasSpontaneousRenalRupture;
+    }
+
+    public Boolean getHasMyocardialDamage() {
+        return hasMyocardialDamage;
+    }
+
+    public void setHasMyocardialDamage(Boolean hasMyocardialDamage) {
+        this.hasMyocardialDamage = hasMyocardialDamage;
+    }
+
+    public Boolean getHasLiverDamage() {
+        return hasLiverDamage;
+    }
+
+    public void setHasLiverDamage(Boolean hasLiverDamage) {
+        this.hasLiverDamage = hasLiverDamage;
+    }
+
+    public Boolean getOtherComplications() {
+        return otherComplications;
+    }
+
+    public void setOtherComplications(Boolean otherComplications) {
+        this.otherComplications = otherComplications;
+    }
+
+    public String getOtherComplicationsName() {
+        return otherComplicationsName;
+    }
+
+    public void setOtherComplicationsName(String otherComplicationsName) {
+        this.otherComplicationsName = otherComplicationsName;
+    }
 }

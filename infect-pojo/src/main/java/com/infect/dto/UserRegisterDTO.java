@@ -2,11 +2,9 @@ package com.infect.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
 
 import java.io.Serializable;
 
-@Data
 @ApiModel(value = "信息" ,description = "员工登录时传递得数据模型")
 public class UserRegisterDTO implements Serializable {
 
@@ -25,4 +23,43 @@ public class UserRegisterDTO implements Serializable {
     @ApiModelProperty(value = "密码",example = "12345678", required = true)
     private String password;
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public Boolean getIsActived() {
+        return isActived;
+    }
+
+    public void setIsActived(Boolean actived) {
+        isActived = actived;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

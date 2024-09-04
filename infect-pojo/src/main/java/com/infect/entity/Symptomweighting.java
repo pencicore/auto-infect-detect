@@ -7,9 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+
 
 /**
  * <p>
@@ -19,9 +17,8 @@ import lombok.experimental.Accessors;
  * @author author
  * @since 2024-08-24
  */
-@Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
+//@EqualsAndHashCode(callSuper = false)
+//@Accessors(chain = true)
 @TableName("symptomweighting")
 @ApiModel(value="Symptomweighting对象", description="")
 public class Symptomweighting implements Serializable {
@@ -41,4 +38,51 @@ public class Symptomweighting implements Serializable {
 
     private BigDecimal weightScore;
 
+    public Integer getSymptomWeightingId() {
+        return symptomWeightingId;
+    }
+
+    public void setSymptomWeightingId(Integer symptomWeightingId) {
+        this.symptomWeightingId = symptomWeightingId;
+    }
+
+    public Integer getDiseaseTypeId() {
+        return diseaseTypeId;
+    }
+
+    public void setDiseaseTypeId(Integer diseaseTypeId) {
+        this.diseaseTypeId = diseaseTypeId;
+    }
+
+    public String getDiseaseTypeName() {
+        return diseaseTypeName;
+    }
+
+    public void setDiseaseTypeName(String diseaseTypeName) {
+        this.diseaseTypeName = diseaseTypeName;
+    }
+
+    public String getTableName() {
+        return tableName;
+    }
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
+
+    public String getSymptomFieldName() {
+        return symptomFieldName;
+    }
+
+    public void setSymptomFieldName(String symptomFieldName) {
+        this.symptomFieldName = symptomFieldName;
+    }
+
+    public BigDecimal getWeightScore() {
+        return weightScore;
+    }
+
+    public void setWeightScore(BigDecimal weightScore) {
+        this.weightScore = weightScore;
+    }
 }

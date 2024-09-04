@@ -106,6 +106,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public boolean changePassword(ChangePasswordDTO changePasswordDTO) {
+        if(!changePasswordDTO.getNewPassword().equals(changePasswordDTO.getConfirmPassword())){
+            return false;
+        }
         //检查原密码是否正确
         LambdaQueryWrapper<User> wrapper=new LambdaQueryWrapper<User>()
                 .eq(User::getUserId, BaseContext.getCurrentId())

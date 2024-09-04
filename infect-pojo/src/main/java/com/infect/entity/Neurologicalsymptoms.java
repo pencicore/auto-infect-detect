@@ -6,9 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+
 
 /**
  * <p>
@@ -18,9 +16,8 @@ import lombok.experimental.Accessors;
  * @author author
  * @since 2024-08-24
  */
-@Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
+//@EqualsAndHashCode(callSuper = false)
+//@Accessors(chain = true)
 @TableName("neurologicalsymptoms")
 @ApiModel(value="Neurologicalsymptoms对象", description="神经系统症状表")
 public class Neurologicalsymptoms implements Serializable {
@@ -76,4 +73,131 @@ public class Neurologicalsymptoms implements Serializable {
     @ApiModelProperty(value = "是否有听力减退", required = true, example = "false")
     private Boolean hasHearingLoss;
 
+    public Integer getNeurologicalSymptomsId() {
+        return neurologicalSymptomsId;
+    }
+
+    public void setNeurologicalSymptomsId(Integer neurologicalSymptomsId) {
+        this.neurologicalSymptomsId = neurologicalSymptomsId;
+    }
+
+    public Integer getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(Integer statusId) {
+        this.statusId = statusId;
+    }
+
+    public Boolean getHasDelirium() {
+        return hasDelirium;
+    }
+
+    public void setHasDelirium(Boolean hasDelirium) {
+        this.hasDelirium = hasDelirium;
+    }
+
+    public Boolean getHasConvulsion() {
+        return hasConvulsion;
+    }
+
+    public void setHasConvulsion(Boolean hasConvulsion) {
+        this.hasConvulsion = hasConvulsion;
+    }
+
+    public Boolean getHasDrowsiness() {
+        return hasDrowsiness;
+    }
+
+    public void setHasDrowsiness(Boolean hasDrowsiness) {
+        this.hasDrowsiness = hasDrowsiness;
+    }
+
+    public Boolean getHasComa() {
+        return hasComa;
+    }
+
+    public void setHasComa(Boolean hasComa) {
+        this.hasComa = hasComa;
+    }
+
+    public Boolean getHasStiffNeck() {
+        return hasStiffNeck;
+    }
+
+    public void setHasStiffNeck(Boolean hasStiffNeck) {
+        this.hasStiffNeck = hasStiffNeck;
+    }
+
+    public Boolean getHasRestlessness() {
+        return hasRestlessness;
+    }
+
+    public void setHasRestlessness(Boolean hasRestlessness) {
+        this.hasRestlessness = hasRestlessness;
+    }
+
+    public Boolean getHasMuscleParalysisNeckShoulder() {
+        return hasMuscleParalysisNeckShoulder;
+    }
+
+    public void setHasMuscleParalysisNeckShoulder(Boolean hasMuscleParalysisNeckShoulder) {
+        this.hasMuscleParalysisNeckShoulder = hasMuscleParalysisNeckShoulder;
+    }
+
+    public Boolean getHasMuscleParalysisLimbs() {
+        return hasMuscleParalysisLimbs;
+    }
+
+    public void setHasMuscleParalysisLimbs(Boolean hasMuscleParalysisLimbs) {
+        this.hasMuscleParalysisLimbs = hasMuscleParalysisLimbs;
+    }
+
+    public Boolean getHasSwallowingDifficulty() {
+        return hasSwallowingDifficulty;
+    }
+
+    public void setHasSwallowingDifficulty(Boolean hasSwallowingDifficulty) {
+        this.hasSwallowingDifficulty = hasSwallowingDifficulty;
+    }
+
+    public Boolean getHasSpeechDisorder() {
+        return hasSpeechDisorder;
+    }
+
+    public void setHasSpeechDisorder(Boolean hasSpeechDisorder) {
+        this.hasSpeechDisorder = hasSpeechDisorder;
+    }
+
+    public Boolean getHasConsciousnessDisorder() {
+        return hasConsciousnessDisorder;
+    }
+
+    public void setHasConsciousnessDisorder(Boolean hasConsciousnessDisorder) {
+        this.hasConsciousnessDisorder = hasConsciousnessDisorder;
+    }
+
+    public Boolean getHasDizziness() {
+        return hasDizziness;
+    }
+
+    public void setHasDizziness(Boolean hasDizziness) {
+        this.hasDizziness = hasDizziness;
+    }
+
+    public Boolean getHasTinnitus() {
+        return hasTinnitus;
+    }
+
+    public void setHasTinnitus(Boolean hasTinnitus) {
+        this.hasTinnitus = hasTinnitus;
+    }
+
+    public Boolean getHasHearingLoss() {
+        return hasHearingLoss;
+    }
+
+    public void setHasHearingLoss(Boolean hasHearingLoss) {
+        this.hasHearingLoss = hasHearingLoss;
+    }
 }

@@ -12,12 +12,10 @@ import com.infect.utils.BaseContext;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @Api(tags = "用户相关接口")
-@Slf4j
 @RestController
 @RequestMapping("/railwayemployee/user")
 public class EmployeeUserController {
@@ -31,7 +29,7 @@ public class EmployeeUserController {
     @ApiOperation(value = "提交个人信息")
     @PostMapping("/information")
     public Result submitUserProfile(@RequestBody UserInfoDTO userInfoDTO){
-        log.info("用户{}提交个人信息：{}", BaseContext.getCurrentId(),userInfoDTO);
+//        log.info("用户{}提交个人信息：{}", BaseContext.getCurrentId(),userInfoDTO);
 
         User user= BeanUtil.copyProperties(userInfoDTO,User.class);
         user.setUserId(BaseContext.getCurrentId());
@@ -44,10 +42,7 @@ public class EmployeeUserController {
     @ApiOperation(value = "修改密码")
     @PostMapping("/password")
     public Result changePassword(@RequestBody ChangePasswordDTO changePasswordDTO){
-        log.info("用户{}修改密码：{}",BaseContext.getCurrentId(),changePasswordDTO);
-
         Boolean res = userService.changePassword(changePasswordDTO);
-
         if(!res){
             return Result.error("密码修改失败");
         }
@@ -57,7 +52,7 @@ public class EmployeeUserController {
     @ApiOperation(value = "用户提交反馈")
     @PostMapping("submit")
     public Result submitUserFeedback(@RequestBody Userfeedback userfeedback){
-        log.info("用户{}提交反馈：{}", BaseContext.getCurrentId(),userfeedback);
+//        log.info("用户{}提交反馈：{}", BaseContext.getCurrentId(),userfeedback);
 
         userfeedback.setUserId(BaseContext.getCurrentId());
         userfeedbackService.save(userfeedback);

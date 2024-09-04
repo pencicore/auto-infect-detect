@@ -6,9 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+
 
 /**
  * <p>
@@ -18,9 +16,8 @@ import lombok.experimental.Accessors;
  * @author author
  * @since 2024-08-24
  */
-@Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
+//@EqualsAndHashCode(callSuper = false)
+//@Accessors(chain = true)
 @TableName("respiratorysymptoms")
 @ApiModel(value="Respiratorysymptoms对象", description="呼吸系统症状表")
 public class Respiratorysymptoms implements Serializable {
@@ -72,4 +69,124 @@ public class Respiratorysymptoms implements Serializable {
 
     @ApiModelProperty(value = "是否支气管炎或支气管肺炎", required = true, example = "true")
     private Boolean hasBronchitis;
+
+    public Integer getRespiratorySymptomsId() {
+        return respiratorySymptomsId;
+    }
+
+    public void setRespiratorySymptomsId(Integer respiratorySymptomsId) {
+        this.respiratorySymptomsId = respiratorySymptomsId;
+    }
+
+    public Integer getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(Integer statusId) {
+        this.statusId = statusId;
+    }
+
+    public Boolean getHasCough() {
+        return hasCough;
+    }
+
+    public void setHasCough(Boolean hasCough) {
+        this.hasCough = hasCough;
+    }
+
+    public Boolean getHasSputum() {
+        return hasSputum;
+    }
+
+    public void setHasSputum(Boolean hasSputum) {
+        this.hasSputum = hasSputum;
+    }
+
+    public Boolean getHasBloodySputum() {
+        return hasBloodySputum;
+    }
+
+    public void setHasBloodySputum(Boolean hasBloodySputum) {
+        this.hasBloodySputum = hasBloodySputum;
+    }
+
+    public Boolean getHasHemoptysis() {
+        return hasHemoptysis;
+    }
+
+    public void setHasHemoptysis(Boolean hasHemoptysis) {
+        this.hasHemoptysis = hasHemoptysis;
+    }
+
+    public Boolean getHasSoreThroat() {
+        return hasSoreThroat;
+    }
+
+    public void setHasSoreThroat(Boolean hasSoreThroat) {
+        this.hasSoreThroat = hasSoreThroat;
+    }
+
+    public Boolean getHasDryThroat() {
+        return hasDryThroat;
+    }
+
+    public void setHasDryThroat(Boolean hasDryThroat) {
+        this.hasDryThroat = hasDryThroat;
+    }
+
+    public Boolean getHasNasalCongestion() {
+        return hasNasalCongestion;
+    }
+
+    public void setHasNasalCongestion(Boolean hasNasalCongestion) {
+        this.hasNasalCongestion = hasNasalCongestion;
+    }
+
+    public Boolean getHasRunnyNose() {
+        return hasRunnyNose;
+    }
+
+    public void setHasRunnyNose(Boolean hasRunnyNose) {
+        this.hasRunnyNose = hasRunnyNose;
+    }
+
+    public Boolean getHasChestTightness() {
+        return hasChestTightness;
+    }
+
+    public void setHasChestTightness(Boolean hasChestTightness) {
+        this.hasChestTightness = hasChestTightness;
+    }
+
+    public Boolean getHasShortnessOfBreath() {
+        return hasShortnessOfBreath;
+    }
+
+    public void setHasShortnessOfBreath(Boolean hasShortnessOfBreath) {
+        this.hasShortnessOfBreath = hasShortnessOfBreath;
+    }
+
+    public Boolean getHasBreathingDifficulty() {
+        return hasBreathingDifficulty;
+    }
+
+    public void setHasBreathingDifficulty(Boolean hasBreathingDifficulty) {
+        this.hasBreathingDifficulty = hasBreathingDifficulty;
+    }
+
+    public Boolean getHasHoarseness() {
+        return hasHoarseness;
+    }
+
+    public void setHasHoarseness(Boolean hasHoarseness) {
+        this.hasHoarseness = hasHoarseness;
+    }
+
+    public Boolean getHasBronchitis() {
+        return hasBronchitis;
+    }
+
+    public void setHasBronchitis(Boolean hasBronchitis) {
+        this.hasBronchitis = hasBronchitis;
+    }
 }

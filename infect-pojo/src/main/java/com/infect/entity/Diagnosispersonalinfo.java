@@ -7,9 +7,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 /**
  * <p>
@@ -19,9 +16,8 @@ import lombok.experimental.Accessors;
  * @author author
  * @since 2024-08-24
  */
-@Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
+//@EqualsAndHashCode(callSuper = false)
+//@Accessors(chain = true)
 @TableName("diagnosispersonalinfo")
 @ApiModel(value = "Diagnosispersonalinfo对象", description = "诊断个人基本情况")
 public class Diagnosispersonalinfo implements Serializable {
@@ -67,4 +63,108 @@ public class Diagnosispersonalinfo implements Serializable {
 
     @ApiModelProperty(value = "血氧饱和度", required = true, example = "98.5")
     private BigDecimal bloodOxygen;
+
+    public Integer getDiagnosisPersonalInfoId() {
+        return diagnosisPersonalInfoId;
+    }
+
+    public void setDiagnosisPersonalInfoId(Integer diagnosisPersonalInfoId) {
+        this.diagnosisPersonalInfoId = diagnosisPersonalInfoId;
+    }
+
+    public Integer getDiagnosisResultsId() {
+        return diagnosisResultsId;
+    }
+
+    public void setDiagnosisResultsId(Integer diagnosisResultsId) {
+        this.diagnosisResultsId = diagnosisResultsId;
+    }
+
+    public BigDecimal getHeight() {
+        return height;
+    }
+
+    public void setHeight(BigDecimal height) {
+        this.height = height;
+    }
+
+    public BigDecimal getWeight() {
+        return weight;
+    }
+
+    public void setWeight(BigDecimal weight) {
+        this.weight = weight;
+    }
+
+    public String getBloodPressure() {
+        return bloodPressure;
+    }
+
+    public void setBloodPressure(String bloodPressure) {
+        this.bloodPressure = bloodPressure;
+    }
+
+    public BigDecimal getBloodSugarFasting() {
+        return bloodSugarFasting;
+    }
+
+    public void setBloodSugarFasting(BigDecimal bloodSugarFasting) {
+        this.bloodSugarFasting = bloodSugarFasting;
+    }
+
+    public BigDecimal getBloodSugarRandom() {
+        return bloodSugarRandom;
+    }
+
+    public void setBloodSugarRandom(BigDecimal bloodSugarRandom) {
+        this.bloodSugarRandom = bloodSugarRandom;
+    }
+
+    public BigDecimal getCholesterolTotal() {
+        return cholesterolTotal;
+    }
+
+    public void setCholesterolTotal(BigDecimal cholesterolTotal) {
+        this.cholesterolTotal = cholesterolTotal;
+    }
+
+    public BigDecimal getTriglycerides() {
+        return triglycerides;
+    }
+
+    public void setTriglycerides(BigDecimal triglycerides) {
+        this.triglycerides = triglycerides;
+    }
+
+    public BigDecimal getCholesterolLipid() {
+        return cholesterolLipid;
+    }
+
+    public void setCholesterolLipid(BigDecimal cholesterolLipid) {
+        this.cholesterolLipid = cholesterolLipid;
+    }
+
+    public BigDecimal getHdl() {
+        return hdl;
+    }
+
+    public void setHdl(BigDecimal hdl) {
+        this.hdl = hdl;
+    }
+
+    public BigDecimal getLdl() {
+        return ldl;
+    }
+
+    public void setLdl(BigDecimal ldl) {
+        this.ldl = ldl;
+    }
+
+    public BigDecimal getBloodOxygen() {
+        return bloodOxygen;
+    }
+
+    public void setBloodOxygen(BigDecimal bloodOxygen) {
+        this.bloodOxygen = bloodOxygen;
+    }
 }
