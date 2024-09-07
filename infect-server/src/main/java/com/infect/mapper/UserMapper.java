@@ -17,4 +17,20 @@ public interface UserMapper extends BaseMapper<User> {
     //根据用户id获取用户名
     @Select("select user.Name from user where UserId = #{userId}")
     String selectNameById(Integer userId);
+
+    //根据用户id获取账户状态
+    @Select("select IsActived from user where UserID = #{userId}")
+    Boolean selectIsActivedByUserId(Integer userId);
+
+    //根据id修改账号状态
+    @Select("update user set IsActived = #{status} where UserID = #{userId}")
+    void updateIsActivedByUserId(Integer userId, Boolean status);
+
+    //更具用户id获取身份证号
+    @Select("select IDNumber from user where UserID = #{userId}")
+    String selectIdNumberByUserId(Integer userId);
+
+    //根据id修改用户密码
+    @Select("update user set Password = #{password} where UserID = #{userId}")
+    void updateIdNumberByUserId(String password, Integer userId);
 }
