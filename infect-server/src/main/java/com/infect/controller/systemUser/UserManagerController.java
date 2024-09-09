@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+
 @Api(tags = "用户管理-系统管理员密码管理")
 @RestController
 @RequestMapping("/systemUser/userManager")
@@ -55,7 +57,7 @@ public class UserManagerController {
         return Result.success();
     }
 
-    @PostMapping("/addManyUser")
+    @PostMapping("/addManyUserByExcel")
     @ApiOperation(value = "根据.xlsx文件批量添加用户")
     public Result addManyUser(@RequestParam("file") MultipartFile multipartFile) throws Exception {
         userService.addManyUser(multipartFile);
@@ -79,11 +81,15 @@ public class UserManagerController {
     @GetMapping("/pageSelectUser")
     @ApiOperation(value = "根据用户类型，用户名分页查询用户列表")
     public Result<PageResult<UserSystemInfoVO>> pageSelectUser(UserPageDTO userPageDTO){
-        System.out.println(userPageDTO);
+//        System.out.println(userPageDTO);
         PageResult<UserSystemInfoVO> pageResult = userService.queryUserspage(userPageDTO);
         return Result.success(pageResult);
     }
 
-
+    @GetMapping("/queryAllUserToExcel")
+    @ApiOperation(value = "将用户列表导出为.xlsx文件")
+    public void queryAllUserToExcel(HttpServletResponse response){
+        userService.queryAllUserToExcel(response);
+    }
 
 }

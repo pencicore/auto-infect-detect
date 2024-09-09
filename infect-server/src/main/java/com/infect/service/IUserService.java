@@ -10,6 +10,8 @@ import com.infect.vo.UserLoginVO;
 import com.infect.vo.system.UserSystemInfoVO;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * <p>
  *  服务类
@@ -31,4 +33,6 @@ public interface IUserService extends IService<User> {
     void initPassword(Integer userId);
 
     PageResult<UserSystemInfoVO> queryUserspage(UserPageDTO userPageDTO);
+
+    void queryAllUserToExcel(HttpServletResponse response);
 }
