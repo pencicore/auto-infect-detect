@@ -26,7 +26,7 @@ public class Workenvironmentinfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "环境信息ID，自增", hidden = true)
+    @ApiModelProperty(value = "环境信息ID，自增", hidden = false, example = "1")
     @TableId(value = "EnvironmentID", type = IdType.AUTO)
     private Integer environmentId;
 

@@ -2,21 +2,23 @@ package com.infect.controller.systemUser;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.infect.dto.system.UserInfoDTO;
+import com.infect.dto.system.UserPageDTO;
 import com.infect.dto.system.UserPutDTO;
 import com.infect.entity.User;
+import com.infect.result.PageResult;
 import com.infect.result.Result;
 import com.infect.service.IUserService;
 import com.infect.vo.system.UserInfoVO;
+import com.infect.vo.system.UserSystemInfoVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @Api(tags = "用户管理-系统管理员密码管理")
 @RestController
-@RequestMapping("/systemuser/password")
+@RequestMapping("/systemUser/userManager")
 public class UserManagerController {
 
     @Autowired
@@ -73,5 +75,15 @@ public class UserManagerController {
         userService.initPassword(userId);
         return Result.success();
     }
+
+    @GetMapping("/pageSelectUser")
+    @ApiOperation(value = "根据用户类型，用户名分页查询用户列表")
+    public Result<PageResult<UserSystemInfoVO>> pageSelectUser(UserPageDTO userPageDTO){
+        System.out.println(userPageDTO);
+        PageResult<UserSystemInfoVO> pageResult = userService.queryUserspage(userPageDTO);
+        return Result.success(pageResult);
+    }
+
+
 
 }

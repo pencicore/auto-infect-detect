@@ -6,6 +6,7 @@ import com.infect.service.IUserService;
 import com.infect.utils.BaseContext;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,9 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Api(tags = "用户管理-系统管理员密码管理")
 @RestController
-@RequestMapping("/systemuser/password")
+@RequestMapping("/systemUser/userpPassword")
 public class UserPasswordController {
 
+    @Autowired
     private IUserService userService;
 
     @ApiOperation(value = "系统管理员修改密码")

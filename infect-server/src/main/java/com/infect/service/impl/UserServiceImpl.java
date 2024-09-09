@@ -1,19 +1,24 @@
 package com.infect.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.infect.constants.JwtConstant;
 import com.infect.dto.ChangePasswordDTO;
 import com.infect.dto.UserLoginDTO;
+import com.infect.dto.system.UserPageDTO;
 import com.infect.entity.User;
 import com.infect.enums.UserEnumConstants;
 import com.infect.mapper.UserMapper;
 import com.infect.properties.JwtProperties;
+import com.infect.result.PageResult;
 import com.infect.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.infect.utils.BaseContext;
 import com.infect.utils.ExcelUtil;
 import com.infect.utils.JwtUtil;
 import com.infect.vo.UserLoginVO;
+import com.infect.vo.system.UserSystemInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -345,5 +350,44 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         //修改用户密码为身份找号后六位
         userMapper.updateIdNumberByUserId(idNumber.substring(12), userId);
+    }
+
+    /**
+     * 分页查询用户信息
+     * @param userPageDTO
+     * @return
+     */
+    @Override
+    public PageResult<UserSystemInfoVO> queryUserspage(UserPageDTO userPageDTO) {
+        String name = userPageDTO.getName();
+        String phoneNumber = userPageDTO.getPhoneNumber();
+        String department = userPageDTO.getDepartment();
+        String specificOccupation = userPageDTO.getSpecificOccupation();
+        String userType = userPageDTO.getUserType();
+
+        //构建分页条件
+        Page<User> page = Page.of(userPageDTO.getPageNo(), userPageDTO.getPageSize());
+
+        //分页查询
+        Page<User> p = lambdaQuery()
+                .like(name!=null, User::getName, name)
+                .eq(phoneNumber!=null, User::getPhoneNumber, phoneNumber)
+                .eq(department!=null, User::getDepartment, department)
+                .eq(specificOccupation!=null, User::getSpecificOccupation, specificOccupation)
+                .eq(userType!=null, User::getUserType, userType)
+                .page(page);
+
+        //封装VO结果
+        PageResult<UserSystemInfoVO> pageResult = new PageResult<>();
+        pageResult.setTotal(p.getTotal());
+
+        List<UserSystemInfoVO> list=new ArrayList<>();
+        for (Object t:p.getRecords()) {
+            list.add(BeanUtil.copyProperties(t,UserSystemInfoVO.class));
+        }
+        pageResult.setRecords(list);
+
+        //返回
+        return pageResult;
     }
 }

@@ -9,7 +9,6 @@ import com.infect.utils.BaseContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -64,6 +63,17 @@ public class WorkenvironmentinfoServiceImpl extends ServiceImpl<Workenvironmenti
         return lambdaQuery()
                 .eq(Workenvironmentinfo::getUserId, userId)
                 .eq(Workenvironmentinfo::getYearMonth, yearMonth)
+                .one();
+    }
+
+    /**
+     * 根据id查询用户某月工作环境基本信息
+     * @return
+     */
+    @Override
+    public Workenvironmentinfo getWorkInfoById(Integer workId) {
+        return lambdaQuery()
+                .eq(Workenvironmentinfo::getEnvironmentId, workId)
                 .one();
     }
 }

@@ -16,4 +16,6 @@ public interface IWorkenvironmentinfoService extends IService<Workenvironmentinf
     void saveWorkEnvironmentInfo(Workenvironmentinfo workenvironmentinfo);
 
     Workenvironmentinfo getWorkEnvironmentInfo(Integer currentId, String yearMonth);
+
+    Workenvironmentinfo getWorkInfoById(Integer workId);
 }
