@@ -1,6 +1,7 @@
 package com.infect.config;
 
 import com.infect.interceptor.JwtTokenRailwayEmployeeInterceptor;
+import com.infect.interceptor.JwtTokenSystemUserInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,10 +22,15 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
     @Autowired
     private JwtTokenRailwayEmployeeInterceptor jwtTokenRailwayEmployeeInterceptor;
 
+    @Autowired
+    private JwtTokenSystemUserInterceptor jwtTokenSystemUserInterceptor;
+
     protected void addInterceptors(InterceptorRegistry registry) {
 //        log.info("开始注册自定义拦截器...");
         registry.addInterceptor(jwtTokenRailwayEmployeeInterceptor)
                 .addPathPatterns("/railwayemployee/**");
+//        registry.addInterceptor(jwtTokenSystemUserInterceptor)
+//                .addPathPatterns("/systemUser/**");
     }
 
     @Bean

@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 
-@Api(tags = "用户管理-系统管理员密码管理")
+@Api(tags = "用户管理-用户管理")
 @RestController
 @RequestMapping("/systemUser/userManager")
 public class UserManagerController {
