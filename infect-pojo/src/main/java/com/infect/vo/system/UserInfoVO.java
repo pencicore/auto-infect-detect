@@ -1,50 +1,31 @@
-package com.infect.entity;
+package com.infect.vo.system;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.time.LocalDate;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.time.LocalDate;
 
-/**
- * <p>
- *
- * </p>
- *
- * @author author
- * @since 2024-08-24
- */
-//@EqualsAndHashCode(callSuper = false)
-//@Accessors(chain = true)
-@TableName("user")
-@ApiModel(value="User对象", description="")
-public class User implements Serializable {
-    @TableId(value = "UserID", type = IdType.AUTO)
-    @ApiModelProperty(value = "用户ID，自增", example = "1")
-    private Integer userId;
+@ApiModel("用户导入DTO")
+public class UserInfoVO {
 
-    @ApiModelProperty(value = "用户密码", required = true, example = "password123")
-    private String password;
-
-    @ApiModelProperty(value = "用户类型", required = true, example = "铁路职工")
+    @ApiModelProperty(value = "用户类型", required = true, example = "系统管理员")
     private String userType;
 
     @ApiModelProperty(value = "是否激活", required = true, example = "true")
     private Boolean isActived;
 
-    @ApiModelProperty(value = "用户姓名", required = true, example = "张三")
+    @ApiModelProperty(value = "姓名", required = true, example = "张三")
     private String name;
 
-    @ApiModelProperty(value = "性别", example = "男")
+    @ApiModelProperty(value = "性别", required = true, example = "男")
     private String gender;
 
     @ApiModelProperty(value = "是否怀孕", example = "false")
     private Boolean isPregnant;
 
-    @ApiModelProperty(value = "怀孕周数", example = "12")
+    @ApiModelProperty(value = "怀孕周数", example = "0")
     private Integer pregnancyWeeks;
 
     @ApiModelProperty(value = "身份证号", required = true, example = "123456789012345678")
@@ -62,35 +43,26 @@ public class User implements Serializable {
     @ApiModelProperty(value = "教育水平", example = "大专/本科")
     private String educationLevel;
 
-    @ApiModelProperty(value = "在高原工作的开始日期", example = "2022-05-01")
+    @ApiModelProperty(value = "在高原工作的开始日期", example = "2015-01-01")
     private LocalDate workOnPlateauStartDate;
 
-    @ApiModelProperty(value = "部门", example = "工程技术部")
+    @ApiModelProperty(value = "部门", example = "安全部")
     private String department;
 
     @ApiModelProperty(value = "特殊职业", example = "医务人员")
     private String specificOccupation;
 
-    @ApiModelProperty(value = "具体医务人员类别", example = "医生")
+    @ApiModelProperty(value = "医务人员类型", example = "医生")
     private String medicalPersonnelType;
 
-    @ApiModelProperty(value = "其他职位名称", example = "外科医生")
+    @ApiModelProperty(value = "其他职位名称", example = "其他医务类别")
     private String otherPositionName;
 
-    @ApiModelProperty(value = "电话号码", required = true, example = "13812345678")
+    @ApiModelProperty(value = "电话号码", required = true, example = "13800138000")
     private String phoneNumber;
 
-    @ApiModelProperty(value = "其他电话号码", example = "13912345678")
+    @ApiModelProperty(value = "其他电话号码", example = "13800138001")
     private String otherPhoneNumber;
-
-    @ApiModelProperty(value = "紧急联系人姓名", required = true, example = "李四")
-    private String emergencyContactName;
-
-    @ApiModelProperty(value = "紧急联系人电话", required = true, example = "13512345678")
-    private String emergencyContactPhoneNumber;
-
-    @ApiModelProperty(value = "紧急联系人关系", required = true, example = "朋友")
-    private String emergencyContactRelation;
 
     @ApiModelProperty(value = "是否有既往病史", example = "false")
     private Boolean hasMedicalHistory;
@@ -134,7 +106,7 @@ public class User implements Serializable {
     @ApiModelProperty(value = "是否有其他癌症", example = "false")
     private Boolean hasOtherCancer;
 
-    @ApiModelProperty(value = "其他癌症名称", example = "肝癌")
+    @ApiModelProperty(value = "其他癌症名称", example = "皮肤癌")
     private String otherCancerName;
 
     @ApiModelProperty(value = "是否有严重精神障碍", example = "false")
@@ -161,7 +133,7 @@ public class User implements Serializable {
     @ApiModelProperty(value = "是否有斑疹伤寒", example = "false")
     private Boolean hasTyphus;
 
-    @ApiModelProperty(value = "是否产后6周以内", example = "false")
+    @ApiModelProperty(value = "是否为产后6周以内", example = "false")
     private Boolean isPostpartumInSixWeeks;
 
     @ApiModelProperty(value = "是否有粉尘接触史", example = "false")
@@ -170,19 +142,19 @@ public class User implements Serializable {
     @ApiModelProperty(value = "是否有其他疾病", example = "false")
     private Boolean hasOtherDiseases;
 
-    @ApiModelProperty(value = "其他疾病名称", example = "哮喘")
+    @ApiModelProperty(value = "其他疾病名称", example = "贫血")
     private String otherDiseasesName;
 
     @ApiModelProperty(value = "吸烟状态", example = "从不吸")
     private String smokingStatus;
 
-    @ApiModelProperty(value = "饮酒状态", example = "不喝酒")
+    @ApiModelProperty(value = "喝酒状态", example = "偶尔喝酒（小于3次/周）")
     private String drinkingStatus;
 
     @ApiModelProperty(value = "身高", example = "170")
     private Integer height;
 
-    @ApiModelProperty(value = "体重", example = "65")
+    @ApiModelProperty(value = "体重", example = "60")
     private Integer weight;
 
     @ApiModelProperty(value = "是否接种新冠疫苗", example = "true")
@@ -191,7 +163,7 @@ public class User implements Serializable {
     @ApiModelProperty(value = "是否接种流感疫苗", example = "true")
     private Boolean isVaccinatedForFlu;
 
-    @ApiModelProperty(value = "是否接种鼠疫疫苗", example = "true")
+    @ApiModelProperty(value = "是否接种鼠疫疫苗", example = "false")
     private Boolean isVaccinatedForPlague;
 
     @ApiModelProperty(value = "是否接种卡介苗", example = "true")
@@ -200,12 +172,19 @@ public class User implements Serializable {
     @ApiModelProperty(value = "是否接种肝炎疫苗", example = "true")
     private Boolean isVaccinatedForHepatitis;
 
-    public User() {
+    @ApiModelProperty(value = "紧急联系人姓名", example = "李四")
+    private String emergencyContactName;
+
+    @ApiModelProperty(value = "紧急联系人电话", example = "13900139000")
+    private String emergencyContactPhoneNumber;
+
+    @ApiModelProperty(value = "紧急联系人关系", example = "朋友")
+    private String emergencyContactRelation;
+
+    public UserInfoVO() {
     }
 
-    public User(Integer userId, String password, String userType, Boolean isActived, String name, String gender, Boolean isPregnant, Integer pregnancyWeeks, String idNumber, LocalDate birthDate, Integer age, String ethnicity, String educationLevel, LocalDate workOnPlateauStartDate, String department, String specificOccupation, String medicalPersonnelType, String otherPositionName, String phoneNumber, String otherPhoneNumber, Boolean hasMedicalHistory, Boolean hasHypertension, Boolean hasDiabetes, Boolean hasHyperlipidemia, Boolean hasHyperuricemia, Boolean hasCoronaryHeartDisease, Boolean hasStroke, Boolean hasOtherCardiovascularDiseases, Boolean hasAsthma, Boolean hasCOPD, Boolean hasPepticUlcer, Boolean hasMalignantTumor, Boolean hasLungCancer, Boolean hasOtherCancer, String otherCancerName, Boolean hasSevereMentalDisorders, Boolean hasTuberculosis, Boolean hasHepatitis, Boolean hasOccupationalDisease, Boolean hasChronicKidneyDisease, Boolean hasChronicLiverDisease, Boolean hasImmunodeficiency, Boolean hasTyphus, Boolean isPostpartumInSixWeeks, Boolean hasDustExposure, Boolean hasOtherDiseases, String otherDiseasesName, String smokingStatus, String drinkingStatus, Integer height, Integer weight, Boolean isVaccinatedForCOVID, Boolean isVaccinatedForFlu, Boolean isVaccinatedForPlague, Boolean isVaccinatedForBCG, Boolean isVaccinatedForHepatitis, String emergencyContactName, String emergencyContactPhoneNumber, String emergencyContactRelation) {
-        this.userId = userId;
-        this.password = password;
+    public UserInfoVO(String userType, Boolean isActived, String name, String gender, Boolean isPregnant, Integer pregnancyWeeks, String idNumber, LocalDate birthDate, Integer age, String ethnicity, String educationLevel, LocalDate workOnPlateauStartDate, String department, String specificOccupation, String medicalPersonnelType, String otherPositionName, String phoneNumber, String otherPhoneNumber, Boolean hasMedicalHistory, Boolean hasHypertension, Boolean hasDiabetes, Boolean hasHyperlipidemia, Boolean hasHyperuricemia, Boolean hasCoronaryHeartDisease, Boolean hasStroke, Boolean hasOtherCardiovascularDiseases, Boolean hasAsthma, Boolean hasCOPD, Boolean hasPepticUlcer, Boolean hasMalignantTumor, Boolean hasLungCancer, Boolean hasOtherCancer, String otherCancerName, Boolean hasSevereMentalDisorders, Boolean hasTuberculosis, Boolean hasHepatitis, Boolean hasOccupationalDisease, Boolean hasChronicKidneyDisease, Boolean hasChronicLiverDisease, Boolean hasImmunodeficiency, Boolean hasTyphus, Boolean isPostpartumInSixWeeks, Boolean hasDustExposure, Boolean hasOtherDiseases, String otherDiseasesName, String smokingStatus, String drinkingStatus, Integer height, Integer weight, Boolean isVaccinatedForCOVID, Boolean isVaccinatedForFlu, Boolean isVaccinatedForPlague, Boolean isVaccinatedForBCG, Boolean isVaccinatedForHepatitis, String emergencyContactName, String emergencyContactPhoneNumber, String emergencyContactRelation) {
         this.userType = userType;
         this.isActived = isActived;
         this.name = name;
@@ -263,38 +242,6 @@ public class User implements Serializable {
         this.emergencyContactName = emergencyContactName;
         this.emergencyContactPhoneNumber = emergencyContactPhoneNumber;
         this.emergencyContactRelation = emergencyContactRelation;
-    }
-
-    /**
-     * 获取
-     * @return userId
-     */
-    public Integer getUserId() {
-        return userId;
-    }
-
-    /**
-     * 设置
-     * @param userId
-     */
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    /**
-     * 获取
-     * @return password
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * 设置
-     * @param password
-     */
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     /**
@@ -1210,6 +1157,6 @@ public class User implements Serializable {
     }
 
     public String toString() {
-        return "User{userId = " + userId + ", password = " + password + ", userType = " + userType + ", isActived = " + isActived + ", name = " + name + ", gender = " + gender + ", isPregnant = " + isPregnant + ", pregnancyWeeks = " + pregnancyWeeks + ", idNumber = " + idNumber + ", birthDate = " + birthDate + ", age = " + age + ", ethnicity = " + ethnicity + ", educationLevel = " + educationLevel + ", workOnPlateauStartDate = " + workOnPlateauStartDate + ", department = " + department + ", specificOccupation = " + specificOccupation + ", medicalPersonnelType = " + medicalPersonnelType + ", otherPositionName = " + otherPositionName + ", phoneNumber = " + phoneNumber + ", otherPhoneNumber = " + otherPhoneNumber + ", hasMedicalHistory = " + hasMedicalHistory + ", hasHypertension = " + hasHypertension + ", hasDiabetes = " + hasDiabetes + ", hasHyperlipidemia = " + hasHyperlipidemia + ", hasHyperuricemia = " + hasHyperuricemia + ", hasCoronaryHeartDisease = " + hasCoronaryHeartDisease + ", hasStroke = " + hasStroke + ", hasOtherCardiovascularDiseases = " + hasOtherCardiovascularDiseases + ", hasAsthma = " + hasAsthma + ", hasCOPD = " + hasCOPD + ", hasPepticUlcer = " + hasPepticUlcer + ", hasMalignantTumor = " + hasMalignantTumor + ", hasLungCancer = " + hasLungCancer + ", hasOtherCancer = " + hasOtherCancer + ", otherCancerName = " + otherCancerName + ", hasSevereMentalDisorders = " + hasSevereMentalDisorders + ", hasTuberculosis = " + hasTuberculosis + ", hasHepatitis = " + hasHepatitis + ", hasOccupationalDisease = " + hasOccupationalDisease + ", hasChronicKidneyDisease = " + hasChronicKidneyDisease + ", hasChronicLiverDisease = " + hasChronicLiverDisease + ", hasImmunodeficiency = " + hasImmunodeficiency + ", hasTyphus = " + hasTyphus + ", isPostpartumInSixWeeks = " + isPostpartumInSixWeeks + ", hasDustExposure = " + hasDustExposure + ", hasOtherDiseases = " + hasOtherDiseases + ", otherDiseasesName = " + otherDiseasesName + ", smokingStatus = " + smokingStatus + ", drinkingStatus = " + drinkingStatus + ", height = " + height + ", weight = " + weight + ", isVaccinatedForCOVID = " + isVaccinatedForCOVID + ", isVaccinatedForFlu = " + isVaccinatedForFlu + ", isVaccinatedForPlague = " + isVaccinatedForPlague + ", isVaccinatedForBCG = " + isVaccinatedForBCG + ", isVaccinatedForHepatitis = " + isVaccinatedForHepatitis + ", emergencyContactName = " + emergencyContactName + ", emergencyContactPhoneNumber = " + emergencyContactPhoneNumber + ", emergencyContactRelation = " + emergencyContactRelation + "}";
+        return "UserPutDTO{userType = " + userType + ", isActived = " + isActived + ", name = " + name + ", gender = " + gender + ", isPregnant = " + isPregnant + ", pregnancyWeeks = " + pregnancyWeeks + ", idNumber = " + idNumber + ", birthDate = " + birthDate + ", age = " + age + ", ethnicity = " + ethnicity + ", educationLevel = " + educationLevel + ", workOnPlateauStartDate = " + workOnPlateauStartDate + ", department = " + department + ", specificOccupation = " + specificOccupation + ", medicalPersonnelType = " + medicalPersonnelType + ", otherPositionName = " + otherPositionName + ", phoneNumber = " + phoneNumber + ", otherPhoneNumber = " + otherPhoneNumber + ", hasMedicalHistory = " + hasMedicalHistory + ", hasHypertension = " + hasHypertension + ", hasDiabetes = " + hasDiabetes + ", hasHyperlipidemia = " + hasHyperlipidemia + ", hasHyperuricemia = " + hasHyperuricemia + ", hasCoronaryHeartDisease = " + hasCoronaryHeartDisease + ", hasStroke = " + hasStroke + ", hasOtherCardiovascularDiseases = " + hasOtherCardiovascularDiseases + ", hasAsthma = " + hasAsthma + ", hasCOPD = " + hasCOPD + ", hasPepticUlcer = " + hasPepticUlcer + ", hasMalignantTumor = " + hasMalignantTumor + ", hasLungCancer = " + hasLungCancer + ", hasOtherCancer = " + hasOtherCancer + ", otherCancerName = " + otherCancerName + ", hasSevereMentalDisorders = " + hasSevereMentalDisorders + ", hasTuberculosis = " + hasTuberculosis + ", hasHepatitis = " + hasHepatitis + ", hasOccupationalDisease = " + hasOccupationalDisease + ", hasChronicKidneyDisease = " + hasChronicKidneyDisease + ", hasChronicLiverDisease = " + hasChronicLiverDisease + ", hasImmunodeficiency = " + hasImmunodeficiency + ", hasTyphus = " + hasTyphus + ", isPostpartumInSixWeeks = " + isPostpartumInSixWeeks + ", hasDustExposure = " + hasDustExposure + ", hasOtherDiseases = " + hasOtherDiseases + ", otherDiseasesName = " + otherDiseasesName + ", smokingStatus = " + smokingStatus + ", drinkingStatus = " + drinkingStatus + ", height = " + height + ", weight = " + weight + ", isVaccinatedForCOVID = " + isVaccinatedForCOVID + ", isVaccinatedForFlu = " + isVaccinatedForFlu + ", isVaccinatedForPlague = " + isVaccinatedForPlague + ", isVaccinatedForBCG = " + isVaccinatedForBCG + ", isVaccinatedForHepatitis = " + isVaccinatedForHepatitis + ", emergencyContactName = " + emergencyContactName + ", emergencyContactPhoneNumber = " + emergencyContactPhoneNumber + ", emergencyContactRelation = " + emergencyContactRelation + "}";
     }
 }

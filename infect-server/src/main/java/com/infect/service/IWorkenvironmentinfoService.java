@@ -1,7 +1,12 @@
 package com.infect.service;
 
+import com.infect.dto.system.EnvironmentPageDTO;
 import com.infect.entity.Workenvironmentinfo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.infect.result.PageResult;
+import com.infect.vo.system.EnvironmentInfoVO;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * <p>
@@ -17,7 +22,9 @@ public interface IWorkenvironmentinfoService extends IService<Workenvironmentinf
 
     Workenvironmentinfo getWorkEnvironmentInfo(Integer currentId, String yearMonth);
 
-    void updateWorkEnvironmentInfo(Workenvironmentinfo workenvironmentinfo);
+    Workenvironmentinfo getWorkInfoById(Integer workId);
 
-    Workenvironmentinfo getEnvironmentInfo(Integer currentId, String date);
+    PageResult<EnvironmentInfoVO> pageSelectWorkEnvironment(EnvironmentPageDTO environmentPageDTO);
+
+    void queryAllWorkEnvironmentInfoToExcel(HttpServletResponse response);
 }
