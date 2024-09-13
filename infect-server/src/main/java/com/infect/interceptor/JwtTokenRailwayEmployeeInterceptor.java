@@ -1,6 +1,7 @@
 package com.infect.interceptor;
 
 import com.infect.constants.JwtConstant;
+import com.infect.enums.UserEnumConstants;
 import com.infect.properties.JwtProperties;
 import com.infect.utils.BaseContext;
 import com.infect.utils.JwtUtil;
@@ -42,16 +43,16 @@ public class JwtTokenRailwayEmployeeInterceptor implements HandlerInterceptor {
             //当前拦截到的不是动态方法，直接放行
             return true;
         }
-
         //1、从请求头中获取令牌
         String token = request.getHeader(jwtProperties.getTokenName());
-
+        if(token.startsWith(UserEnumConstants.TOKEN_PREFIX) && !token.isEmpty()){
+            token = token.substring(UserEnumConstants.TOKEN_PREFIX.length());
+        }
+        System.out.println("token"+token);
         //2、校验令牌
         try {
-//            log.info("jwt校验:{}", token);
             Claims claims = JwtUtil.parseJWT(jwtProperties.getRailwayEmployeeSecretKey(), token);
             Integer userId = Integer.valueOf(claims.get(JwtConstant.UserId).toString());
-//            log.info("当前用户id：{}", userId);
 
             /*
             2024/3/2 02-05

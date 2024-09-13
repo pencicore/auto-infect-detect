@@ -43,29 +43,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                 .eq(User::getPhoneNumber, userLoginDTO.getPhoneNumber())
                 .eq(User::getPassword,userLoginDTO.getPassword());
         User user = userMapper.selectOne(queryWrapper);
-
         //判断手机号码和密码是否正确,不正确直接返回null
         if(user==null){
             return null;
         }
-
         //判断账户是否可以使用，不能使用返回null
         if(!user.getIsActived()){
             return null;
         }
-
         //创建UserLoginVO对象，设置属性值
         UserLoginVO userLoginVO = new UserLoginVO();
         userLoginVO.setUser(user);
-
         //通过身份证号判断用户是否填写个人信息
-        if(user.getIdNumber()=="" || user.getIdNumber()==null) {
+        if("".equals(user.getIdNumber()) || user.getIdNumber()==null) {
             userLoginVO.setInformationComplete(false);
         }
         else {
             userLoginVO.setInformationComplete(true);
         }
-
         //根据不同身份，生成jwt
         String secretKey="";
         Long ttl=0L;
@@ -92,15 +87,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         else {
             return null;
         }
-
+        //生成jwt
         Map<String,Object> map=new HashMap();
         map.put(JwtConstant.UserId,user.getUserId().toString());
         String jwt= JwtUtil.createJWT(secretKey,ttl,map);
         userLoginVO.setToken(jwt);
-
         //将密码设置为空
         userLoginVO.getUser().setPassword("hello");
-
         return userLoginVO;
     }
 

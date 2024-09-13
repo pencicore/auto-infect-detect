@@ -11,6 +11,64 @@ import io.swagger.annotations.ApiModelProperty;
 @TableName("diagnosisgeneralsymptoms")
 @ApiModel(value = "DiagnosisGeneralSymptoms对象", description = "诊断全身症状表")
 public class Diagnosisgeneralsymptoms implements Serializable {
+    @Override
+    public String toString() {
+        return "Diagnosisgeneralsymptoms{" +
+                "diagnosisGeneralSymptomId=" + diagnosisGeneralSymptomId +
+                ", diagnosisResultsId=" + diagnosisResultsId +
+                ", hasFever=" + hasFever +
+                ", highestTemperature=" + highestTemperature +
+                ", feverDuration=" + feverDuration +
+                ", hasChills=" + hasChills +
+                ", hasSweating=" + hasSweating +
+                ", hasFatigue=" + hasFatigue +
+                ", hasHeadache=" + hasHeadache +
+                ", hasMusclePain=" + hasMusclePain +
+                ", hasJointPain=" + hasJointPain +
+                ", hasLymphNodeSwelling=" + hasLymphNodeSwelling +
+                ", hasLymphNodeSwellingGroin=" + hasLymphNodeSwellingGroin +
+                ", hasLymphNodeSwellingArmpit=" + hasLymphNodeSwellingArmpit +
+                ", hasLymphNodeSwellingSubclavian=" + hasLymphNodeSwellingSubclavian +
+                ", hasLymphNodeSwellingNeck=" + hasLymphNodeSwellingNeck +
+                ", hasLymphNodeSwellingElbow=" + hasLymphNodeSwellingElbow +
+                ", hasLymphNodeSwellingPopliteal=" + hasLymphNodeSwellingPopliteal +
+                ", hasCyanosis=" + hasCyanosis +
+                ", hasSubcutaneousAndMucosalBleedingSpots=" + hasSubcutaneousAndMucosalBleedingSpots +
+                ", hasSevereAnemia=" + hasSevereAnemia +
+                ", hasPainfulRedRash=" + hasPainfulRedRash +
+                ", hasBloodBlisters=" + hasBloodBlisters +
+                ", hasSkinUlcer=" + hasSkinUlcer +
+                ", hasSubcutaneousAndMucosalBleedingCavity=" + hasSubcutaneousAndMucosalBleedingCavity +
+                ", hasCongestiveOrPetechialRash=" + hasCongestiveOrPetechialRash +
+                ", hasDehydration=" + hasDehydration +
+                ", dehydrationSeverity='" + dehydrationSeverity + '\'' +
+                ", hasItchyRash=" + hasItchyRash +
+                ", itchyRashOnFingers=" + itchyRashOnFingers +
+                ", itchyRashOnBackOfHands=" + itchyRashOnBackOfHands +
+                ", itchyRashOnUpperLimbs=" + itchyRashOnUpperLimbs +
+                ", itchyRashOnLowerLimbs=" + itchyRashOnLowerLimbs +
+                ", itchyRashOnFeet=" + itchyRashOnFeet +
+                ", itchyRashOnFace=" + itchyRashOnFace +
+                ", itchyRashOnOther=" + itchyRashOnOther +
+                ", hasEdema=" + hasEdema +
+                ", hasNightSweats=" + hasNightSweats +
+                ", hasWeightLoss=" + hasWeightLoss +
+                ", hasExhaustion=" + hasExhaustion +
+                ", hasWhiteBloodCells=" + hasWhiteBloodCells +
+                ", hasBloodPressureDrop=" + hasBloodPressureDrop +
+                ", lowestBloodPressure=" + lowestBloodPressure +
+                ", hasShockSyndrome=" + hasShockSyndrome +
+                ", hasHighIntracranialPressure=" + hasHighIntracranialPressure +
+                ", hasTurbidCerebrospinalFluid=" + hasTurbidCerebrospinalFluid +
+                ", hasBleeding=" + hasBleeding +
+                ", bleedingVolume=" + bleedingVolume +
+                ", bleedingCavity='" + bleedingCavity + '\'' +
+                ", hasPlasmaLeakage=" + hasPlasmaLeakage +
+                ", hasOtherOrganDamage=" + hasOtherOrganDamage +
+                ", hasKernigSign=" + hasKernigSign +
+                ", hasBrudzinskiSign=" + hasBrudzinskiSign +
+                '}';
+    }
 
     private static final long serialVersionUID = 1L;
 

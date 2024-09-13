@@ -16,6 +16,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Api(tags = "打卡和监控功能相关接口")
 //@Slf4j
@@ -32,8 +33,6 @@ public class EmployeeCheckInController {
     @ApiOperation(value = "铁路工人签到")
     @PostMapping("/checkin")
     public Result userCheckIn(@RequestBody RailwayEmployeeCheckInDTO railwayEmployeeCheckInDTO){
-//        log.info("用户{}今日签到：{}", BaseContext.getCurrentId(), railwayEmployeeCheckInDTO);
-
         dailyhealthstatusService.userCheckIn(railwayEmployeeCheckInDTO);
         return Result.success();
     }
@@ -42,27 +41,41 @@ public class EmployeeCheckInController {
     @GetMapping("/select/daily")
     public Result<DailyhealthstatusGetVO> getDailyCheckIn(
             @ApiParam(value = "查询时间", required = true, example = "2024-08-29")
-            @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date){
-//        log.info("查询用户{}在{}打卡情况", BaseContext.getCurrentId(),date);
-
-        DailyhealthstatusGetVO dailyhealthstatusGetVO = dailyhealthstatusService.getDailyCheckIn(date);
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") String date){
+        // 创建 DateTimeFormatter 对象
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        // 解析字符串并转换为 LocalDate
+        LocalDate localDate = LocalDate.parse(date, formatter);
+        DailyhealthstatusGetVO dailyhealthstatusGetVO = dailyhealthstatusService.getDailyCheckIn(localDate);
         return Result.success(dailyhealthstatusGetVO);
     }
 
     @ApiOperation(value = "提交/修改当月工作环境信息")
     @PostMapping("/month")
     public Result saveWorkEnvironmentInfo(@RequestBody Workenvironmentinfo workenvironmentinfo) {
-//        log.info("用户{}提交当月工作环境信息：{}", BaseContext.getCurrentId(), workenvironmentinfo);
         workenvironmentinfoService.saveWorkEnvironmentInfo(workenvironmentinfo);
-
         return Result.success();
     }
+
+    @ApiOperation(value = "更新当月工作环境信息")
+    @PostMapping("/update/month")
+    public Result updateWorkEnvironmentInfo(@RequestBody Workenvironmentinfo workenvironmentinfo) {
+        workenvironmentinfoService.updateWorkEnvironmentInfo(workenvironmentinfo);
+        return Result.success();
+    }
+
+    @ApiOperation(value = "获取当月工作环境信息")
+    @PostMapping("/environment/info")
+    public Result saveRiskFactorsAndExposure(@ApiParam(value = "查询时间", required = true, example = "2024-08")
+                                                 @RequestBody String date) {
+        Workenvironmentinfo workenvironmentinfo = workenvironmentinfoService.getEnvironmentInfo(BaseContext.getCurrentId(),date);
+        return Result.success(workenvironmentinfo);
+    }
+
 
     @ApiOperation(value = "一次性提交所有症状信息")
     @PostMapping("/all")
     public Result saveAllSymptoms(@RequestBody AllSymptomsDTO allSymptomsDTO){
-//        log.info("用户{}提交所有症状信息：{}", BaseContext.getCurrentId(),allSymptomsDTO);
-
         dailyhealthstatusService.saveAllSymptoms(allSymptomsDTO);
         return Result.success();
     }

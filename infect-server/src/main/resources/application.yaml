@@ -32,7 +32,7 @@ mybatis-plus:
 
 infect:
   jwt:
-    token-name: token
+    token-name: Authorization
     railway-employee-secret-key: railway_employee
     railway-employee-ttl: 72000000123
     admin-secret-key: admin

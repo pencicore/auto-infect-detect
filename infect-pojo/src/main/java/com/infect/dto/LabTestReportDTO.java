@@ -74,4 +74,16 @@ public class LabTestReportDTO {
     public void setLabTestFileIds(List<Integer> labTestFileIds) {
         LabTestFileIds = labTestFileIds;
     }
+
+    @Override
+    public String toString() {
+        return "LabTestReportDTO{" +
+                "isVirusAntigenTestDone=" + isVirusAntigenTestDone +
+                ", isVirusNucleicAcidTestDone=" + isVirusNucleicAcidTestDone +
+                ", isVirusCultureIsolationDone=" + isVirusCultureIsolationDone +
+                ", isSerologicalTestDone=" + isSerologicalTestDone +
+                ", pathogenicTestResults='" + pathogenicTestResults + '\'' +
+                ", LabTestFileIds=" + LabTestFileIds +
+                '}';
+    }
 }

@@ -20,6 +20,20 @@ import io.swagger.annotations.ApiModelProperty;
 @TableName("diagnosisothersymptoms")
 @ApiModel(value = "Diagnosisothersymptoms对象", description = "诊断其他症状表")
 public class Diagnosisothersymptoms implements Serializable {
+    @Override
+    public String toString() {
+        return "Diagnosisothersymptoms{" +
+                "diagnosisOtherSymptomId=" + diagnosisOtherSymptomId +
+                ", diagnosisResultsId=" + diagnosisResultsId +
+                ", hasSuddenOnset=" + hasSuddenOnset +
+                ", hasRapidProgress=" + hasRapidProgress +
+                ", hasPeriodicAttack=" + hasPeriodicAttack +
+                ", hasForcedPosture=" + hasForcedPosture +
+                ", hasCalfMusclePain=" + hasCalfMusclePain +
+                ", hasOtherSymptoms=" + hasOtherSymptoms +
+                ", otherSymptomsName='" + otherSymptomsName + '\'' +
+                '}';
+    }
 
     private static final long serialVersionUID = 1L;
 

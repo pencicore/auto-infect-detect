@@ -40,4 +40,5 @@ public interface IDailyhealthstatusService extends IService<Dailyhealthstatus> {
     void saveRiskFactorsAndExposure(Riskfactorsandexposure riskFactorsAndExposure);
 
     void saveAllSymptoms(AllSymptomsDTO allSymptomsDTO);
+
 }

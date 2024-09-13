@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "infect.jwt")
 public class JwtProperties {
-
     private String tokenName;
     private String railwayEmployeeSecretKey;
     private long railwayEmployeeTtl;

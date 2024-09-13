@@ -20,6 +20,60 @@ import io.swagger.annotations.ApiModelProperty;
 @TableName("diagnosiscomplications")
 @ApiModel(value = "DiagnosisComplications对象", description = "诊断并发症表")
 public class Diagnosiscomplications implements Serializable {
+    @Override
+    public String toString() {
+        return "Diagnosiscomplications{" +
+                "diagnosisComplicationId=" + diagnosisComplicationId +
+                ", diagnosisResultsId=" + diagnosisResultsId +
+                ", hasComplications=" + hasComplications +
+                ", hasViralPneumonia=" + hasViralPneumonia +
+                ", hasBacterialPneumonia=" + hasBacterialPneumonia +
+                ", hasFungalPneumonia=" + hasFungalPneumonia +
+                ", hasRespiratoryFailure=" + hasRespiratoryFailure +
+                ", hasArds=" + hasArds +
+                ", hasDic=" + hasDic +
+                ", hasToxicShock=" + hasToxicShock +
+                ", hasMeningitis=" + hasMeningitis +
+                ", hasEncephalitis=" + hasEncephalitis +
+                ", hasBacteremia=" + hasBacteremia +
+                ", hasMyocarditis=" + hasMyocarditis +
+                ", hasAcuteLungInjury=" + hasAcuteLungInjury +
+                ", hasAcuteKidneyInjury=" + hasAcuteKidneyInjury +
+                ", hasEpilepsy=" + hasEpilepsy +
+                ", hasToxicHepatitis=" + hasToxicHepatitis +
+                ", hasFluidOverload=" + hasFluidOverload +
+                ", hasSuperinfection=" + hasSuperinfection +
+                ", hasHypoxemia=" + hasHypoxemia +
+                ", hasSepticShock=" + hasSepticShock +
+                ", hasMetabolicAcidosis=" + hasMetabolicAcidosis +
+                ", hasElectrolyteImbalance=" + hasElectrolyteImbalance +
+                ", hasHemolysis=" + hasHemolysis +
+                ", hasGastrointestinalBleeding=" + hasGastrointestinalBleeding +
+                ", hasCoagulationDisorder=" + hasCoagulationDisorder +
+                ", hasMultipleOrganFailure=" + hasMultipleOrganFailure +
+                ", hasBronchitis=" + hasBronchitis +
+                ", hasBronchopneumonia=" + hasBronchopneumonia +
+                ", hasAnemia=" + hasAnemia +
+                ", hasHepatosplenomegaly=" + hasHepatosplenomegaly +
+                ", hasBrainEdema=" + hasBrainEdema +
+                ", hasHus=" + hasHus +
+                ", hasHematemesis=" + hasHematemesis +
+                ", hasMelena=" + hasMelena +
+                ", hasHemoptysis=" + hasHemoptysis +
+                ", hasAbdominalHemorrhage=" + hasAbdominalHemorrhage +
+                ", hasNasalBleeding=" + hasNasalBleeding +
+                ", hasVaginalBleeding=" + hasVaginalBleeding +
+                ", hasHypertensiveEncephalopathy=" + hasHypertensiveEncephalopathy +
+                ", hasIntracranialHemorrhage=" + hasIntracranialHemorrhage +
+                ", hasPulmonaryEdema=" + hasPulmonaryEdema +
+                ", hasSecondaryInfection=" + hasSecondaryInfection +
+                ", hasSpontaneousRenalRupture=" + hasSpontaneousRenalRupture +
+                ", hasMyocardialDamage=" + hasMyocardialDamage +
+                ", hasLiverDamage=" + hasLiverDamage +
+                ", otherComplications=" + otherComplications +
+                ", otherComplicationsName='" + otherComplicationsName + '\'' +
+                '}';
+    }
 
     private static final long serialVersionUID = 1L;
 

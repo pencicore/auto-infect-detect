@@ -20,6 +20,27 @@ import io.swagger.annotations.ApiModelProperty;
 @TableName("diagnosisneurologicalsymptoms")
 @ApiModel(value = "Diagnosisneurologicalsymptoms对象", description = "诊断神经系统症状")
 public class Diagnosisneurologicalsymptoms implements Serializable {
+    @Override
+    public String toString() {
+        return "Diagnosisneurologicalsymptoms{" +
+                "diagnosisNeurologicalSymptomId=" + diagnosisNeurologicalSymptomId +
+                ", diagnosisResultsId=" + diagnosisResultsId +
+                ", hasDelirium=" + hasDelirium +
+                ", hasConvulsion=" + hasConvulsion +
+                ", hasDrowsiness=" + hasDrowsiness +
+                ", hasComa=" + hasComa +
+                ", hasStiffNeck=" + hasStiffNeck +
+                ", hasRestlessness=" + hasRestlessness +
+                ", hasMuscleParalysisNeckShoulder=" + hasMuscleParalysisNeckShoulder +
+                ", hasMuscleParalysisLimbs=" + hasMuscleParalysisLimbs +
+                ", hasSwallowingDifficulty=" + hasSwallowingDifficulty +
+                ", hasSpeechDisorder=" + hasSpeechDisorder +
+                ", hasConsciousnessDisorder=" + hasConsciousnessDisorder +
+                ", hasDizziness=" + hasDizziness +
+                ", hasTinnitus=" + hasTinnitus +
+                ", hasHearingLoss=" + hasHearingLoss +
+                '}';
+    }
 
     private static final long serialVersionUID = 1L;
 

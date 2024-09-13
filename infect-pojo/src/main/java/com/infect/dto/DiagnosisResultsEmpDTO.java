@@ -161,4 +161,24 @@ public class DiagnosisResultsEmpDTO {
     public void setOtherRegistrationDetails(String otherRegistrationDetails) {
         this.otherRegistrationDetails = otherRegistrationDetails;
     }
+
+    @Override
+    public String toString() {
+        return "DiagnosisResultsEmpDTO{" +
+                "diseaseType='" + diseaseType + '\'' +
+                ", otherDiseaseName='" + otherDiseaseName + '\'' +
+                ", plagueSubtype='" + plagueSubtype + '\'' +
+                ", anthraxSubtype='" + anthraxSubtype + '\'' +
+                ", discoveryMethod='" + discoveryMethod + '\'' +
+                ", otherDiscoveryMethodName='" + otherDiscoveryMethodName + '\'' +
+                ", diseaseOutcome='" + diseaseOutcome + '\'' +
+                ", hospitalName='" + hospitalName + '\'' +
+                ", admissionDate=" + admissionDate +
+                ", dischargeDate=" + dischargeDate +
+                ", deathDate=" + deathDate +
+                ", admissionSymptomsAndSigns='" + admissionSymptomsAndSigns + '\'' +
+                ", registrationClassification='" + registrationClassification + '\'' +
+                ", otherRegistrationDetails='" + otherRegistrationDetails + '\'' +
+                '}';
+    }
 }

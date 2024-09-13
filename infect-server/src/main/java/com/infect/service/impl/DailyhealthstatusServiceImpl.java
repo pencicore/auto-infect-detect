@@ -2,6 +2,7 @@ package com.infect.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.infect.dto.AllSymptomsDTO;
 import com.infect.dto.RailwayEmployeeCheckInDTO;
 import com.infect.entity.*;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 /**
  * <p>
@@ -79,10 +81,10 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
     @Override
     public void userCheckIn(RailwayEmployeeCheckInDTO railwayEmployeeCheckInDTO) {
         Dailyhealthstatus dailyhealthstatus = BeanUtil.copyProperties(railwayEmployeeCheckInDTO, Dailyhealthstatus.class);
+        dailyhealthstatus.setHealth(railwayEmployeeCheckInDTO.getHealth());
         dailyhealthstatus.setUserId(BaseContext.getCurrentId());
         dailyhealthstatus.setCheckInTime(LocalTime.now());
         dailyhealthstatus.setCheckInDate(LocalDate.now());
-
         dailyhealthstatusMapper.insert(dailyhealthstatus);
     }
 
@@ -91,7 +93,6 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
     @Override
     public void saveAllSymptoms(AllSymptomsDTO allSymptomsDTO) {
         //TODO 这里先暂时暴力处理，后期优化
-
         // 提交全身症状信息
         saveGeneralSymptoms(allSymptomsDTO.getGeneralsymptoms());
         // 提交呼吸系统症状信息
@@ -109,6 +110,8 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
         // 提交风险因素和暴露信息
         saveRiskFactorsAndExposure(allSymptomsDTO.getRiskFactorsAndExposure());
     }
+
+
 
 
     /*提交全身症状信息*/

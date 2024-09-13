@@ -1,6 +1,7 @@
 package com.infect.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.infect.entity.Workenvironmentinfo;
 import com.infect.mapper.WorkenvironmentinfoMapper;
 import com.infect.service.IWorkenvironmentinfoService;
@@ -9,10 +10,12 @@ import com.infect.utils.BaseContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 /**
  * <p>
@@ -47,7 +50,18 @@ public class WorkenvironmentinfoServiceImpl extends ServiceImpl<Workenvironmenti
         workenvironmentinfo.setUserId(BaseContext.getCurrentId());
         workenvironmentinfo.setYearMonth(yearMonth);
         workenvironmentinfo.setSubmissionTime(LocalDateTime.now());
-
+        if (workenvironmentinfo.getWorkStationAltitude() == null || workenvironmentinfo.getWorkStationAltitude() <= 0){
+            workenvironmentinfo.setWorkStationAltitude(1500);
+        }
+        if (workenvironmentinfo.getWorkStationName() == null || workenvironmentinfo.getWorkStationName().equals("")){
+            workenvironmentinfo.setWorkStationName("无");
+        }
+        if (workenvironmentinfo.getWindowOpenArea() == null){
+            workenvironmentinfo.setWindowOpenArea(BigDecimal.valueOf(12.75));
+        }
+        if (workenvironmentinfo.getVentilationCondition()== null){
+            workenvironmentinfo.setVentilationCondition("不开窗通风");
+        }
         //如果没有添加数据
         if (count == 0) {
             workenvironmentinfoMapper.insert(workenvironmentinfo);
@@ -65,5 +79,26 @@ public class WorkenvironmentinfoServiceImpl extends ServiceImpl<Workenvironmenti
                 .eq(Workenvironmentinfo::getUserId, userId)
                 .eq(Workenvironmentinfo::getYearMonth, yearMonth)
                 .one();
+    }
+
+    @Override
+    public void updateWorkEnvironmentInfo(Workenvironmentinfo workenvironmentinfo) {
+        workenvironmentinfoMapper.updateWorkEnvironment(workenvironmentinfo);
+    }
+
+    @Override
+    public Workenvironmentinfo getEnvironmentInfo(Integer currentId, String date) {
+
+        // 创建查询条件
+        QueryWrapper<Workenvironmentinfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("userId", currentId)
+                .eq("YearMonth", date);
+
+        // 执行查询
+        Workenvironmentinfo results = workenvironmentinfoMapper.selectOne(queryWrapper);
+        if (results == null){
+            return null;
+        }
+        return results;
     }
 }

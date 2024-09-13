@@ -21,6 +21,24 @@ import io.swagger.annotations.ApiModelProperty;
 @TableName("diagnosispersonalinfo")
 @ApiModel(value = "Diagnosispersonalinfo对象", description = "诊断个人基本情况")
 public class Diagnosispersonalinfo implements Serializable {
+    @Override
+    public String toString() {
+        return "Diagnosispersonalinfo{" +
+                "diagnosisPersonalInfoId=" + diagnosisPersonalInfoId +
+                ", diagnosisResultsId=" + diagnosisResultsId +
+                ", height=" + height +
+                ", weight=" + weight +
+                ", bloodPressure='" + bloodPressure + '\'' +
+                ", bloodSugarFasting=" + bloodSugarFasting +
+                ", bloodSugarRandom=" + bloodSugarRandom +
+                ", cholesterolTotal=" + cholesterolTotal +
+                ", triglycerides=" + triglycerides +
+                ", cholesterolLipid=" + cholesterolLipid +
+                ", hdl=" + hdl +
+                ", ldl=" + ldl +
+                ", bloodOxygen=" + bloodOxygen +
+                '}';
+    }
 
     private static final long serialVersionUID = 1L;
 

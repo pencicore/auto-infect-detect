@@ -19,6 +19,17 @@ import io.swagger.annotations.ApiModelProperty;
 @TableName("diagnosiscirculatorysymptoms")
 @ApiModel(value = "Diagnosiscirculatorysymptoms对象", description = "诊断循环系统症状")
 public class Diagnosiscirculatorysymptoms implements Serializable {
+    @Override
+    public String toString() {
+        return "Diagnosiscirculatorysymptoms{" +
+                "diagnosisCirculatorySymptomId=" + diagnosisCirculatorySymptomId +
+                ", diagnosisResultsId=" + diagnosisResultsId +
+                ", hasArrhythmia=" + hasArrhythmia +
+                ", hasChestPain=" + hasChestPain +
+                ", hasRapidPulse=" + hasRapidPulse +
+                ", hasPalpitation=" + hasPalpitation +
+                '}';
+    }
 
     private static final long serialVersionUID = 1L;
 

@@ -2,9 +2,10 @@ package com.infect.service;
 
 import com.infect.dto.LabTestFileDTO;
 import com.infect.dto.LabTestReportDTO;
+import com.infect.result.Result;
 
 public interface MyLabTestService {
     Integer uploadLabTestFile(LabTestFileDTO labTestFileDTO);
 
-    void saveLabTest(LabTestReportDTO labTestReportDTO, Integer userId);
+    Result saveLabTest(LabTestReportDTO labTestReportDTO, Integer userId);
 }

@@ -7,6 +7,8 @@ import com.infect.dto.UserRegisterDTO;
 import com.infect.entity.User;
 import com.infect.result.Result;
 import com.infect.service.IUserService;
+import com.infect.utils.GlobalExceptionHandler;
+import com.infect.utils.TokenBucketLimiter;
 import com.infect.vo.UserLoginVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,6 +35,14 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
+//    private final TokenBucketLimiter limiter;
+//    private final GlobalExceptionHandler globalExceptionHandler;
+//
+//    public UserController(TokenBucketLimiter limiter, GlobalExceptionHandler globalExceptionHandler) {
+//        this.limiter = limiter;
+//        this.globalExceptionHandler = globalExceptionHandler;
+//    }
+
     @ApiOperation(value = "员工注册")
     @PostMapping("/register")
     public Result register(@RequestBody UserRegisterDTO userRegisterDTO){
@@ -48,11 +58,18 @@ public class UserController {
     @ApiOperation(value = "员工登录")
     @PostMapping("/login")
     public Result<UserLoginVO> login(@RequestBody UserLoginDTO userLoginDTO){
-//        log.info("用户登录：{}",userLoginDTO);
-        UserLoginVO userLoginVO = userService.login(userLoginDTO);
-        if (userLoginVO == null){
-            return Result.error("用户名或密码错误");
+
+
+        try {
+//            globalExceptionHandler.checkRateLimit(3, 1); // 每次请求消耗 1 个令牌
+            UserLoginVO userLoginVO = userService.login(userLoginDTO);
+            if (userLoginVO == null){
+                return Result.error("用户名或密码错误");
+            }
+            return Result.success(userLoginVO);
+        } catch (Exception e) {
+            throw new RuntimeException("Rate limit exceeded");
         }
-        return Result.success(userLoginVO);
+
     }
 }

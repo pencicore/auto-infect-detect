@@ -8,6 +8,7 @@ import com.infect.entity.Labtestreport;
 import com.infect.mapper.LabtestfilesMapper;
 import com.infect.mapper.LabtestreportMapper;
 import com.infect.properties.PathProperties;
+import com.infect.result.Result;
 import com.infect.service.MyLabTestService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -35,16 +37,13 @@ public class LabTestServiceImpl implements MyLabTestService {
     public Integer uploadLabTestFile(LabTestFileDTO labTestFileDTO) {
 
         MultipartFile file = labTestFileDTO.getFile();
-
         // 跳过空文件
         if (file.isEmpty()) {
             return -1;
         }
-
         // 获取程序的当前工作目录
         //TODO 后期这里可以优化一下
         String currentDir = System.getProperty("user.dir");
-
         // 定义保存文件的目录
         String saveDir = currentDir + File.separator + pathProperties.getLabTestFilePath();
 
@@ -53,7 +52,6 @@ public class LabTestServiceImpl implements MyLabTestService {
         if (!directory.exists()) {
             directory.mkdirs(); // 创建目录
         }
-
         // 为文件名添加UUID前缀
         String originalFileName = file.getOriginalFilename();
         String fileExtension = originalFileName != null ? originalFileName.substring(originalFileName.lastIndexOf('.')) : "";
@@ -87,22 +85,32 @@ public class LabTestServiceImpl implements MyLabTestService {
 
     }
 
+
     @Override
-    public void saveLabTest(LabTestReportDTO labTestReportDTO, Integer userId) {
-        //创建LabTestReport实体类
-        Labtestreport labtestreport = BeanUtil.copyProperties(labTestReportDTO, Labtestreport.class);
-        labtestreport.setUserId(userId);
-        labtestreport.setUploadDate(LocalDate.now());
+    public Result saveLabTest(LabTestReportDTO labTestReportDTO, Integer userId) {
+        // 查询数据，获取 id 字段
+        List<Integer> labTestReportIds = labtestreportMapper.selectLabTestReportIdByUserIdAndDate(userId, LocalDate.now());
 
-        //插入数据
-        labtestreportMapper.insert(labtestreport);
+        if (labTestReportIds.isEmpty()) {
+            // 处理没有找到的情况
+            return Result.error("未找到相关数据");
+        } else if (labTestReportIds.size() > 1) {
+            return Result.error("您今日已经提交过了");
+        } else {
+            // 创建 LabTestReport 实体类
+            Labtestreport labtestreport = BeanUtil.copyProperties(labTestReportDTO, Labtestreport.class);
+            labtestreport.setUserId(userId);
+            labtestreport.setUploadDate(LocalDate.now());
 
-        //查询数据，获取id字段
-        Integer labTestReportId = labtestreportMapper.selectLabTestReportIdByUserIdAndDate(userId,LocalDate.now());
-
-        //变量文件id数组，修改文件字段中的实验室检测报告id
-        for (Integer fileId : labTestReportDTO.getLabTestFileIds()) {
-            labtestfilesMapper.updateLabTestReportIdByFileId(fileId,labTestReportId);
+            // 插入数据
+            labtestreportMapper.insert(labtestreport);
+            // 只有一个结果
+            Integer labTestReportId = labTestReportIds.get(0);
+            // 变量文件 id 数组，修改文件字段中的实验室检测报告 id
+            for (Integer fileId : labTestReportDTO.getLabTestFileIds()) {
+                labtestfilesMapper.updateLabTestReportIdByFileId(fileId, labTestReportId);
+            }
+            return Result.success();
         }
     }
 }

@@ -135,4 +135,22 @@ public class AllDiagnosisAndResultDTO {
     public void setFileIdList(List<Integer> fileIdList) {
         this.fileIdList = fileIdList;
     }
+
+    @Override
+    public String toString() {
+        return "AllDiagnosisAndResultDTO{" +
+                "diagnosisResultsEmpDTO=" + diagnosisResultsEmpDTO +
+                ", diagnosispersonalinfo=" + diagnosispersonalinfo +
+                ", diagnosisgeneralsymptoms=" + diagnosisgeneralsymptoms +
+                ", diagnosisrespiratorysymptoms=" + diagnosisrespiratorysymptoms +
+                ", diagnosisdigestivesymptoms=" + diagnosisdigestivesymptoms +
+                ", diagnosiscirculatorysymptoms=" + diagnosiscirculatorysymptoms +
+                ", diagnosisneurologicalsymptoms=" + diagnosisneurologicalsymptoms +
+                ", diagnosislocalsymptoms=" + diagnosislocalsymptoms +
+                ", diagnosisothersymptoms=" + diagnosisothersymptoms +
+                ", diagnosiscomplications=" + diagnosiscomplications +
+                ", diagnosisexaminations=" + diagnosisexaminations +
+                ", fileIdList=" + fileIdList +
+                '}';
+    }
 }

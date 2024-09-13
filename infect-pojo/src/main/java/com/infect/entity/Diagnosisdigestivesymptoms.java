@@ -22,6 +22,32 @@ import io.swagger.annotations.ApiModelProperty;
 @TableName("diagnosisdigestivesymptoms")
 @ApiModel(value = "Diagnosisdigestivesymptoms对象", description = "诊断消化系统症状")
 public class Diagnosisdigestivesymptoms implements Serializable {
+    @Override
+    public String toString() {
+        return "Diagnosisdigestivesymptoms{" +
+                "diagnosisDigestiveSymptomId=" + diagnosisDigestiveSymptomId +
+                ", diagnosisResultsId=" + diagnosisResultsId +
+                ", isDiarrheaFrequencyGEThreeTimesPerDay=" + isDiarrheaFrequencyGEThreeTimesPerDay +
+                ", diarrheaTimesPerDay=" + diarrheaTimesPerDay +
+                ", hasStoolType1=" + hasStoolType1 +
+                ", stoolType1Detail='" + stoolType1Detail + '\'' +
+                ", hasStoolType2=" + hasStoolType2 +
+                ", stoolType2Detail='" + stoolType2Detail + '\'' +
+                ", diarrheaMode='" + diarrheaMode + '\'' +
+                ", stoolAmount='" + stoolAmount + '\'' +
+                ", stoolOdor='" + stoolOdor + '\'' +
+                ", hasVomiting=" + hasVomiting +
+                ", vomitingMode='" + vomitingMode + '\'' +
+                ", hasNausea=" + hasNausea +
+                ", hasAppetiteLoss=" + hasAppetiteLoss +
+                ", hasAbdominalDistension=" + hasAbdominalDistension +
+                ", hasAbdominalPain=" + hasAbdominalPain +
+                ", hasBorborygmus=" + hasBorborygmus +
+                ", hasUpperAbdominalDiscomfort=" + hasUpperAbdominalDiscomfort +
+                ", hasConstipation=" + hasConstipation +
+                ", hasOliguriaOrAnuria=" + hasOliguriaOrAnuria +
+                '}';
+    }
 
     private static final long serialVersionUID = 1L;
 
