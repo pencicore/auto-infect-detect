@@ -6,57 +6,15 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.lang.reflect.Field;
 import java.net.URLEncoder;
 import java.util.*;
 
-import static cn.hutool.poi.excel.cell.CellUtil.getCellValue;
-
-public class ExcelUtil {    // 读取Excel文件
-
-    /**
-     * 获取Excel文件中所有数据
-     * @param file
-     * @param sheetIndex
-     * @return
-     * @throws Exception
-     */
-    public static List<List<String>> readExcelFile(MultipartFile file, Integer sheetIndex) throws Exception {
-        List<List<String>> data = new ArrayList<>();
-
-        // 获取文件输入流
-        try (InputStream inputStream = file.getInputStream()) {
-            // 创建Workbook对象
-            Workbook workbook = new XSSFWorkbook(inputStream);
-
-            // 选择第一个sheet
-            Sheet sheet = workbook.getSheetAt(sheetIndex);
-
-            // 遍历每一行
-            Iterator<Row> rowIterator = sheet.iterator();
-            while (rowIterator.hasNext()) {
-                Row row = rowIterator.next();
-                List<String> rowData = new ArrayList<>();
-
-                // 遍历每一单元格
-                Iterator<Cell> cellIterator = row.cellIterator();
-                while (cellIterator.hasNext()) {
-                    Cell cell = cellIterator.next();
-                    rowData.add(getCellValue(cell).toString());
-                }
-
-                data.add(rowData);
-            }
-        }
-        return data;
-    }
+public class ExcelPencilUtil {
 
     /**
      * 生成Excel表
@@ -72,10 +30,10 @@ public class ExcelUtil {    // 读取Excel文件
      * @param listData
      * @return
      */
-    public static XSSFWorkbook getExcelFile(HttpServletResponse response, String fileName, String filePath,
-                                            Integer readStartY, Integer readStartX, Integer total,
-                                            Integer writeStartY, Integer writeStartX,
-                                            List<List<Object>> listData){
+    public static XSSFSheet getExcel(HttpServletResponse response, String fileName, String filePath,
+                                     Integer readStartY, Integer readStartX, Integer total,
+                                     Integer writeStartY, Integer writeStartX,
+                                     List<List<Object>> listData){
         //1.根据startX和startY，读取total个元素名，按顺序保存到List集合里(忽略大小写)
         List<String> excelNameList = getExcelNameList(readStartY, readStartX, total, filePath);
 
@@ -128,7 +86,9 @@ public class ExcelUtil {    // 读取Excel文件
 
             //5.关闭资源
             in.close();
-            return excel;
+
+            //6.返回
+            return sheet;
 
         } catch (IOException e) {
             throw new RuntimeException(e);

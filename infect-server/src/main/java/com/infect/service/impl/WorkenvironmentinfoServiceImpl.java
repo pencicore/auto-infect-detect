@@ -252,6 +252,7 @@ public class WorkenvironmentinfoServiceImpl extends ServiceImpl<Workenvironmenti
             excel.write(out);
 
             //4.关闭资源
+            in.close();
             out.close();
             excel.close();
 

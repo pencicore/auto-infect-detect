@@ -19,8 +19,6 @@ import com.infect.utils.ExcelUtil;
 import com.infect.utils.JwtUtil;
 import com.infect.vo.UserLoginVO;
 import com.infect.vo.system.UserSystemInfoVO;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +28,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -422,262 +419,298 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     /**
-     * 将用户信息导出为excel表
+     * 将用户信息导出为excel表(利用工具)
      * @param response
      */
-    @Override
-    public void queryAllUserToExcel(HttpServletResponse response) {
-        //0.设置 HTTP 响应头，指定文件名和 MIME 类型
-        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        response.setHeader("Content-Disposition", "attachment; filename=\"users.xlsx\"");
+    public void queryAllUserToExcel(HttpServletResponse response){
+        String projectDir = System.getProperty("user.dir");
+        System.out.println("项目根目录: " + projectDir);
 
-        //1.查询数据库，获取用户信息
-        List<User> list = userMapper.selectList(null);
+        String filePath = projectDir + "\\infect-server\\src\\main\\resources\\templates\\个人信息导出表.xlsx";
 
-        //2.通过POI将数据写入到EXcel文件
-        InputStream in = this.getClass().getClassLoader().getResourceAsStream("templates/个人信息导出表.xlsx");
+        List<User> listUser = userMapper.selectList(null);
+        List<List<Object>> listList = new ArrayList<>();
+
+        for (Object obj:listUser) {
+            List<Object> temp = new ArrayList<>();
+            temp.add(obj);
+            listList.add(temp);
+        }
+
+        XSSFWorkbook excel = ExcelUtil.getExcelFile(response, "个人信息导出表.xlsx", filePath
+                , 1,1,52
+                ,1,1
+                ,listList);
 
         try {
-            // 根据模板创建一个新Excel文件
-            XSSFWorkbook excel = new XSSFWorkbook(in);
-            XSSFSheet sheet = excel.getSheet("个人信息导出表");
-
-            // 填充数据
-            int n = list.size();
-            XSSFRow row;
-            User user;
-
-            for (int i = 0; i < n; i++) {
-                row = sheet.getRow(i + 1);
-                // 如果当前行为空，需要先创建该行
-                if (row == null) {
-                    row = sheet.createRow(i + 1);
-                }
-                user = list.get(i);
-
-                for (int j=0; j<53;j++){
-                    if(row.getCell(j)==null){
-                        row.createCell(j);
-                    }
-                }
-
-                // 序号
-                row.createCell(0).setCellValue(i + 1);
-
-// 用户类型
-                if (user.getUserType() != null) {
-                    row.createCell(1).setCellValue(user.getUserType());
-                }
-
-// 姓名
-                if (user.getName() != null) {
-                    row.createCell(2).setCellValue(user.getName());
-                }
-
-// 性别
-                if (user.getGender() != null) {
-                    row.createCell(3).setCellValue(user.getGender());
-                }
-
-// 是否怀孕
-                row.createCell(4).setCellValue(user.getIsPregnant() != null && user.getIsPregnant() ? "是" : "否");
-
-// 怀孕周数
-                if (user.getPregnancyWeeks() != null) {
-                    row.createCell(5).setCellValue(user.getPregnancyWeeks().toString());
-                } else {
-                    row.createCell(5).setCellValue("");
-                }
-
-// 身份证号
-                if (user.getIdNumber() != null) {
-                    row.createCell(6).setCellValue(user.getIdNumber());
-                }
-
-// 年龄
-                if (user.getAge() != null) {
-                    row.createCell(7).setCellValue(user.getAge());
-                }
-
-// 民族
-                if (user.getEthnicity() != null) {
-                    row.createCell(8).setCellValue(user.getEthnicity());
-                }
-
-// 教育水平
-                if (user.getEducationLevel() != null) {
-                    row.createCell(9).setCellValue(user.getEducationLevel());
-                }
-
-// 在高原工作的开始日期
-                if (user.getWorkOnPlateauStartDate() != null) {
-                    row.createCell(10).setCellValue(user.getWorkOnPlateauStartDate().toString());
-                } else {
-                    row.createCell(10).setCellValue("");
-                }
-
-// 部门
-                if (user.getDepartment() != null) {
-                    row.createCell(11).setCellValue(user.getDepartment());
-                }
-
-// 特殊职业
-                if (user.getSpecificOccupation() != null) {
-                    row.createCell(12).setCellValue(user.getSpecificOccupation());
-                }
-
-// 医务人员类别
-                if (user.getMedicalPersonnelType() != null) {
-                    row.createCell(13).setCellValue(user.getMedicalPersonnelType());
-                }
-
-// 其他职位名称
-                if (user.getOtherPositionName() != null) {
-                    row.createCell(14).setCellValue(user.getOtherPositionName());
-                }
-
-// 电话号码
-                if (user.getPhoneNumber() != null) {
-                    row.createCell(15).setCellValue(user.getPhoneNumber());
-                }
-
-// 其他电话号码
-                if (user.getOtherPhoneNumber() != null) {
-                    row.createCell(16).setCellValue(user.getOtherPhoneNumber());
-                }
-
-// 是否有既往病史
-                row.createCell(17).setCellValue(user.getHasMedicalHistory() != null && user.getHasMedicalHistory() ? "是" : "否");
-
-// 是否有高血压
-                row.createCell(18).setCellValue(user.getHasHypertension() != null && user.getHasHypertension() ? "是" : "否");
-
-// 是否有糖尿病
-                row.createCell(19).setCellValue(user.getHasDiabetes() != null && user.getHasDiabetes() ? "是" : "否");
-
-// 是否有高脂血症
-                row.createCell(20).setCellValue(user.getHasHyperlipidemia() != null && user.getHasHyperlipidemia() ? "是" : "否");
-
-// 是否有高尿酸血症
-                row.createCell(21).setCellValue(user.getHasHyperuricemia() != null && user.getHasHyperuricemia() ? "是" : "否");
-
-// 是否有冠心病
-                row.createCell(22).setCellValue(user.getHasCoronaryHeartDisease() != null && user.getHasCoronaryHeartDisease() ? "是" : "否");
-
-// 是否有中风
-                row.createCell(23).setCellValue(user.getHasStroke() != null && user.getHasStroke() ? "是" : "否");
-
-// 是否有其他心血管疾病
-                row.createCell(24).setCellValue(user.getHasOtherCardiovascularDiseases() != null && user.getHasOtherCardiovascularDiseases() ? "是" : "否");
-
-// 是否有哮喘
-                row.createCell(25).setCellValue(user.getHasAsthma() != null && user.getHasAsthma() ? "是" : "否");
-
-// 是否有慢阻肺
-                row.createCell(26).setCellValue(user.getHasCOPD() != null && user.getHasCOPD() ? "是" : "否");
-
-// 是否有消化性溃疡
-                row.createCell(27).setCellValue(user.getHasPepticUlcer() != null && user.getHasPepticUlcer() ? "是" : "否");
-
-// 是否有恶性肿瘤
-                row.createCell(28).setCellValue(user.getHasMalignantTumor() != null && user.getHasMalignantTumor() ? "是" : "否");
-
-// 是否有肺癌
-                row.createCell(29).setCellValue(user.getHasLungCancer() != null && user.getHasLungCancer() ? "是" : "否");
-
-// 是否有其他癌症
-                row.createCell(30).setCellValue(user.getHasOtherCancer() != null && user.getHasOtherCancer() ? "是" : "否");
-
-// 其他癌症名称
-                if (user.getOtherCancerName() != null) {
-                    row.createCell(31).setCellValue(user.getOtherCancerName());
-                }
-
-// 是否有严重精神障碍
-                row.createCell(32).setCellValue(user.getHasSevereMentalDisorders() != null && user.getHasSevereMentalDisorders() ? "是" : "否");
-
-// 是否有结核病
-                row.createCell(33).setCellValue(user.getHasTuberculosis() != null && user.getHasTuberculosis() ? "是" : "否");
-
-// 是否有肝炎
-                row.createCell(34).setCellValue(user.getHasHepatitis() != null && user.getHasHepatitis() ? "是" : "否");
-
-// 是否有职业病
-                row.createCell(35).setCellValue(user.getHasOccupationalDisease() != null && user.getHasOccupationalDisease() ? "是" : "否");
-
-// 是否有慢性肾病
-                row.createCell(36).setCellValue(user.getHasChronicKidneyDisease() != null && user.getHasChronicKidneyDisease() ? "是" : "否");
-
-// 是否有慢性肝病
-                row.createCell(37).setCellValue(user.getHasChronicLiverDisease() != null && user.getHasChronicLiverDisease() ? "是" : "否");
-
-// 是否有免疫缺陷
-                row.createCell(38).setCellValue(user.getHasImmunodeficiency() != null && user.getHasImmunodeficiency() ? "是" : "否");
-
-// 是否有斑疹伤寒
-                row.createCell(39).setCellValue(user.getHasTyphus() != null && user.getHasTyphus() ? "是" : "否");
-
-// 是否在六周内产后
-                row.createCell(40).setCellValue(user.getIsPostpartumInSixWeeks() != null && user.getIsPostpartumInSixWeeks() ? "是" : "否");
-
-// 是否有粉尘暴露
-                row.createCell(41).setCellValue(user.getHasDustExposure() != null && user.getHasDustExposure() ? "是" : "否");
-
-// 是否有其他疾病
-                row.createCell(42).setCellValue(user.getHasOtherDiseases() != null && user.getHasOtherDiseases() ? "是" : "否");
-
-// 其他疾病名称
-                if (user.getOtherDiseasesName() != null) {
-                    row.createCell(43).setCellValue(user.getOtherDiseasesName());
-                }
-
-// 吸烟状态
-                if (user.getSmokingStatus() != null) {
-                    row.createCell(44).setCellValue(user.getSmokingStatus());
-                }
-
-// 饮酒状态
-                if (user.getDrinkingStatus() != null) {
-                    row.createCell(45).setCellValue(user.getDrinkingStatus());
-                }
-
-// 身高
-                if (user.getHeight() != null) {
-                    row.createCell(46).setCellValue(user.getHeight());
-                }
-
-// 体重
-                if (user.getWeight() != null) {
-                    row.createCell(47).setCellValue(user.getWeight());
-                }
-
-// 是否接种新冠疫苗
-                row.createCell(48).setCellValue(user.getIsVaccinatedForCOVID() != null && user.getIsVaccinatedForCOVID() ? "是" : "否");
-
-// 是否接种流感疫苗
-                row.createCell(49).setCellValue(user.getIsVaccinatedForFlu() != null && user.getIsVaccinatedForFlu() ? "是" : "否");
-
-// 是否接种鼠疫疫苗
-                row.createCell(50).setCellValue(user.getIsVaccinatedForPlague() != null && user.getIsVaccinatedForPlague() ? "是" : "否");
-
-// 是否接种卡介苗
-                row.createCell(51).setCellValue(user.getIsVaccinatedForBCG() != null && user.getIsVaccinatedForBCG() ? "是" : "否");
-
-// 是否接种肝炎疫苗
-                row.createCell(52).setCellValue(user.getIsVaccinatedForHepatitis() != null && user.getIsVaccinatedForHepatitis() ? "是" : "否");
-
-            }
-
-            //3.通过输出流将Excel文件下载到客户端中
-            ServletOutputStream out=response.getOutputStream();
+            ServletOutputStream out = response.getOutputStream();
             excel.write(out);
 
-            //4.关闭资源
-            out.close();
             excel.close();
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
+    //老方法
+//    /**
+//     * 将用户信息导出为excel表
+//     * @param response
+//     */
+//    @Override
+//    public void queryAllUserToExcel(HttpServletResponse response) {
+//        //0.设置 HTTP 响应头，指定文件名和 MIME 类型
+//        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+//        response.setHeader("Content-Disposition", "attachment; filename=\"users.xlsx\"");
+//
+//        //1.查询数据库，获取用户信息
+//        List<User> list = userMapper.selectList(null);
+//
+//        //2.通过POI将数据写入到EXcel文件
+//        InputStream in = this.getClass().getClassLoader().getResourceAsStream("templates/个人信息导出表.xlsx");
+//
+//        try {
+//            // 根据模板创建一个新Excel文件
+//            XSSFWorkbook excel = new XSSFWorkbook(in);
+//            XSSFSheet sheet = excel.getSheet("个人信息导出表");
+//
+//            // 填充数据
+//            int n = list.size();
+//            XSSFRow row;
+//            User user;
+//
+//            for (int i = 0; i < n; i++) {
+//                row = sheet.getRow(i + 1);
+//                // 如果当前行为空，需要先创建该行
+//                if (row == null) {
+//                    row = sheet.createRow(i + 1);
+//                }
+//                user = list.get(i);
+//
+//                for (int j=0; j<53;j++){
+//                    if(row.getCell(j)==null){
+//                        row.createCell(j);
+//                    }
+//                }
+//
+//                // 序号
+//                row.createCell(0).setCellValue(i + 1);
+//
+//// 用户类型
+//                if (user.getUserType() != null) {
+//                    row.createCell(1).setCellValue(user.getUserType());
+//                }
+//
+//// 姓名
+//                if (user.getName() != null) {
+//                    row.createCell(2).setCellValue(user.getName());
+//                }
+//
+//// 性别
+//                if (user.getGender() != null) {
+//                    row.createCell(3).setCellValue(user.getGender());
+//                }
+//
+//// 是否怀孕
+//                row.createCell(4).setCellValue(user.getIsPregnant() != null && user.getIsPregnant() ? "是" : "否");
+//
+//// 怀孕周数
+//                if (user.getPregnancyWeeks() != null) {
+//                    row.createCell(5).setCellValue(user.getPregnancyWeeks().toString());
+//                } else {
+//                    row.createCell(5).setCellValue("");
+//                }
+//
+//// 身份证号
+//                if (user.getIdNumber() != null) {
+//                    row.createCell(6).setCellValue(user.getIdNumber());
+//                }
+//
+//// 年龄
+//                if (user.getAge() != null) {
+//                    row.createCell(7).setCellValue(user.getAge());
+//                }
+//
+//// 民族
+//                if (user.getEthnicity() != null) {
+//                    row.createCell(8).setCellValue(user.getEthnicity());
+//                }
+//
+//// 教育水平
+//                if (user.getEducationLevel() != null) {
+//                    row.createCell(9).setCellValue(user.getEducationLevel());
+//                }
+//
+//// 在高原工作的开始日期
+//                if (user.getWorkOnPlateauStartDate() != null) {
+//                    row.createCell(10).setCellValue(user.getWorkOnPlateauStartDate().toString());
+//                } else {
+//                    row.createCell(10).setCellValue("");
+//                }
+//
+//// 部门
+//                if (user.getDepartment() != null) {
+//                    row.createCell(11).setCellValue(user.getDepartment());
+//                }
+//
+//// 特殊职业
+//                if (user.getSpecificOccupation() != null) {
+//                    row.createCell(12).setCellValue(user.getSpecificOccupation());
+//                }
+//
+//// 医务人员类别
+//                if (user.getMedicalPersonnelType() != null) {
+//                    row.createCell(13).setCellValue(user.getMedicalPersonnelType());
+//                }
+//
+//// 其他职位名称
+//                if (user.getOtherPositionName() != null) {
+//                    row.createCell(14).setCellValue(user.getOtherPositionName());
+//                }
+//
+//// 电话号码
+//                if (user.getPhoneNumber() != null) {
+//                    row.createCell(15).setCellValue(user.getPhoneNumber());
+//                }
+//
+//// 其他电话号码
+//                if (user.getOtherPhoneNumber() != null) {
+//                    row.createCell(16).setCellValue(user.getOtherPhoneNumber());
+//                }
+//
+//// 是否有既往病史
+//                row.createCell(17).setCellValue(user.getHasMedicalHistory() != null && user.getHasMedicalHistory() ? "是" : "否");
+//
+//// 是否有高血压
+//                row.createCell(18).setCellValue(user.getHasHypertension() != null && user.getHasHypertension() ? "是" : "否");
+//
+//// 是否有糖尿病
+//                row.createCell(19).setCellValue(user.getHasDiabetes() != null && user.getHasDiabetes() ? "是" : "否");
+//
+//// 是否有高脂血症
+//                row.createCell(20).setCellValue(user.getHasHyperlipidemia() != null && user.getHasHyperlipidemia() ? "是" : "否");
+//
+//// 是否有高尿酸血症
+//                row.createCell(21).setCellValue(user.getHasHyperuricemia() != null && user.getHasHyperuricemia() ? "是" : "否");
+//
+//// 是否有冠心病
+//                row.createCell(22).setCellValue(user.getHasCoronaryHeartDisease() != null && user.getHasCoronaryHeartDisease() ? "是" : "否");
+//
+//// 是否有中风
+//                row.createCell(23).setCellValue(user.getHasStroke() != null && user.getHasStroke() ? "是" : "否");
+//
+//// 是否有其他心血管疾病
+//                row.createCell(24).setCellValue(user.getHasOtherCardiovascularDiseases() != null && user.getHasOtherCardiovascularDiseases() ? "是" : "否");
+//
+//// 是否有哮喘
+//                row.createCell(25).setCellValue(user.getHasAsthma() != null && user.getHasAsthma() ? "是" : "否");
+//
+//// 是否有慢阻肺
+//                row.createCell(26).setCellValue(user.getHasCOPD() != null && user.getHasCOPD() ? "是" : "否");
+//
+//// 是否有消化性溃疡
+//                row.createCell(27).setCellValue(user.getHasPepticUlcer() != null && user.getHasPepticUlcer() ? "是" : "否");
+//
+//// 是否有恶性肿瘤
+//                row.createCell(28).setCellValue(user.getHasMalignantTumor() != null && user.getHasMalignantTumor() ? "是" : "否");
+//
+//// 是否有肺癌
+//                row.createCell(29).setCellValue(user.getHasLungCancer() != null && user.getHasLungCancer() ? "是" : "否");
+//
+//// 是否有其他癌症
+//                row.createCell(30).setCellValue(user.getHasOtherCancer() != null && user.getHasOtherCancer() ? "是" : "否");
+//
+//// 其他癌症名称
+//                if (user.getOtherCancerName() != null) {
+//                    row.createCell(31).setCellValue(user.getOtherCancerName());
+//                }
+//
+//// 是否有严重精神障碍
+//                row.createCell(32).setCellValue(user.getHasSevereMentalDisorders() != null && user.getHasSevereMentalDisorders() ? "是" : "否");
+//
+//// 是否有结核病
+//                row.createCell(33).setCellValue(user.getHasTuberculosis() != null && user.getHasTuberculosis() ? "是" : "否");
+//
+//// 是否有肝炎
+//                row.createCell(34).setCellValue(user.getHasHepatitis() != null && user.getHasHepatitis() ? "是" : "否");
+//
+//// 是否有职业病
+//                row.createCell(35).setCellValue(user.getHasOccupationalDisease() != null && user.getHasOccupationalDisease() ? "是" : "否");
+//
+//// 是否有慢性肾病
+//                row.createCell(36).setCellValue(user.getHasChronicKidneyDisease() != null && user.getHasChronicKidneyDisease() ? "是" : "否");
+//
+//// 是否有慢性肝病
+//                row.createCell(37).setCellValue(user.getHasChronicLiverDisease() != null && user.getHasChronicLiverDisease() ? "是" : "否");
+//
+//// 是否有免疫缺陷
+//                row.createCell(38).setCellValue(user.getHasImmunodeficiency() != null && user.getHasImmunodeficiency() ? "是" : "否");
+//
+//// 是否有斑疹伤寒
+//                row.createCell(39).setCellValue(user.getHasTyphus() != null && user.getHasTyphus() ? "是" : "否");
+//
+//// 是否在六周内产后
+//                row.createCell(40).setCellValue(user.getIsPostpartumInSixWeeks() != null && user.getIsPostpartumInSixWeeks() ? "是" : "否");
+//
+//// 是否有粉尘暴露
+//                row.createCell(41).setCellValue(user.getHasDustExposure() != null && user.getHasDustExposure() ? "是" : "否");
+//
+//// 是否有其他疾病
+//                row.createCell(42).setCellValue(user.getHasOtherDiseases() != null && user.getHasOtherDiseases() ? "是" : "否");
+//
+//// 其他疾病名称
+//                if (user.getOtherDiseasesName() != null) {
+//                    row.createCell(43).setCellValue(user.getOtherDiseasesName());
+//                }
+//
+//// 吸烟状态
+//                if (user.getSmokingStatus() != null) {
+//                    row.createCell(44).setCellValue(user.getSmokingStatus());
+//                }
+//
+//// 饮酒状态
+//                if (user.getDrinkingStatus() != null) {
+//                    row.createCell(45).setCellValue(user.getDrinkingStatus());
+//                }
+//
+//// 身高
+//                if (user.getHeight() != null) {
+//                    row.createCell(46).setCellValue(user.getHeight());
+//                }
+//
+//// 体重
+//                if (user.getWeight() != null) {
+//                    row.createCell(47).setCellValue(user.getWeight());
+//                }
+//
+//// 是否接种新冠疫苗
+//                row.createCell(48).setCellValue(user.getIsVaccinatedForCOVID() != null && user.getIsVaccinatedForCOVID() ? "是" : "否");
+//
+//// 是否接种流感疫苗
+//                row.createCell(49).setCellValue(user.getIsVaccinatedForFlu() != null && user.getIsVaccinatedForFlu() ? "是" : "否");
+//
+//// 是否接种鼠疫疫苗
+//                row.createCell(50).setCellValue(user.getIsVaccinatedForPlague() != null && user.getIsVaccinatedForPlague() ? "是" : "否");
+//
+//// 是否接种卡介苗
+//                row.createCell(51).setCellValue(user.getIsVaccinatedForBCG() != null && user.getIsVaccinatedForBCG() ? "是" : "否");
+//
+//// 是否接种肝炎疫苗
+//                row.createCell(52).setCellValue(user.getIsVaccinatedForHepatitis() != null && user.getIsVaccinatedForHepatitis() ? "是" : "否");
+//
+//            }
+//
+//            //3.通过输出流将Excel文件下载到客户端中
+//            ServletOutputStream out=response.getOutputStream();
+//            excel.write(out);
+//
+//            //4.关闭资源
+//            in.close();
+//            out.close();
+//            excel.close();
+//
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 }
