@@ -27,4 +27,8 @@ public interface IWorkenvironmentinfoService extends IService<Workenvironmentinf
     PageResult<EnvironmentInfoVO> pageSelectWorkEnvironment(EnvironmentPageDTO environmentPageDTO);
 
     void queryAllWorkEnvironmentInfoToExcel(HttpServletResponse response);
+    
+    void updateWorkEnvironmentInfo(Workenvironmentinfo workenvironmentinfo);
+
+    Workenvironmentinfo getEnvironmentInfo(Integer currentId, String date);
 }

@@ -94,7 +94,7 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
     @Override
     public void userCheckIn(RailwayEmployeeCheckInDTO railwayEmployeeCheckInDTO) {
         Dailyhealthstatus dailyhealthstatus = BeanUtil.copyProperties(railwayEmployeeCheckInDTO, Dailyhealthstatus.class);
-        dailyhealthstatus.setHealth(railwayEmployeeCheckInDTO.getHealth());
+        dailyhealthstatus.setIsHealth(railwayEmployeeCheckInDTO.getHealth());
         dailyhealthstatus.setUserId(BaseContext.getCurrentId());
         dailyhealthstatus.setCheckInTime(LocalTime.now());
         dailyhealthstatus.setCheckInDate(LocalDate.now());
