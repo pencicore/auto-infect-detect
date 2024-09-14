@@ -105,8 +105,11 @@ public class ExcelUtil {    // 读取Excel文件
 
             //4.通过POI将数据写入到Excel文件中
             int n = listData.size();
+
             for(int i=0;i<n;i++){
-                sheet.createRow(writeStartY+i);
+                sheet.createRow(writeStartY+i)
+                        .createCell(writeStartX-1)
+                        .setCellValue(i+1);
             }
 
             for(int i=0;i<total;i++){
@@ -156,13 +159,17 @@ public class ExcelUtil {    // 读取Excel文件
                 String fieldName = field.getName().toLowerCase();
                 //如果字段名重复，返回空，文件生成失败
                 if(resultMap.containsKey(fieldName)) {
-                    return null;
+//                    return null;
+                    continue;
                 }
                 resultMap.put(fieldName, new ArrayList<>());
             }
         }
 
+        //遍历每行
         for(List<Object> resource:list){
+
+            //遍历一行数据的每个对象
             for(Object obj:resource){
                 if(obj==null) continue;
                 // 获取对象的类
@@ -170,6 +177,7 @@ public class ExcelUtil {    // 读取Excel文件
                 // 获取所有声明的字段
                 Field[] fields = clazz.getDeclaredFields();
 
+                //遍历对象中所有字段
                 for (Field field:fields) {
                     //获取该字段对应的值和字段名
                     field.setAccessible(true);

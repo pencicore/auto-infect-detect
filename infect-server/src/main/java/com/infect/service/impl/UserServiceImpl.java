@@ -417,8 +417,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      */
     public void queryAllUserToExcel(HttpServletResponse response){
         String projectDir = System.getProperty("user.dir");
-        System.out.println("项目根目录: " + projectDir);
-
         String filePath = projectDir + "\\infect-server\\src\\main\\resources\\templates\\个人信息导出表.xlsx";
 
         List<User> listUser = userMapper.selectList(null);
@@ -440,6 +438,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             excel.write(out);
 
             excel.close();
+            out.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

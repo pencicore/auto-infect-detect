@@ -57,5 +57,10 @@ public class StatisticsCheckinController {
         dailyhealthstatusService.getEmployeeCheckInExcel(response);
     }
 
+    @GetMapping("getEmployeeCheckInExcelAI")
+    @ApiOperation("导出职工打卡信息导出表")
+    public void getEmployeeCheckInExcelAI(HttpServletResponse response){
+        dailyhealthstatusService.getEmployeeCheckInExcelAI(response);
+    }
 
 }

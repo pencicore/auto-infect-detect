@@ -14,13 +14,18 @@ import com.infect.service.IDailyhealthstatusService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.infect.utils.BaseContext;
 import com.infect.utils.ExcelPencilUtil;
+import com.infect.utils.ExcelUtil;
 import com.infect.vo.DailyhealthstatusGetVO;
 import com.infect.vo.system.CheckinInfoVO;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.time.LocalDate;
@@ -193,30 +198,155 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
      */
     @Override
     public void getEmployeeCheckInExcel(HttpServletResponse response) {
-        //TODO
 
+        //获取文件绝对路径
         String projectDir = System.getProperty("user.dir");
+        String fileName = projectDir + "\\infect-server\\src\\main\\resources\\templates\\职工打卡信息导出表.xlsx";
 
-        String fileName = projectDir + "\\infect-server\\src\\main\\resources\\templates\\个人信息导出表.xlsx";
-
-        List<User> listUser = userMapper.selectList(null);
+        //查询打卡信息
+        List<Dailyhealthstatus> dailyhealthstatusList = dailyhealthstatusMapper.selectList(null);
         List<List<Object>> listList = new ArrayList<>();
 
-        for (Object obj:
-                listUser) {
+        //生成二维数组
+        for (Dailyhealthstatus obj:
+                dailyhealthstatusList) {
             List<Object> temp = new ArrayList<>();
+
             temp.add(obj);
+
+            temp.add(userMapper.selectById(obj.getUserId()));
+
+            Integer statusId=obj.getStatusId();
+
+            temp.add(generalsymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Generalsymptoms>()
+                            .eq(Generalsymptoms::getStatusId,statusId)
+            ));
+            temp.add(respiratorysymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Respiratorysymptoms>()
+                            .eq(Respiratorysymptoms::getStatusId,statusId)
+            ));
+            temp.add(digestivesymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Digestivesymptoms>()
+                            .eq(Digestivesymptoms::getStatusId,statusId)
+            ));
+            temp.add(circulatorysymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Circulatorysymptoms>()
+                            .eq(Circulatorysymptoms::getStatusId,statusId)
+            ));
+            temp.add(neurologicalsymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Neurologicalsymptoms>()
+                            .eq(Neurologicalsymptoms::getStatusId,statusId)
+            ));
+            temp.add(localsymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Localsymptoms>()
+                            .eq(Localsymptoms::getStatusId, statusId)
+            ));
+            temp.add(othersymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Othersymptoms>()
+                            .eq(Othersymptoms::getStatusId,statusId)
+            ));
+            temp.add(riskfactorsandexposureMapper.selectOne(
+                    new LambdaQueryWrapper<Riskfactorsandexposure>()
+                            .eq(Riskfactorsandexposure::getStatusId, statusId)
+            ));
+
             listList.add(temp);
         }
 
-        ExcelPencilUtil.getExcel(response, "个人信息导出表.xlsx", fileName
-                , 1,1,52
-                ,1,1
-                ,listList);
+        XSSFWorkbook excel = ExcelUtil.getExcelFile(response, "职工打卡信息导出表.xlsx", fileName
+                , 2, 1, 185
+                , 2, 1
+                , listList);
+
+        try {
+            ServletOutputStream out = response.getOutputStream();
+            excel.write(out);
+
+            excel.close();
+            out.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
+    /**
+     * 导出职工打卡信息导出表（含AI预测数据
+     * @param response
+     */
+    @Override
+    public void getEmployeeCheckInExcelAI(HttpServletResponse response) {
 
+        //获取文件绝对路径
+        String projectDir = System.getProperty("user.dir");
+        String fileName = projectDir + "\\infect-server\\src\\main\\resources\\templates\\职工打卡信息导出表(含AI预测数据）.xlsx";
 
+        //查询打卡信息
+        List<Dailyhealthstatus> dailyhealthstatusList = dailyhealthstatusMapper.selectList(null);
+        List<List<Object>> listList = new ArrayList<>();
+
+        //生成二维数组
+        for (Dailyhealthstatus obj:
+                dailyhealthstatusList) {
+            List<Object> temp = new ArrayList<>();
+
+            temp.add(obj);
+
+            temp.add(userMapper.selectById(obj.getUserId()));
+
+            Integer statusId=obj.getStatusId();
+
+            temp.add(generalsymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Generalsymptoms>()
+                            .eq(Generalsymptoms::getStatusId,statusId)
+            ));
+            temp.add(respiratorysymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Respiratorysymptoms>()
+                            .eq(Respiratorysymptoms::getStatusId,statusId)
+            ));
+            temp.add(digestivesymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Digestivesymptoms>()
+                            .eq(Digestivesymptoms::getStatusId,statusId)
+            ));
+            temp.add(circulatorysymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Circulatorysymptoms>()
+                            .eq(Circulatorysymptoms::getStatusId,statusId)
+            ));
+            temp.add(neurologicalsymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Neurologicalsymptoms>()
+                            .eq(Neurologicalsymptoms::getStatusId,statusId)
+            ));
+            temp.add(localsymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Localsymptoms>()
+                            .eq(Localsymptoms::getStatusId, statusId)
+            ));
+            temp.add(othersymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Othersymptoms>()
+                            .eq(Othersymptoms::getStatusId,statusId)
+            ));
+            temp.add(riskfactorsandexposureMapper.selectOne(
+                    new LambdaQueryWrapper<Riskfactorsandexposure>()
+                            .eq(Riskfactorsandexposure::getStatusId, statusId)
+            ));
+
+            listList.add(temp);
+        }
+
+        XSSFWorkbook excel = ExcelUtil.getExcelFile(response, "职工打卡信息导出表(含AI预测数据）.xlsx", fileName
+                , 2, 1, 185
+                , 2, 1
+                , listList);
+
+        try {
+            ServletOutputStream out = response.getOutputStream();
+            excel.write(out);
+
+            excel.close();
+            out.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
     /*提交全身症状信息*/

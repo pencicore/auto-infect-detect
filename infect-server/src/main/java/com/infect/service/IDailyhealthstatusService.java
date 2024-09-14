@@ -48,4 +48,6 @@ public interface IDailyhealthstatusService extends IService<Dailyhealthstatus> {
     PageResult<CheckinInfoVO> pageSelectCheckin(CheckinPageDTO checkinPageDTO);
 
     void getEmployeeCheckInExcel(HttpServletResponse response);
+
+    void getEmployeeCheckInExcelAI(HttpServletResponse response);
 }
