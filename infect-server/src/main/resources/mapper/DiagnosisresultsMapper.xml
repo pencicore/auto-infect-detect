@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.infect.mapper.DiagnosisresultsMapper">
+
+    <select id="selectDiseaseStatisticsList" resultType="com.infect.temporary.DiseaseStatisticsInfoTemp">
+        SELECT submissionTime,diseaseType,COUNT(*) AS count FROM DiagnosisResults
+        <where>
+            <if test="sourceType == '自动诊断'">
+                AND DiscoveryMethod = 'APP填报'
+            </if>
+            <if test="sourceType == '医院诊断'">
+                AND DiscoveryMethod IN ('主动就诊','健康检查','常规监测发现')
+            </if>
+            <!-- 如果diseaseList存在，按DiseaseType过滤 -->
+            <if test="diseaseList != null and diseaseList.size() > 0">
+                AND DiseaseType IN
+                <foreach item="disease" collection="diseaseList" open="(" separator="," close=")">
+                    #{disease}
+                </foreach>
+            </if>
+            <!-- 按日期范围过滤 -->
+            <if test="dateBegin != null">
+                AND SubmissionTime &gt;= #{dateBegin}
+            </if>
+            <if test="dateEnd != null">
+                AND SubmissionTime &lt;= #{dateEnd}
+            </if>
+        </where>
+        GROUP BY SubmissionTime,DiseaseType ORDER BY SubmissionTime ASC
+    </select>
+
+</mapper>

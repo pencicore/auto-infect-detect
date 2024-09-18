@@ -1,27 +1,33 @@
 package com.infect.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.lang.Pair;
 import com.infect.dto.AllDiagnosisAndResultDTO;
 import com.infect.dto.DiagnosisReportsDTO;
+import com.infect.dto.system.DiseaseStatisticsDTO;
 import com.infect.entity.*;
 import com.infect.enums.DiagnosisResultsEnumConstants;
 import com.infect.mapper.*;
 import com.infect.properties.PathProperties;
 import com.infect.service.MyDiagnosisService;
+import com.infect.temporary.DiseaseStatisticsInfoTemp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.UUID;
+import java.util.*;
+import java.util.List;
 
 @Service
 public class DiagnosisServiceImpl implements MyDiagnosisService {
+
+    @Autowired
+    private DiseasetypeMapper diseasetypeMapper;
 
     @Autowired
     private DiagnosisresultsMapper diagnosisresultsMapper;
@@ -194,4 +200,44 @@ public class DiagnosisServiceImpl implements MyDiagnosisService {
         // 获取文件报告ID
         return diagnosisreportsMapper.selectIdByFilePath(saveDir + File.separator + uniqueFileName);
     }
+
+
+    /**
+     * 获取疾病类型列表
+     *
+     * @return
+     */
+    @Override
+    public java.util.List<String> getDiseaseList() {
+        return diseasetypeMapper.selectDiseaseTypeNameList();
+    }
+
+    /**
+     * 根据时间，数据类型，疾病类型查询数据
+     * @param diseaseStatisticsDTO
+     * @return
+     */
+    @Override
+    public Map<String, java.util.List<Pair<LocalDate, Integer>>> getDiseaseStatisticsListInfo(DiseaseStatisticsDTO diseaseStatisticsDTO) {
+        Map<String, java.util.List<Pair<LocalDate, Integer>>> map = new HashMap<>();
+
+        //查询数据库，获取每天每种疾病的患病人数
+        List<DiseaseStatisticsInfoTemp> list = diagnosisresultsMapper.selectDiseaseStatisticsList(diseaseStatisticsDTO.getSourceType(),
+                diseaseStatisticsDTO.getDiseaseList(),
+                diseaseStatisticsDTO.getDateBegin(),
+                diseaseStatisticsDTO.getDateEnd());
+
+        //初始化map集合
+        for (String s: diseaseStatisticsDTO.getDiseaseList()) {
+            map.put(s,new ArrayList<>());
+        }
+
+        //封装VO数据
+        for (DiseaseStatisticsInfoTemp temp: list) {
+            map.get(temp.getDiseaseType()).add(new Pair<>(temp.getSubmissionTime(),temp.getCount()));
+        }
+
+        return map;
+    }
+
 }

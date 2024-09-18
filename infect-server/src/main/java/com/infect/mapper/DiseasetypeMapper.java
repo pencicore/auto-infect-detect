@@ -2,6 +2,9 @@ package com.infect.mapper;
 
 import com.infect.entity.Diseasetype;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface DiseasetypeMapper extends BaseMapper<Diseasetype> {
 
+    @Select("select DiseaseTypeName from diseasetype")
+    List<String> selectDiseaseTypeNameList();
 }

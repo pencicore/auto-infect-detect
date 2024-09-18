@@ -2,9 +2,11 @@ package com.infect.mapper;
 
 import com.infect.entity.Diagnosisresults;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.infect.temporary.DiseaseStatisticsInfoTemp;
 import org.apache.ibatis.annotations.Select;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * <p>
@@ -18,4 +20,6 @@ public interface DiagnosisresultsMapper extends BaseMapper<Diagnosisresults> {
 
     @Select("select DiagnosisResultsID from diagnosisresults where UserID = #{userId} and SubmissionTime = #{nowTime}")
     Integer selectIdByUserIdAndTime(Integer userId, LocalDate nowTime);
+
+    List<DiseaseStatisticsInfoTemp> selectDiseaseStatisticsList(String sourceType, List<String> diseaseList, LocalDate dateBegin, LocalDate dateEnd);
 }
