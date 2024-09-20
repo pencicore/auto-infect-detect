@@ -6,12 +6,16 @@ import com.infect.dto.system.CheckinPageDTO;
 import com.infect.entity.*;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.infect.result.PageResult;
+import com.infect.temporary.DiseaseNameNumberPairTemp;
+import com.infect.temporary.StationTemp;
 import com.infect.vo.DailyhealthstatusGetVO;
+import com.infect.vo.system.CheckinDailyNumberVO;
+import com.infect.vo.system.CheckinInfoStatisticsVO;
 import com.infect.vo.system.CheckinInfoVO;
 
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -50,4 +54,12 @@ public interface IDailyhealthstatusService extends IService<Dailyhealthstatus> {
     void getEmployeeCheckInExcel(HttpServletResponse response);
 
     void getEmployeeCheckInExcelAI(HttpServletResponse response);
+
+    List<DiseaseNameNumberPairTemp> getDiseaseDataToday();
+
+    List<StationTemp> getUserStation();
+
+    List<CheckinInfoStatisticsVO> getChickInInfoByText(String phoneNumber, Integer infoNumber);
+
+    List<CheckinDailyNumberVO> getCheckInDailyNumber(LocalDate startDate, LocalDate endDate);
 }

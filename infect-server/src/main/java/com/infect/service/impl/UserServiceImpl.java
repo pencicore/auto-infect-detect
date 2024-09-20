@@ -7,8 +7,10 @@ import com.infect.constants.JwtConstant;
 import com.infect.dto.ChangePasswordDTO;
 import com.infect.dto.UserLoginDTO;
 import com.infect.dto.system.UserPageDTO;
+import com.infect.entity.Dailyhealthstatus;
 import com.infect.entity.User;
 import com.infect.enums.UserEnumConstants;
+import com.infect.mapper.DailyhealthstatusMapper;
 import com.infect.mapper.UserMapper;
 import com.infect.properties.JwtProperties;
 import com.infect.result.PageResult;
@@ -18,6 +20,7 @@ import com.infect.utils.BaseContext;
 import com.infect.utils.ExcelUtil;
 import com.infect.utils.JwtUtil;
 import com.infect.vo.UserLoginVO;
+import com.infect.vo.system.ImportantUserInfoVO;
 import com.infect.vo.system.UserSystemInfoVO;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +50,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private DailyhealthstatusMapper dailyhealthstatusMapper;
 
     @Autowired
     private JwtProperties jwtProperties;
@@ -442,6 +448,36 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * 获取重点人员跟踪信息
+     * @return
+     */
+    @Override
+    public List<ImportantUserInfoVO> getImportantUserInfo() {
+        //查询最近3天有患病的用户id
+        List<Integer> ids = dailyhealthstatusMapper.selectUerIdByIsHealth(
+                LocalDate.now().minusDays(3),
+                LocalDate.now());
+
+        //根据id查询用户部分信息
+        List<ImportantUserInfoVO> list = userMapper.selectNameAndDepartmentByIds(ids);
+
+        //根据id查询今日签到部分信息
+        for (ImportantUserInfoVO vo:list) {
+            Dailyhealthstatus dailyhealthstatus = dailyhealthstatusMapper.selectOne(
+                    new LambdaQueryWrapper<Dailyhealthstatus>()
+                            .eq(Dailyhealthstatus::getUserId, vo.getUserId())
+                            .eq(Dailyhealthstatus::getCheckInDate, LocalDate.now())
+            );
+
+            if(dailyhealthstatus!=null){
+                BeanUtil.copyProperties(dailyhealthstatus,vo);
+            }
+        }
+
+        return list;
     }
 
     //老方法

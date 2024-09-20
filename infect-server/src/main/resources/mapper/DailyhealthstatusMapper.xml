@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.infect.mapper.DailyhealthstatusMapper">
+
+    <select id="selectDiseaseNumber" resultType="com.infect.temporary.DiseaseNameNumberPairTemp">
+        SELECT DiagnosisDiseaseTypeName, COUNT(*) AS count FROM DailyHealthStatus
+        WHERE CheckInDate = #{now}
+        GROUP BY DiagnosisDiseaseTypeName
+    </select>
+
+    <select id="selectChickInInfo" resultType="com.infect.vo.system.CheckinInfoStatisticsVO">
+        SELECT
+        UserID AS userId,
+        CheckInDate AS checkInDate,
+        CheckInTime AS checkInTime,
+        IsHealth AS isHealth,
+        DiseaseTypeName AS diseaseTypeName,
+        DiagnosisDiseaseTypeName AS diagnosisDiseaseTypeName
+        FROM
+        DailyHealthStatus
+        WHERE
+        1 = 1
+        <!-- 当 ids 不为空时，添加条件筛选 -->
+        <if test="ids != null and ids.size() > 0">
+            AND UserID IN
+            <foreach item="id" collection="ids" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+        ORDER BY
+        CheckInDate DESC,
+        CheckInTime DESC
+        <!-- 只查询前 infoNumber 条数据 -->
+        LIMIT #{infoNumber}
+    </select>
+
+    <select id="selectChickInDailyNumber" resultType="com.infect.vo.system.CheckinDailyNumberVO">
+        SELECT
+            CheckInDate, COUNT(*) AS count
+        FROM
+            DailyHealthStatus
+        WHERE
+            CheckInDate BETWEEN #{startDate} AND #{endDate}
+        GROUP BY
+            CheckInDate
+        ORDER BY
+            CheckInDate ASC
+    </select>
+
+    <select id="selectUerIdByIsHealth" resultType="java.lang.Integer">
+        SELECT UserId FROM DailyHealthStatus WHERE CheckInDate BETWEEN #{startDate} AND #{endDate} AND IsHealth = false
+    </select>
+
+
+</mapper>

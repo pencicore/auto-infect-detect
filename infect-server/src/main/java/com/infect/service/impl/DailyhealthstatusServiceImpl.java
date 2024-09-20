@@ -11,9 +11,13 @@ import com.infect.mapper.*;
 import com.infect.result.PageResult;
 import com.infect.service.IDailyhealthstatusService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.infect.temporary.DiseaseNameNumberPairTemp;
+import com.infect.temporary.StationTemp;
 import com.infect.utils.BaseContext;
 import com.infect.utils.ExcelUtil;
 import com.infect.vo.DailyhealthstatusGetVO;
+import com.infect.vo.system.CheckinDailyNumberVO;
+import com.infect.vo.system.CheckinInfoStatisticsVO;
 import com.infect.vo.system.CheckinInfoVO;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -265,7 +269,7 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
     }
 
     /**
-     * 导出职工打卡信息导出表（含AI预测数据
+     * 导出职工打卡信息导出表（含AI预测数据）
      * @param response
      */
     @Override
@@ -340,6 +344,60 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * 获取当日疾病分布
+     *
+     * @return
+     */
+    @Override
+    public List<DiseaseNameNumberPairTemp> getDiseaseDataToday() {
+        List<DiseaseNameNumberPairTemp> list = dailyhealthstatusMapper.selectDiseaseNumber(LocalDate.now());
+        return list;
+    }
+
+    /**
+     * 获取全部用户地理位置信息
+     * @return
+     */
+    @Override
+    public List<StationTemp> getUserStation() {
+        List<StationTemp> list = dailyhealthstatusMapper.selectStationListByTime(LocalDate.now());
+        return list;
+    }
+
+    /**
+     * 根据手机号筛选数据
+     * @param phoneNumber
+     * @param infoNumber
+     * @return
+     */
+    @Override
+    public List<CheckinInfoStatisticsVO> getChickInInfoByText(String phoneNumber, Integer infoNumber) {
+        //根据手机号模糊查询用户id列表
+        List<Integer> idList = userMapper.selectIdsByWrapper(
+                new LambdaQueryWrapper<User>()
+                        .like(User::getPhoneNumber, phoneNumber)
+        );
+
+        //根据用户id列表查询查询签到信息
+        List<CheckinInfoStatisticsVO> list = dailyhealthstatusMapper.selectChickInInfo(idList,infoNumber);
+
+        //根据用户名逐条查询用户id
+        for (CheckinInfoStatisticsVO vo:
+             list) {
+            vo.setName(userMapper.selectNameById(vo.getUserId()));
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<CheckinDailyNumberVO> getCheckInDailyNumber(LocalDate startDate, LocalDate endDate) {
+        List<CheckinDailyNumberVO> list = dailyhealthstatusMapper.selectChickInDailyNumber(startDate,endDate);
+        System.out.println(list);
+        return list;
     }
 
 

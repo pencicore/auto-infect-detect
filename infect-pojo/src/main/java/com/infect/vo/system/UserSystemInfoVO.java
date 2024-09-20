@@ -6,6 +6,8 @@ import java.time.LocalDate;
 
 public class UserSystemInfoVO {
 
+    private Integer userId;
+
     @ApiModelProperty(value = "用户类型", required = true, example = "铁路职工")
     private String userType;
 
@@ -40,6 +42,20 @@ public class UserSystemInfoVO {
     }
 
     public UserSystemInfoVO(String userType, String name, String phoneNumber, String gender, String ethnicity, String educationLevel, LocalDate workOnPlateauStartDate, String department, String specificOccupation, Boolean isActived) {
+        this.userType = userType;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.gender = gender;
+        this.ethnicity = ethnicity;
+        this.educationLevel = educationLevel;
+        this.workOnPlateauStartDate = workOnPlateauStartDate;
+        this.department = department;
+        this.specificOccupation = specificOccupation;
+        this.isActived = isActived;
+    }
+
+    public UserSystemInfoVO(Integer userId, String userType, String name, String phoneNumber, String gender, String ethnicity, String educationLevel, LocalDate workOnPlateauStartDate, String department, String specificOccupation, Boolean isActived) {
+        this.userId = userId;
         this.userType = userType;
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -214,5 +230,21 @@ public class UserSystemInfoVO {
 
     public String toString() {
         return "UserSystemInfoVO{userType = " + userType + ", name = " + name + ", phoneNumber = " + phoneNumber + ", gender = " + gender + ", ethnicity = " + ethnicity + ", educationLevel = " + educationLevel + ", workOnPlateauStartDate = " + workOnPlateauStartDate + ", department = " + department + ", specificOccupation = " + specificOccupation + ", isActived = " + isActived + "}";
+    }
+
+    /**
+     * 获取
+     * @return userId
+     */
+    public Integer getUserId() {
+        return userId;
+    }
+
+    /**
+     * 设置
+     * @param userId
+     */
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }

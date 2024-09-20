@@ -24,8 +24,6 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value="Dailyhealthstatus对象", description="用户每日健康状态记录")
 public class Dailyhealthstatus implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
     @TableId(value = "StatusID", type = IdType.AUTO)
     @ApiModelProperty(value = "状态ID，自增")
     private Integer statusId;

@@ -3,6 +3,7 @@ package com.infect.mapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.infect.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.infect.vo.system.ImportantUserInfoVO;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -38,6 +39,18 @@ public interface UserMapper extends BaseMapper<User> {
     @Select("update user set Password = #{password} where UserID = #{userId}")
     void updateIdNumberByUserId(String password, Integer userId);
 
+    /**
+     * 根据wrapper条件查询用户id
+     * @param wrapper
+     * @return
+     */
     @Select("select UserID from user ${ew.customSqlSegment}")
     List<Integer> selectIdsByWrapper(@Param("ew") LambdaQueryWrapper<User> wrapper);
+
+    /**
+     * 根据用户id查询用户名和用户所在部门
+     * @param ids
+     * @return
+     */
+    List<ImportantUserInfoVO> selectNameAndDepartmentByIds(List<Integer> ids);
 }

@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 @ApiModel("工作环境VO")
 public class EnvironmentInfoVO {
 
+    private Integer environmentId;
+
     @ApiModelProperty(value = "用户姓名", required = true, example = "张三")
     private String name;
 
@@ -34,6 +36,17 @@ public class EnvironmentInfoVO {
     }
 
     public EnvironmentInfoVO(String name, String workStationName, Integer workStationAltitude, BigDecimal avgMonthlyPressure, BigDecimal maxTemperature, BigDecimal minTemperature, LocalDateTime submissionTime) {
+        this.name = name;
+        this.workStationName = workStationName;
+        this.workStationAltitude = workStationAltitude;
+        this.avgMonthlyPressure = avgMonthlyPressure;
+        this.maxTemperature = maxTemperature;
+        this.minTemperature = minTemperature;
+        this.submissionTime = submissionTime;
+    }
+
+    public EnvironmentInfoVO(Integer environmentId, String name, String workStationName, Integer workStationAltitude, BigDecimal avgMonthlyPressure, BigDecimal maxTemperature, BigDecimal minTemperature, LocalDateTime submissionTime) {
+        this.environmentId = environmentId;
         this.name = name;
         this.workStationName = workStationName;
         this.workStationAltitude = workStationAltitude;
@@ -157,5 +170,21 @@ public class EnvironmentInfoVO {
 
     public String toString() {
         return "EnvironmentInfoVO{name = " + name + ", workStationName = " + workStationName + ", workStationAltitude = " + workStationAltitude + ", avgMonthlyPressure = " + avgMonthlyPressure + ", maxTemperature = " + maxTemperature + ", minTemperature = " + minTemperature + ", submissionTime = " + submissionTime + "}";
+    }
+
+    /**
+     * 获取
+     * @return environmentId
+     */
+    public Integer getEnvironmentId() {
+        return environmentId;
+    }
+
+    /**
+     * 设置
+     * @param environmentId
+     */
+    public void setEnvironmentId(Integer environmentId) {
+        this.environmentId = environmentId;
     }
 }

@@ -48,7 +48,7 @@ public class JwtTokenRailwayEmployeeInterceptor implements HandlerInterceptor {
         if(token.startsWith(UserEnumConstants.TOKEN_PREFIX) && !token.isEmpty()){
             token = token.substring(UserEnumConstants.TOKEN_PREFIX.length());
         }
-        System.out.println("token"+token);
+        System.out.println(jwtProperties.getTokenName()+":"+token);
         //2、校验令牌
         try {
             Claims claims = JwtUtil.parseJWT(jwtProperties.getRailwayEmployeeSecretKey(), token);

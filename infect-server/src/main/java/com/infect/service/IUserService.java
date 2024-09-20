@@ -7,10 +7,12 @@ import com.infect.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.infect.result.PageResult;
 import com.infect.vo.UserLoginVO;
+import com.infect.vo.system.ImportantUserInfoVO;
 import com.infect.vo.system.UserSystemInfoVO;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * <p>
@@ -35,4 +37,6 @@ public interface IUserService extends IService<User> {
     PageResult<UserSystemInfoVO> queryUserspage(UserPageDTO userPageDTO);
 
     void queryAllUserToExcel(HttpServletResponse response);
+
+    List<ImportantUserInfoVO> getImportantUserInfo();
 }
