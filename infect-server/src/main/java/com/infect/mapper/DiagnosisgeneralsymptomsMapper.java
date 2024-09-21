@@ -2,6 +2,7 @@ package com.infect.mapper;
 
 import com.infect.entity.Diagnosisgeneralsymptoms;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * <p>
@@ -13,4 +14,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface DiagnosisgeneralsymptomsMapper extends BaseMapper<Diagnosisgeneralsymptoms> {
 
+    @Select("select * from diagnosisgeneralsymptoms where DiagnosisResultsID = #{userId}")
+    Diagnosisgeneralsymptoms selectByDiagnosisResultsId(Integer userId);
 }

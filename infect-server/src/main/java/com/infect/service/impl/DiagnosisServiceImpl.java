@@ -3,6 +3,7 @@ package com.infect.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.infect.dto.AllDiagnosisAndResultDTO;
 import com.infect.dto.DiagnosisReportsDTO;
+import com.infect.dto.DiagnosisResultsEmpDTO;
 import com.infect.entity.*;
 import com.infect.enums.DiagnosisResultsEnumConstants;
 import com.infect.mapper.*;
@@ -18,6 +19,8 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.UUID;
 
 @Service
@@ -139,6 +142,76 @@ public class DiagnosisServiceImpl implements MyDiagnosisService {
             diagnosisreportsMapper.updateDiagnosisResultIdByFileId(fileId,diagnosisResultId);
         }
     }
+    public static Date stringToDate(String dateString, String format) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+        LocalDate localDate = LocalDate.parse(dateString, formatter);
+        return Date.from(localDate.atStartOfDay(java.time.ZoneId.systemDefault()).toInstant());
+    }
+    @Override
+    @Transactional(readOnly = true)
+    public AllDiagnosisAndResultDTO getDiagnosis(String date, Integer currentId) {
+        // 1. 查询诊断结果信息
+        String format = "yyyy-MM-dd";
+        Date queryDate = stringToDate(date, format);
+        Diagnosisresults diagnosisresults = diagnosisresultsMapper.selectByUserIdAndTime(currentId, queryDate);
+
+        if (diagnosisresults == null) {
+            // 如果没有找到对应的诊断结果，返回空对象或抛出异常
+            return new AllDiagnosisAndResultDTO();
+        }
+
+        // 2. 创建 AllDiagnosisAndResultDTO 对象
+        AllDiagnosisAndResultDTO allDiagnosisAndResultDTO = new AllDiagnosisAndResultDTO();
+
+        // 2.1 复制诊断结果信息到 DTO
+        allDiagnosisAndResultDTO.setDiagnosisResultsEmpDTO(BeanUtil.copyProperties(diagnosisresults, DiagnosisResultsEmpDTO.class));
+
+        // 2.2 查询并设置个人基本信息
+        Diagnosispersonalinfo diagnosispersonalinfo = diagnosisPersonalInfoMapper.selectByDiagnosisResultsId(diagnosisresults.getDiagnosisResultsId());
+        allDiagnosisAndResultDTO.setDiagnosispersonalinfo(diagnosispersonalinfo);
+
+        // 2.3 查询并设置全身症状信息
+        Diagnosisgeneralsymptoms diagnosisGeneralSymptoms = diagnosisGeneralSymptomsMapper.selectByDiagnosisResultsId(diagnosisresults.getDiagnosisResultsId());
+        allDiagnosisAndResultDTO.setDiagnosisgeneralsymptoms(diagnosisGeneralSymptoms);
+
+        // 2.4 查询并设置呼吸系统症状信息
+        Diagnosisrespiratorysymptoms diagnosisRespiratorySymptoms = diagnosisRespiratorySymptomsMapper.selectByDiagnosisResultsId(diagnosisresults.getDiagnosisResultsId());
+        allDiagnosisAndResultDTO.setDiagnosisrespiratorysymptoms(diagnosisRespiratorySymptoms);
+
+        // 2.5 查询并设置消化系统症状信息
+        Diagnosisdigestivesymptoms diagnosisDigestiveSymptoms = diagnosisDigestiveSymptomsMapper.selectByDiagnosisResultsId(diagnosisresults.getDiagnosisResultsId());
+        allDiagnosisAndResultDTO.setDiagnosisdigestivesymptoms(diagnosisDigestiveSymptoms);
+
+        // 2.6 查询并设置循环系统症状信息
+        Diagnosiscirculatorysymptoms diagnosisCirculatorySymptoms = diagnosisCirculatorySymptomsMapper.selectByDiagnosisResultsId(diagnosisresults.getDiagnosisResultsId());
+        allDiagnosisAndResultDTO.setDiagnosiscirculatorysymptoms(diagnosisCirculatorySymptoms);
+
+        // 2.7 查询并设置神经系统症状信息
+        Diagnosisneurologicalsymptoms diagnosisNeurologicalSymptoms = diagnosisNeurologicalSymptomsMapper.selectByDiagnosisResultsId(diagnosisresults.getDiagnosisResultsId());
+        allDiagnosisAndResultDTO.setDiagnosisneurologicalsymptoms(diagnosisNeurologicalSymptoms);
+
+        // 2.8 查询并设置局部症状信息
+        Diagnosislocalsymptoms diagnosisLocalSymptoms = diagnosisLocalSymptomsMapper.selectByDiagnosisResultsId(diagnosisresults.getDiagnosisResultsId());
+        allDiagnosisAndResultDTO.setDiagnosislocalsymptoms(diagnosisLocalSymptoms);
+
+        // 2.9 查询并设置其他症状信息
+        Diagnosisothersymptoms diagnosisOtherSymptoms = diagnosisOtherSymptomsMapper.selectByDiagnosisResultsId(diagnosisresults.getDiagnosisResultsId());
+        allDiagnosisAndResultDTO.setDiagnosisothersymptoms(diagnosisOtherSymptoms);
+
+        // 2.10 查询并设置并发症信息
+        Diagnosiscomplications diagnosisComplications = diagnosisComplicationsMapper.selectByDiagnosisResultsId(diagnosisresults.getDiagnosisResultsId());
+        allDiagnosisAndResultDTO.setDiagnosiscomplications(diagnosisComplications);
+
+        // 2.11 查询并设置检查项目信息
+        Diagnosisexaminations diagnosisexaminations = diagnosisexaminationsMapper.selectByDiagnosisResultsId(diagnosisresults.getDiagnosisResultsId());
+        allDiagnosisAndResultDTO.setDiagnosisexaminations(diagnosisexaminations);
+
+        // 2.12 查询并设置文件信息
+        List fileIdList = diagnosisreportsMapper.selectFileIdsByDiagnosisResultId(diagnosisresults.getDiagnosisResultsId());
+        allDiagnosisAndResultDTO.setFileIdList((java.util.List<Integer>) fileIdList);
+
+        return allDiagnosisAndResultDTO;
+    }
 
     @Override
     public Integer uploadReportFile(DiagnosisReportsDTO diagnosisReportsDTO) {
@@ -194,4 +267,5 @@ public class DiagnosisServiceImpl implements MyDiagnosisService {
         // 获取文件报告ID
         return diagnosisreportsMapper.selectIdByFilePath(saveDir + File.separator + uniqueFileName);
     }
+
 }

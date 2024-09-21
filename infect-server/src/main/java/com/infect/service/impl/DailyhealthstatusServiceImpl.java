@@ -11,12 +11,14 @@ import com.infect.service.IDailyhealthstatusService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.infect.utils.BaseContext;
 import com.infect.vo.DailyhealthstatusGetVO;
+import com.infect.vo.MonthlyHealthStatusVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,6 +31,9 @@ import java.util.List;
  */
 @Service
 public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusMapper, Dailyhealthstatus> implements IDailyhealthstatusService {
+
+    @Autowired
+    private DiagnosisresultsMapper diagnosisresultsMapper;
 
     @Autowired
     private DailyhealthstatusMapper dailyhealthstatusMapper;
@@ -56,6 +61,9 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
 
     @Autowired
     private RiskfactorsandexposureMapper riskfactorsandexposureMapper;
+
+    @Autowired
+    private LabtestreportMapper labtestreportMapper;
 
     @Override
     public DailyhealthstatusGetVO getDailyCheckIn(LocalDate date) {
@@ -111,7 +119,62 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
         saveRiskFactorsAndExposure(allSymptomsDTO.getRiskFactorsAndExposure());
     }
 
+    @Override
+    public List<MonthlyHealthStatusVO> getWorkEnvironmentInfo(Integer currentId, String yearMonth) {
 
+
+        List<Dailyhealthstatus> dailyhealthstatuses = dailyhealthstatusMapper.selectList(
+                new QueryWrapper<Dailyhealthstatus>()
+                        .eq("UserId", currentId)
+                        .like("CheckInDate", yearMonth + "%")
+        );
+        List<MonthlyHealthStatusVO> monthlyHealthStatusVOS = new ArrayList<>();
+        for (Dailyhealthstatus dailyhealthstatus : dailyhealthstatuses) {
+            MonthlyHealthStatusVO monthlyHealthStatusVO = new MonthlyHealthStatusVO();
+            monthlyHealthStatusVO.setDate(dailyhealthstatus.getCheckInDate().toString());
+            monthlyHealthStatusVO.setHealth(dailyhealthstatus.getHealth());
+            monthlyHealthStatusVOS.add(monthlyHealthStatusVO);
+        }
+        return monthlyHealthStatusVOS;
+    }
+
+    @Override
+    public List<MonthlyHealthStatusVO> getDiagnoseInfo( String yearMonth, Integer currentId, List<MonthlyHealthStatusVO> clearHealthCostsGetVO) {
+        List<Diagnosisresults> diagnosisresults = diagnosisresultsMapper.selectList(
+                new QueryWrapper<Diagnosisresults>()
+                        .eq("UserID", currentId)
+                        .like("SubmissionTime", yearMonth + "%")
+        );
+        // 遍历 diagnosisresults 并更新 clearHealthCostsGetVO
+        for (MonthlyHealthStatusVO vo : clearHealthCostsGetVO) {
+            for (Diagnosisresults result : diagnosisresults) {
+                if (result.getSubmissionTime().toString().equals(vo.getDate())) {
+                    vo.setDiagnose(true);
+                    break; // 找到匹配项后跳出内层循环
+                }
+            }
+        }
+        return clearHealthCostsGetVO;
+    }
+
+    @Override
+    public List<MonthlyHealthStatusVO> getExamineInfo(Integer currentId, String yearMonth, List<MonthlyHealthStatusVO> newClearHealthCostsGetVO) {
+        List<Labtestreport> labtestreports = labtestreportMapper.selectList(
+                new QueryWrapper<Labtestreport>()
+                        .eq("UserID", currentId)
+                        .like("UploadDate", yearMonth + "%")
+        );
+        // 遍历 diagnosisresults 并更新 clearHealthCostsGetVO
+        for (MonthlyHealthStatusVO vo : newClearHealthCostsGetVO) {
+            for (Labtestreport result : labtestreports) {
+                if (result.getUploadDate().toString().equals(vo.getDate())) {
+                    vo.setExamine(true);
+                    break; // 找到匹配项后跳出内层循环
+                }
+            }
+        }
+        return newClearHealthCostsGetVO;
+    }
 
 
     /*提交全身症状信息*/

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Select;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * <p>
@@ -18,4 +19,7 @@ public interface DiagnosisresultsMapper extends BaseMapper<Diagnosisresults> {
 
     @Select("select DiagnosisResultsID from diagnosisresults where UserID = #{userId} and SubmissionTime = #{nowTime}")
     Integer selectIdByUserIdAndTime(Integer userId, LocalDate nowTime);
+
+    @Select("select * from diagnosisresults where UserID = #{currentId} and SubmissionTime = #{date}")
+    Diagnosisresults selectByUserIdAndTime(Integer currentId, Date date);
 }

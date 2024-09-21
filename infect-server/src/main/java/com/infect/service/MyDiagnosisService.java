@@ -8,4 +8,6 @@ public interface MyDiagnosisService {
     void saveDiagnosis(Integer currentId, AllDiagnosisAndResultDTO allDiagnosisAndResultDTO);
 
     Integer uploadReportFile(DiagnosisReportsDTO diagnosisReportsDTO);
+
+    AllDiagnosisAndResultDTO getDiagnosis(String date, Integer currentId);
 }

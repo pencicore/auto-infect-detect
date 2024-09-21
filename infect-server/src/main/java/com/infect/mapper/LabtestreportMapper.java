@@ -19,4 +19,7 @@ public interface LabtestreportMapper extends BaseMapper<Labtestreport> {
 
     @Select("select LabTestReportID from labtestreport where UserID = #{userId} and UploadDate = #{now}")
     List<Integer> selectLabTestReportIdByUserIdAndDate(Integer userId, LocalDate now);
+
+    @Select("select * from labtestreport where UploadDate = #{date} and UserID = #{currentId}")
+    List<Labtestreport> getReportFile(String date, Integer currentId);
 }

@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -112,5 +113,25 @@ public class LabTestServiceImpl implements MyLabTestService {
             }
             return Result.success();
         }
+    }
+
+    @Override
+    public LabTestReportDTO getReportFile(String date, Integer currentId) {
+        List<Labtestreport> labtestreport = labtestreportMapper.getReportFile(date, currentId);
+        if (labtestreport.isEmpty()) {
+            return null;
+        }
+        List<Integer> integers = new ArrayList<>();
+        for (Labtestreport labtestreport1 : labtestreport) {
+            integers.add(labtestreport1.getLabTestReportId());
+        }
+        LabTestReportDTO labTestReportDTO = new LabTestReportDTO();
+        labTestReportDTO.setLabTestFileIds(integers);
+        labTestReportDTO.setVirusAntigenTestDone(labtestreport.get(0).getVirusAntigenTestDone());
+        labTestReportDTO.setVirusCultureIsolationDone(labtestreport.get(0).getVirusCultureIsolationDone());
+        labTestReportDTO.setVirusNucleicAcidTestDone(labtestreport.get(0).getVirusNucleicAcidTestDone());
+        labTestReportDTO.setPathogenicTestResults(labtestreport.get(0).getPathogenicTestResults());
+        labTestReportDTO.setSerologicalTestDone(labtestreport.get(0).getSerologicalTestDone());
+        return labTestReportDTO;
     }
 }

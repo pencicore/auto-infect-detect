@@ -8,6 +8,7 @@ import com.infect.service.IDailyhealthstatusService;
 import com.infect.service.IWorkenvironmentinfoService;
 import com.infect.utils.BaseContext;
 import com.infect.vo.DailyhealthstatusGetVO;
+import com.infect.vo.MonthlyHealthStatusVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Api(tags = "打卡和监控功能相关接口")
 //@Slf4j
@@ -50,6 +52,17 @@ public class EmployeeCheckInController {
         return Result.success(dailyhealthstatusGetVO);
     }
 
+    @ApiOperation(value = "根据id和year和month查询工人本月的打卡情况")
+    @PostMapping("/select/month")
+    public Result<List<MonthlyHealthStatusVO>> getMonthCheckIn(
+            @ApiParam(value = "查询时间", required = true, example = "2024-08")
+            @RequestBody String yearMonth) {
+        List<MonthlyHealthStatusVO> ClearHealthCostsGetVO = dailyhealthstatusService.getWorkEnvironmentInfo(BaseContext.getCurrentId(),yearMonth);
+        List<MonthlyHealthStatusVO> NewClearHealthCostsGetVO= dailyhealthstatusService.getDiagnoseInfo(yearMonth,BaseContext.getCurrentId(),ClearHealthCostsGetVO);
+        List<MonthlyHealthStatusVO> FinalHealthCostsGetVO = dailyhealthstatusService.getExamineInfo(BaseContext.getCurrentId(),yearMonth,NewClearHealthCostsGetVO);
+        return Result.success(FinalHealthCostsGetVO);
+    }
+
     @ApiOperation(value = "提交/修改当月工作环境信息")
     @PostMapping("/month")
     public Result saveWorkEnvironmentInfo(@RequestBody Workenvironmentinfo workenvironmentinfo) {
@@ -71,7 +84,6 @@ public class EmployeeCheckInController {
         Workenvironmentinfo workenvironmentinfo = workenvironmentinfoService.getEnvironmentInfo(BaseContext.getCurrentId(),date);
         return Result.success(workenvironmentinfo);
     }
-
 
     @ApiOperation(value = "一次性提交所有症状信息")
     @PostMapping("/all")

@@ -44,4 +44,3 @@ infect:
   path:
     diagnosis-file-path: diagnosisReports
     lab-test-file-path: labTestFilePath
-

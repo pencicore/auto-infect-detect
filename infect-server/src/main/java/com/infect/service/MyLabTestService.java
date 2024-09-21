@@ -8,4 +8,6 @@ public interface MyLabTestService {
     Integer uploadLabTestFile(LabTestFileDTO labTestFileDTO);
 
     Result saveLabTest(LabTestReportDTO labTestReportDTO, Integer userId);
+
+    LabTestReportDTO getReportFile(String date, Integer currentId);
 }

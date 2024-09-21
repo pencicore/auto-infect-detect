@@ -5,9 +5,11 @@ import com.infect.dto.RailwayEmployeeCheckInDTO;
 import com.infect.entity.*;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.infect.vo.DailyhealthstatusGetVO;
+import com.infect.vo.MonthlyHealthStatusVO;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -41,4 +43,9 @@ public interface IDailyhealthstatusService extends IService<Dailyhealthstatus> {
 
     void saveAllSymptoms(AllSymptomsDTO allSymptomsDTO);
 
+    List<MonthlyHealthStatusVO> getWorkEnvironmentInfo(Integer currentId, String yearMonth);
+
+    List<MonthlyHealthStatusVO> getDiagnoseInfo( String yearMonth,Integer currentId, List<MonthlyHealthStatusVO> clearHealthCostsGetVO);
+
+    List<MonthlyHealthStatusVO> getExamineInfo(Integer currentId, String yearMonth, List<MonthlyHealthStatusVO> newClearHealthCostsGetVO);
 }

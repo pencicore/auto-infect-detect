@@ -8,7 +8,9 @@ import com.infect.service.*;
 import com.infect.utils.BaseContext;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 @Api(tags = "健康状况，录入诊断信息相关接口")
@@ -38,9 +40,18 @@ public class EmployeeDiagnosisController {
     @ApiOperation(value = "铁路工人提交诊断结果和所有诊断症状信息")
     @PostMapping("/result")
     public Result saveDiagnosis(@RequestBody AllDiagnosisAndResultDTO allDiagnosisAndResultDTO) {
-        System.out.println(allDiagnosisAndResultDTO);
         myDiagnosisService.saveDiagnosis(BaseContext.getCurrentId(),allDiagnosisAndResultDTO);
         return Result.success();
+    }
+
+    @ApiOperation(value = "铁路工人获取当日的提交报告")
+    @PostMapping("/report")
+    public Result<AllDiagnosisAndResultDTO> getReportFile(
+            @ApiParam(value = "查询时间", required = true, example = "2024-08-29")
+            @RequestBody String date) {
+        AllDiagnosisAndResultDTO diagnosisReports = myDiagnosisService.getDiagnosis(date, BaseContext.getCurrentId());
+        System.out.println(diagnosisReports);
+        return Result.success(diagnosisReports);
     }
 
 //    @ApiOperation(value = "铁路工人自己提交诊断结果，不可修改")

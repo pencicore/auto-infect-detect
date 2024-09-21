@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.awt.*;
+
 /**
  * <p>
  *  Mapper 接口
@@ -20,4 +22,6 @@ public interface DiagnosisreportsMapper extends BaseMapper<Diagnosisreports> {
 
     @Select("select DiagnosisResultsID from diagnosisreports where FilePath=#{s}")
     Integer selectIdByFilePath(String s);
+    @Select("select ReportID from diagnosisreports where DiagnosisResultsID=#{userId}")
+    List selectFileIdsByDiagnosisResultId(Integer userId);
 }
