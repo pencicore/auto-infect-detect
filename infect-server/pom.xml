@@ -13,9 +13,9 @@
     <artifactId>infect-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <properties>
-        <java.version>17</java.version>
-    </properties>
+<!--    <properties>-->
+<!--        <java.version>17</java.version>-->
+<!--    </properties>-->
 
     <dependencies>
         <dependency>

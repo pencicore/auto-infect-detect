@@ -1,6 +1,7 @@
 package com.infect.config;
 
 import com.infect.interceptor.JwtTokenRailwayEmployeeInterceptor;
+import com.infect.interceptor.JwtTokenSystemUserInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,26 +22,65 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
     @Autowired
     private JwtTokenRailwayEmployeeInterceptor jwtTokenRailwayEmployeeInterceptor;
 
+    @Autowired
+    private JwtTokenSystemUserInterceptor jwtTokenSystemUserInterceptor;
+
     protected void addInterceptors(InterceptorRegistry registry) {
 //        log.info("开始注册自定义拦截器...");
         registry.addInterceptor(jwtTokenRailwayEmployeeInterceptor)
                 .addPathPatterns("/railwayemployee/**")
                 .excludePathPatterns("/railwayemployee/labtest/file","/railwayemployee/diagnosis/file");
 
+//        registry.addInterceptor(jwtTokenSystemUserInterceptor)
+//                .addPathPatterns("/systemUser/**");
     }
 
     @Bean
-    public Docket api() {
+    public Docket api0() {
         ApiInfo apiInfo = new ApiInfoBuilder()
                 .title("项目接口文档")
                 .version("2.0")
                 .description("项目接口文档")
                 .build();
         Docket docket = new Docket(DocumentationType.SWAGGER_2)
-                .groupName("常用接口")
+                .groupName("通用接口")
                 .apiInfo(apiInfo)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.infect.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.infect.controller.common"))
+                .paths(PathSelectors.any())
+                .build();
+        return docket;
+    }
+
+    @Bean
+    public Docket api1() {
+        ApiInfo apiInfo = new ApiInfoBuilder()
+                .title("项目接口文档")
+                .version("2.0")
+                .description("项目接口文档")
+                .build();
+        Docket docket = new Docket(DocumentationType.SWAGGER_2)
+                .groupName("铁路工人接口")
+                .apiInfo(apiInfo)
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.infect.controller.railwayEmployee"))
+                .paths(PathSelectors.any())
+                .build();
+        return docket;
+    }
+
+    @Bean
+    public Docket api2() {
+        ApiInfo apiInfo = new ApiInfoBuilder()
+                .title("项目接口文档")
+                .version("2.0")
+                .description("项目接口文档")
+                .build();
+        Docket docket = new Docket(DocumentationType.SWAGGER_2)
+                .groupName("系统管理员接口")
+                .apiInfo(apiInfo)
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.infect.controller.systemUser"))
                 .paths(PathSelectors.any())
                 .build();
         return docket;

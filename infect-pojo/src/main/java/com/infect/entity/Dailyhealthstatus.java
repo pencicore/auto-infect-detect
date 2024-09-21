@@ -98,11 +98,11 @@ public class Dailyhealthstatus implements Serializable {
         this.checkInTime = checkInTime;
     }
 
-    public Boolean getHealth() {
+    public Boolean getIsHealth() {
         return isHealth;
     }
 
-    public void setHealth(Boolean health) {
+    public void setIsHealth(Boolean health) {
         isHealth = health;
     }
 

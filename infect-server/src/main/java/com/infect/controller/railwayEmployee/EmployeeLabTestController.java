@@ -3,7 +3,6 @@ package com.infect.controller.railwayEmployee;
 import com.infect.dto.LabTestFileDTO;
 import com.infect.dto.LabTestReportDTO;
 import com.infect.result.Result;
-import com.infect.service.ILabtestfilesService;
 import com.infect.service.MyLabTestService;
 import com.infect.utils.BaseContext;
 import io.swagger.annotations.Api;
