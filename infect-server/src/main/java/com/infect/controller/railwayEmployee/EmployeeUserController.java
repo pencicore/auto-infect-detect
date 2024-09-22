@@ -31,7 +31,6 @@ public class EmployeeUserController {
     @ApiOperation(value = "提交个人信息")
     @PostMapping("/information")
     public Result submitUserProfile(@RequestBody UserInfoDTO userInfoDTO){
-//        log.info("用户{}提交个人信息：{}", BaseContext.getCurrentId(),userInfoDTO);
         User user= BeanUtil.copyProperties(userInfoDTO,User.class);
         user.setUserId(BaseContext.getCurrentId());
         user.setPhoneNumber(null);

@@ -2,6 +2,7 @@ package com.infect.controller.railwayEmployee;
 
 import com.infect.dto.AllSymptomsDTO;
 import com.infect.dto.RailwayEmployeeCheckInDTO;
+import com.infect.entity.Diseasescoring;
 import com.infect.entity.Workenvironmentinfo;
 import com.infect.result.Result;
 import com.infect.service.IDailyhealthstatusService;
@@ -88,8 +89,8 @@ public class EmployeeCheckInController {
     @ApiOperation(value = "一次性提交所有症状信息")
     @PostMapping("/all")
     public Result saveAllSymptoms(@RequestBody AllSymptomsDTO allSymptomsDTO){
-        dailyhealthstatusService.saveAllSymptoms(allSymptomsDTO);
-        return Result.success();
+        List<Diseasescoring> diseasescoringList = dailyhealthstatusService.saveAllSymptoms(allSymptomsDTO);
+        return Result.success(diseasescoringList);
     }
 
 //    @ApiOperation(value = "提交全身症状信息")

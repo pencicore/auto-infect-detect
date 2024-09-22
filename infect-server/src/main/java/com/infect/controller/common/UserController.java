@@ -60,16 +60,16 @@ public class UserController {
     public Result<UserLoginVO> login(@RequestBody UserLoginDTO userLoginDTO){
 
 
-        try {
+//        try {
 //            globalExceptionHandler.checkRateLimit(3, 1); // 每次请求消耗 1 个令牌
             UserLoginVO userLoginVO = userService.login(userLoginDTO);
             if (userLoginVO == null){
                 return Result.error("用户名或密码错误");
             }
             return Result.success(userLoginVO);
-        } catch (Exception e) {
-            throw new RuntimeException("Rate limit exceeded");
-        }
+//        } catch (Exception e) {
+//            throw new RuntimeException("Rate limit exceeded");
+//        }
 
     }
 }
