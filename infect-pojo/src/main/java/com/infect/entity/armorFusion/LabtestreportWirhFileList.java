@@ -1,12 +1,13 @@
-package com.infect.entity;
+package com.infect.entity.armorFusion;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.time.LocalDate;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.List;
 
 /**
  * <p>
@@ -18,11 +19,9 @@ import io.swagger.annotations.ApiModelProperty;
  */
 //@EqualsAndHashCode(callSuper = false)
 //@Accessors(chain = true)
-@TableName("labtestreport")
 @ApiModel(value="Labtestreport对象", description="")
-public class Labtestreport implements Serializable {
+public class LabtestreportWirhFileList implements Serializable {
 
-    @TableId(value = "LabTestReportID", type = IdType.AUTO)
     private Integer labTestReportId;
 
     private Integer userId;
@@ -39,10 +38,12 @@ public class Labtestreport implements Serializable {
 
     private String pathogenicTestResults;
 
-    public Labtestreport() {
+    private List<Integer> fileIds;
+
+    public LabtestreportWirhFileList() {
     }
 
-    public Labtestreport(Integer labTestReportId, Integer userId, LocalDate uploadDate, Boolean isVirusAntigenTestDone, Boolean isVirusNucleicAcidTestDone, Boolean isVirusCultureIsolationDone, Boolean isSerologicalTestDone, String pathogenicTestResults) {
+    public LabtestreportWirhFileList(Integer labTestReportId, Integer userId, LocalDate uploadDate, Boolean isVirusAntigenTestDone, Boolean isVirusNucleicAcidTestDone, Boolean isVirusCultureIsolationDone, Boolean isSerologicalTestDone, String pathogenicTestResults, List<Integer> fileIds) {
         this.labTestReportId = labTestReportId;
         this.userId = userId;
         this.uploadDate = uploadDate;
@@ -51,6 +52,7 @@ public class Labtestreport implements Serializable {
         this.isVirusCultureIsolationDone = isVirusCultureIsolationDone;
         this.isSerologicalTestDone = isSerologicalTestDone;
         this.pathogenicTestResults = pathogenicTestResults;
+        this.fileIds = fileIds;
     }
 
     public Integer getLabTestReportId() {
@@ -181,7 +183,23 @@ public class Labtestreport implements Serializable {
         this.isSerologicalTestDone = isSerologicalTestDone;
     }
 
+    /**
+     * 获取
+     * @return fileIds
+     */
+    public List<Integer> getFileIds() {
+        return fileIds;
+    }
+
+    /**
+     * 设置
+     * @param fileIds
+     */
+    public void setFileIds(List<Integer> fileIds) {
+        this.fileIds = fileIds;
+    }
+
     public String toString() {
-        return "Labtestreport{labTestReportId = " + labTestReportId + ", userId = " + userId + ", uploadDate = " + uploadDate + ", isVirusAntigenTestDone = " + isVirusAntigenTestDone + ", isVirusNucleicAcidTestDone = " + isVirusNucleicAcidTestDone + ", isVirusCultureIsolationDone = " + isVirusCultureIsolationDone + ", isSerologicalTestDone = " + isSerologicalTestDone + ", pathogenicTestResults = " + pathogenicTestResults + "}";
+        return "LabtestreportWirhFileList{labTestReportId = " + labTestReportId + ", userId = " + userId + ", uploadDate = " + uploadDate + ", isVirusAntigenTestDone = " + isVirusAntigenTestDone + ", isVirusNucleicAcidTestDone = " + isVirusNucleicAcidTestDone + ", isVirusCultureIsolationDone = " + isVirusCultureIsolationDone + ", isSerologicalTestDone = " + isSerologicalTestDone + ", pathogenicTestResults = " + pathogenicTestResults + ", fileIds = " + fileIds + "}";
     }
 }

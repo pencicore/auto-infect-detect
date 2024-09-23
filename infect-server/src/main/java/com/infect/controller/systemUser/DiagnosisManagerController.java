@@ -37,7 +37,6 @@ public class DiagnosisManagerController {
     @PostMapping("/pageSelectDiagnosis")
     @ApiOperation(value = "根据用户名，电话，部门，时间分页查询用户诊断信息")
     public Result<PageResult<DiagnosisPageVO>> pageSelectDiagnosis(@RequestBody DiagnosisPageDTO diagnosisPageDTO){
-//        System.out.println(diagnosisPageDTO);
         PageResult<DiagnosisPageVO> result = diagnosisresultsService.pageSelectDiagnosis(diagnosisPageDTO);
         return Result.success(result);
     }

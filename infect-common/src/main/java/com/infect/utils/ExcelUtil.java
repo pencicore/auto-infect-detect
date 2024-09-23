@@ -149,6 +149,10 @@ public class ExcelUtil {    // 读取Excel文件
 
         //获取所有类的所有变量名，初始化map集合
         for(Object obj:list.get(0)){
+            if(obj==null) {
+                continue;
+            }
+
             // 获取对象的类
             Class<?> clazz = obj.getClass();
 

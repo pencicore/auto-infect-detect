@@ -1,23 +1,29 @@
 package com.infect.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.infect.dto.LabTestFileDTO;
 import com.infect.dto.LabTestReportDTO;
-import com.infect.entity.Labtestfiles;
-import com.infect.entity.Labtestreport;
+import com.infect.entity.*;
 import com.infect.mapper.LabtestfilesMapper;
 import com.infect.mapper.LabtestreportMapper;
+import com.infect.mapper.UserMapper;
 import com.infect.properties.PathProperties;
 import com.infect.result.Result;
 import com.infect.service.MyLabTestService;
+import com.infect.utils.ExcelUtil;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,6 +38,9 @@ public class LabTestServiceImpl implements MyLabTestService {
 
     @Autowired
     private LabtestreportMapper labtestreportMapper;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public Integer uploadLabTestFile(LabTestFileDTO labTestFileDTO) {
@@ -112,5 +121,50 @@ public class LabTestServiceImpl implements MyLabTestService {
             }
             return Result.success();
         }
+    }
+
+    /**
+     * 导出文件：导出检测信息导出表
+     * @param response
+     */
+    @Override
+    public void getDetectionInformationExportFormExcel(HttpServletResponse response) {
+        //获取文件绝对路径
+        String projectDir = System.getProperty("user.dir");
+        String fileName = projectDir + "\\infect-server\\src\\main\\resources\\templates\\检测信息导出表.xlsx";
+
+        //查询实验室检测信息
+        List<Labtestreport> labtestreportList = labtestreportMapper.selectList(null);
+        List<List<Object>> listList = new ArrayList<>();
+
+        //生成二维数组
+        for (Labtestreport obj:
+                labtestreportList) {
+            List<Object> temp = new ArrayList<>();
+
+            //添加实验室检测信息
+            temp.add(obj);
+
+            //添加用户信息
+            temp.add(userMapper.selectById(obj.getUserId()));
+
+            listList.add(temp);
+        }
+
+        XSSFWorkbook excel = ExcelUtil.getExcelFile(response, "检测信息导出表.xlsx", fileName
+                , 2, 1, 213
+                , 2, 1
+                , listList);
+
+        try {
+            ServletOutputStream out = response.getOutputStream();
+            excel.write(out);
+
+            excel.close();
+            out.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

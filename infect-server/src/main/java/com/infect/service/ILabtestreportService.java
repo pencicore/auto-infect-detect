@@ -3,6 +3,7 @@ package com.infect.service;
 import com.infect.dto.system.DiagnosisPageDTO;
 import com.infect.entity.Labtestreport;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.infect.entity.armorFusion.LabtestreportWirhFileList;
 import com.infect.result.PageResult;
 import com.infect.vo.system.LabTestPageVO;
 
@@ -18,4 +19,7 @@ public interface ILabtestreportService extends IService<Labtestreport> {
 
     PageResult<LabTestPageVO> pageSelectLabTest(DiagnosisPageDTO labTestPageDTO);
 
+    LabtestreportWirhFileList selectLabTest(Integer labTestReportID);
+
+    void updateLabTest(LabtestreportWirhFileList labtestreportWirhFileList);
 }

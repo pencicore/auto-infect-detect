@@ -5,8 +5,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.infect.dto.system.DiagnosisPageDTO;
+import com.infect.entity.Labtestfiles;
 import com.infect.entity.Labtestreport;
 import com.infect.entity.User;
+import com.infect.entity.armorFusion.LabtestreportWirhFileList;
+import com.infect.mapper.LabtestfilesMapper;
 import com.infect.mapper.LabtestreportMapper;
 import com.infect.mapper.UserMapper;
 import com.infect.result.PageResult;
@@ -37,6 +40,14 @@ public class LabtestreportServiceImpl extends ServiceImpl<LabtestreportMapper, L
     @Autowired
     private LabtestreportMapper labtestreportMapper;
 
+    @Autowired
+    private LabtestfilesMapper labtestfilesMapper;
+
+    /**
+     * 根据用户名，电话，部门，时间分页查询用户检查信息
+     * @param labTestPageDTO
+     * @return
+     */
     @Override
     public PageResult<LabTestPageVO> pageSelectLabTest(DiagnosisPageDTO labTestPageDTO) {
         String name = labTestPageDTO.getName();
@@ -85,5 +96,45 @@ public class LabtestreportServiceImpl extends ServiceImpl<LabtestreportMapper, L
 
         //返回
         return pageResult;
+    }
+
+    /**
+     * 根据诊断id查询检查信息
+     * @param labTestReportID
+     * @return
+     */
+    @Override
+    public LabtestreportWirhFileList selectLabTest(Integer labTestReportID) {
+        LabtestreportWirhFileList labtestreportWirhFileList = new LabtestreportWirhFileList();
+        Labtestreport labtestreport = labtestreportMapper.selectById(labTestReportID);
+        BeanUtil.copyProperties(labtestreport,labtestreportWirhFileList);
+        labtestreportWirhFileList.setFileIds(
+                labtestreportMapper.selectIdsByLabTestReportID(labTestReportID)
+        );
+        return labtestreportWirhFileList;
+    }
+
+    /**
+     * 根据id更新检查信息
+     * 重点是文件更新
+     * @param labtestreportWirhFileList
+     */
+    @Override
+    public void updateLabTest(LabtestreportWirhFileList labtestreportWirhFileList) {
+        Integer labTestReportId = labtestreportWirhFileList.getLabTestReportId();
+        List<Integer> fileIds = labtestreportWirhFileList.getFileIds();
+
+        //更新实验室检测报告表
+        Labtestreport labtestreport = BeanUtil.copyProperties(labtestreportWirhFileList,Labtestreport.class);
+        labtestreport.setUploadDate(LocalDate.now());
+        labtestreportMapper.updateById(labtestreport);
+
+        //将id为labTestReportId且id不在fileIds中的数据的labTestReportId设置为0
+        labtestfilesMapper.updateLabTestReportIdByFileIds(0,labTestReportId,fileIds);
+
+        //将id为labTestReportId且id不在fileIds中的数据的labTestReportId设置为labTestReportId
+        for (Integer fileId:labtestreportWirhFileList.getFileIds()) {
+            labtestfilesMapper.updateLabTestReportIdByFileId(fileId,labTestReportId);
+        }
     }
 }
