@@ -2,6 +2,7 @@ package com.infect.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.infect.dto.AllSymptomsDTO;
 import com.infect.dto.RailwayEmployeeCheckInDTO;
@@ -159,12 +160,14 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
 
         //构建分页条件
         Page<Dailyhealthstatus> page = Page.of(checkinPageDTO.getPageNo(), checkinPageDTO.getPageSize());
+        page.addOrder(new OrderItem("CheckInDate",false));
+        page.addOrder(new OrderItem("CheckInTime",false));
 
         //分页条件查询
         Page<Dailyhealthstatus> p = lambdaQuery()
                 .in(listUserId!=null,Dailyhealthstatus::getUserId,listUserId)
-                .gt(dateFlag,Dailyhealthstatus::getCheckInDate,checkInDateBegin)
-                .lt(dateFlag,Dailyhealthstatus::getCheckInDate,checkInDateEnd)
+                .ge(dateFlag,Dailyhealthstatus::getCheckInDate,checkInDateBegin)
+                .le(dateFlag,Dailyhealthstatus::getCheckInDate,checkInDateEnd)
                 .eq(isHealth!=null,Dailyhealthstatus::getIsHealth,isHealth)
                 .page(page);
 

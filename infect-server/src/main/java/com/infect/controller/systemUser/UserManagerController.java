@@ -81,7 +81,7 @@ public class UserManagerController {
     @GetMapping("/pageSelectUser")
     @ApiOperation(value = "根据用户类型，用户名分页查询用户列表")
     public Result<PageResult<UserSystemInfoVO>> pageSelectUser(UserPageDTO userPageDTO){
-        System.out.println(userPageDTO);
+//        System.out.println(userPageDTO);
         PageResult<UserSystemInfoVO> pageResult = userService.queryUserspage(userPageDTO);
         return Result.success(pageResult);
     }

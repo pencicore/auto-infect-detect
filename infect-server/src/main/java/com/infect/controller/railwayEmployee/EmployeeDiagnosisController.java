@@ -3,6 +3,7 @@ package com.infect.controller.railwayEmployee;
 import com.infect.dto.AllDiagnosisAndResultDTO;
 import com.infect.dto.DiagnosisReportsDTO;
 import com.infect.entity.*;
+import com.infect.enums.DiagnosisResultsEnumConstants;
 import com.infect.result.Result;
 import com.infect.service.*;
 import com.infect.utils.BaseContext;
@@ -39,7 +40,7 @@ public class EmployeeDiagnosisController {
     @PostMapping("/result")
     public Result saveDiagnosis(@RequestBody AllDiagnosisAndResultDTO allDiagnosisAndResultDTO) {
         System.out.println(allDiagnosisAndResultDTO);
-        myDiagnosisService.saveDiagnosis(BaseContext.getCurrentId(),allDiagnosisAndResultDTO);
+        myDiagnosisService.saveDiagnosis(BaseContext.getCurrentId(),allDiagnosisAndResultDTO, DiagnosisResultsEnumConstants.SUBMISSION_USER_TYPE_RAILWAY_EMPLOYEE);
         return Result.success();
     }
 

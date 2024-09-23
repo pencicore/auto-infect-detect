@@ -2,20 +2,25 @@ package com.infect.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.lang.Pair;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.infect.dto.AllDiagnosisAndResultDTO;
 import com.infect.dto.DiagnosisReportsDTO;
 import com.infect.dto.system.DiseaseStatisticsDTO;
 import com.infect.entity.*;
-import com.infect.enums.DiagnosisResultsEnumConstants;
+import com.infect.entity.armorFusion.AllDiagnosis;
 import com.infect.mapper.*;
 import com.infect.properties.PathProperties;
 import com.infect.service.MyDiagnosisService;
 import com.infect.temporary.DiseaseStatisticsInfoTemp;
+import com.infect.utils.ExcelUtil;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -74,7 +79,7 @@ public class DiagnosisServiceImpl implements MyDiagnosisService {
     //将dto中诊断信息全部保存到
     @Override
     @Transactional
-    public void saveDiagnosis(Integer userId, AllDiagnosisAndResultDTO allDiagnosisAndResultDTO) {
+    public void saveDiagnosis(Integer userId, AllDiagnosisAndResultDTO allDiagnosisAndResultDTO, String userType) {
         //部分常量
         LocalDate nowTime = LocalDate.now();
 
@@ -83,7 +88,7 @@ public class DiagnosisServiceImpl implements MyDiagnosisService {
         Diagnosisresults diagnosisresults = BeanUtil.copyProperties(allDiagnosisAndResultDTO.getDiagnosisResultsEmpDTO(), Diagnosisresults.class);
         //1.2 设置用户id，提交时间，提交用户id，提交用户类型
         diagnosisresults.setUserId(userId);
-        diagnosisresults.setSubmissionUserType(DiagnosisResultsEnumConstants.SUBMISSION_USER_TYPE_RAILWAY_EMPLOYEE);
+        diagnosisresults.setSubmissionUserType(userType);
         diagnosisresults.setSubmissionUserId(userId);
         diagnosisresults.setSubmissionTime(nowTime);
         //1.3 查询数据库，通过用户id获取用户姓名
@@ -238,6 +243,241 @@ public class DiagnosisServiceImpl implements MyDiagnosisService {
         }
 
         return map;
+    }
+
+    /**
+     * 根据diagnosisResultsID获取所有诊断信息，还有文件id
+     * @param diagnosisResultsID
+     * @return
+     */
+    @Override
+    public AllDiagnosis getAllDiagnosis(Integer diagnosisResultsID) {
+        AllDiagnosis allDiagnosis = new AllDiagnosis();
+
+        //查询诊断结果表
+        allDiagnosis.setDiagnosisresults(
+                diagnosisresultsMapper.selectById(diagnosisResultsID)
+        );
+
+        //查询9张诊断信息表
+        allDiagnosis.setDiagnosispersonalinfo(
+                diagnosisPersonalInfoMapper.selectOne(
+                        new LambdaQueryWrapper<Diagnosispersonalinfo>()
+                                .eq(Diagnosispersonalinfo::getDiagnosisResultsId, diagnosisResultsID)
+                )
+        );
+
+        allDiagnosis.setDiagnosisgeneralsymptoms(
+                diagnosisGeneralSymptomsMapper.selectOne(
+                        new LambdaQueryWrapper<Diagnosisgeneralsymptoms>()
+                                .eq(Diagnosisgeneralsymptoms::getDiagnosisResultsId, diagnosisResultsID)
+                )
+        );
+        allDiagnosis.setDiagnosisrespiratorysymptoms(
+                diagnosisRespiratorySymptomsMapper.selectOne(
+                        new LambdaQueryWrapper<Diagnosisrespiratorysymptoms>()
+                                .eq(Diagnosisrespiratorysymptoms::getDiagnosisResultsId, diagnosisResultsID)
+                )
+        );
+        allDiagnosis.setDiagnosisdigestivesymptoms(
+                diagnosisDigestiveSymptomsMapper.selectOne(
+                        new LambdaQueryWrapper<Diagnosisdigestivesymptoms>()
+                                .eq(Diagnosisdigestivesymptoms::getDiagnosisResultsId, diagnosisResultsID)
+                )
+        );
+        allDiagnosis.setDiagnosiscirculatorysymptoms(
+                diagnosisCirculatorySymptomsMapper.selectOne(
+                        new LambdaQueryWrapper<Diagnosiscirculatorysymptoms>()
+                                .eq(Diagnosiscirculatorysymptoms::getDiagnosisResultsId, diagnosisResultsID)
+                )
+        );
+        allDiagnosis.setDiagnosisneurologicalsymptoms(
+                diagnosisNeurologicalSymptomsMapper.selectOne(
+                        new LambdaQueryWrapper<Diagnosisneurologicalsymptoms>()
+                                .eq(Diagnosisneurologicalsymptoms::getDiagnosisResultsId, diagnosisResultsID)
+                )
+        );
+        allDiagnosis.setDiagnosislocalsymptoms(
+                diagnosisLocalSymptomsMapper.selectOne(
+                        new LambdaQueryWrapper<Diagnosislocalsymptoms>()
+                                .eq(Diagnosislocalsymptoms::getDiagnosisResultsId, diagnosisResultsID)
+                )
+        );
+        allDiagnosis.setDiagnosisothersymptoms(
+                diagnosisOtherSymptomsMapper.selectOne(
+                        new LambdaQueryWrapper<Diagnosisothersymptoms>()
+                                .eq(Diagnosisothersymptoms::getDiagnosisResultsId, diagnosisResultsID)
+                )
+        );
+        allDiagnosis.setDiagnosiscomplications(
+                diagnosisComplicationsMapper.selectOne(
+                        new LambdaQueryWrapper<Diagnosiscomplications>()
+                                .eq(Diagnosiscomplications::getDiagnosisResultsId, diagnosisResultsID)
+                )
+        );
+
+        //查询检查项目表
+        allDiagnosis.setDiagnosisexaminations(
+                diagnosisexaminationsMapper.selectOne(
+                        new LambdaQueryWrapper<Diagnosisexaminations>()
+                                .eq(Diagnosisexaminations::getDiagnosisResultsId, diagnosisResultsID)
+                )
+        );
+
+        //查询关联的文件id
+        allDiagnosis.setFileIdList(
+                diagnosisreportsMapper.selectIdsByDiagnosisResultsID(diagnosisResultsID)
+        );
+
+        //返回
+        return allDiagnosis;
+    }
+
+    /**
+     * 根据id更新诊断信息
+     * @param allDiagnosis
+     */
+    @Override
+    public void updateDiagnosis(AllDiagnosis allDiagnosis) {
+        //更新诊断结果表
+        diagnosisresultsMapper.updateById(
+                allDiagnosis.getDiagnosisresults()
+        );
+
+        //更新9张诊断信息表
+        diagnosisPersonalInfoMapper.updateById(
+                allDiagnosis.getDiagnosispersonalinfo()
+        );
+
+        diagnosisGeneralSymptomsMapper.updateById(
+                allDiagnosis.getDiagnosisgeneralsymptoms()
+        );
+
+        diagnosisRespiratorySymptomsMapper.updateById(
+                allDiagnosis.getDiagnosisrespiratorysymptoms()
+        );
+
+        diagnosisDigestiveSymptomsMapper.updateById(
+                allDiagnosis.getDiagnosisdigestivesymptoms()
+        );
+
+        diagnosisCirculatorySymptomsMapper.updateById(
+                allDiagnosis.getDiagnosiscirculatorysymptoms()
+        );
+
+        diagnosisNeurologicalSymptomsMapper.updateById(
+                allDiagnosis.getDiagnosisneurologicalsymptoms()
+        );
+
+        diagnosisLocalSymptomsMapper.updateById(
+                allDiagnosis.getDiagnosislocalsymptoms()
+        );
+
+        diagnosisOtherSymptomsMapper.updateById(
+                allDiagnosis.getDiagnosisothersymptoms()
+        );
+
+        diagnosisComplicationsMapper.updateById(
+                allDiagnosis.getDiagnosiscomplications()
+        );
+
+        //更新检查项目表
+        diagnosisexaminationsMapper.updateById(
+                allDiagnosis.getDiagnosisexaminations()
+        );
+    }
+
+    /**
+     * 导出文件：导出临床信息导出表
+     * @param response
+     */
+    @Override
+    public void getExcelClinicalInformationExportForm(HttpServletResponse response) {
+
+        //获取文件绝对路径
+        String projectDir = System.getProperty("user.dir");
+        String fileName = projectDir + "\\infect-server\\src\\main\\resources\\templates\\临床诊断信息导出表.xlsx";
+
+        //查询打卡信息
+        List<Diagnosisresults> diagnosisresultsList = diagnosisresultsMapper.selectList(null);
+        List<List<Object>> listList = new ArrayList<>();
+
+        //生成二维数组
+        for (Diagnosisresults obj:
+                diagnosisresultsList) {
+            List<Object> temp = new ArrayList<>();
+
+            //添加诊断结果信息
+            temp.add(obj);
+
+            //添加用户信息
+            temp.add(userMapper.selectById(obj.getUserId()));
+
+            //获取诊断结果id
+            Integer diagnosisResultsId=obj.getDiagnosisResultsId();
+
+            //添加九张诊断信息表信息
+            temp.add(diagnosisPersonalInfoMapper.selectOne(
+                    new LambdaQueryWrapper<Diagnosispersonalinfo>()
+                            .eq(Diagnosispersonalinfo::getDiagnosisResultsId,diagnosisResultsId)
+            ));
+            temp.add(diagnosisGeneralSymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Diagnosisgeneralsymptoms>()
+                            .eq(Diagnosisgeneralsymptoms::getDiagnosisResultsId, diagnosisResultsId)
+            ));
+            temp.add(diagnosisRespiratorySymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Diagnosisrespiratorysymptoms>()
+                            .eq(Diagnosisrespiratorysymptoms::getDiagnosisResultsId,diagnosisResultsId)
+            ));
+            temp.add(diagnosisDigestiveSymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Diagnosisdigestivesymptoms>()
+                            .eq(Diagnosisdigestivesymptoms::getDiagnosisResultsId,diagnosisResultsId)
+            ));
+            temp.add(diagnosisCirculatorySymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Diagnosiscirculatorysymptoms>()
+                            .eq(Diagnosiscirculatorysymptoms::getDiagnosisResultsId,diagnosisResultsId)
+            ));
+            temp.add(diagnosisNeurologicalSymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Diagnosisneurologicalsymptoms>()
+                            .eq(Diagnosisneurologicalsymptoms::getDiagnosisResultsId,diagnosisResultsId)
+            ));
+            temp.add(diagnosisLocalSymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Diagnosislocalsymptoms>()
+                            .eq(Diagnosislocalsymptoms::getDiagnosisResultsId,diagnosisResultsId)
+            ));
+            temp.add(diagnosisOtherSymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Diagnosisothersymptoms>()
+                            .eq(Diagnosisothersymptoms::getDiagnosisResultsId,diagnosisResultsId)
+            ));
+            temp.add(diagnosisComplicationsMapper.selectOne(
+                    new LambdaQueryWrapper<Diagnosiscomplications>()
+                            .eq(Diagnosiscomplications::getDiagnosisResultsId,diagnosisResultsId)
+            ));
+
+            //添加检查诊断项目信息
+            temp.add(diagnosisexaminationsMapper.selectOne(
+                    new LambdaQueryWrapper<Diagnosisexaminations>()
+                            .eq(Diagnosisexaminations::getDiagnosisResultsId,diagnosisResultsId)
+            ));
+
+            listList.add(temp);
+        }
+
+        XSSFWorkbook excel = ExcelUtil.getExcelFile(response, "临床诊断信息导出表.xlsx", fileName
+                , 2, 1, 213
+                , 2, 1
+                , listList);
+
+        try {
+            ServletOutputStream out = response.getOutputStream();
+            excel.write(out);
+
+            excel.close();
+            out.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 }

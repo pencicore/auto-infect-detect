@@ -2,10 +2,12 @@ package com.infect.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.infect.constants.JwtConstant;
 import com.infect.dto.ChangePasswordDTO;
 import com.infect.dto.UserLoginDTO;
+import com.infect.dto.system.UserBaseInfoDTO;
 import com.infect.dto.system.UserPageDTO;
 import com.infect.entity.Dailyhealthstatus;
 import com.infect.entity.User;
@@ -393,6 +395,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         //构建分页条件
         Page<User> page = Page.of(userPageDTO.getPageNo(), userPageDTO.getPageSize());
+        page.addOrder(new OrderItem("userId",false));
 
         //分页查询
         Page<User> p = lambdaQuery()
@@ -478,6 +481,32 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }
 
         return list;
+    }
+
+    @Override
+    public User getUserByBaseInfo(UserBaseInfoDTO userBaseInfoDTO) {
+        String name = userBaseInfoDTO.getName();
+        String phoneNumber = userBaseInfoDTO.getPhoneNumber();
+        String gender = userBaseInfoDTO.getGender();
+        Integer age = userBaseInfoDTO.getAge();
+
+        //根据查询条件构造wrapper条件
+        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<User>()
+                .like(name!=null, User::getName, name)
+                .like(phoneNumber!=null,User::getPhoneNumber,phoneNumber)
+                .eq(gender!=null,User::getGender,gender)
+                .eq(age!=null,User::getAge,age);
+
+        //根据构造条件查询对应用户数量
+        Integer count = Math.toIntExact(userMapper.selectCount(lambdaQueryWrapper));
+
+        //数量不等于1，返回失败信息
+        if(count!=1){
+            return null;
+        }
+
+        //查询用户信息，并返回
+        return userMapper.selectOne(lambdaQueryWrapper);
     }
 
     //老方法

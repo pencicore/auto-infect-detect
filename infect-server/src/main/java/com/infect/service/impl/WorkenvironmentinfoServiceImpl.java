@@ -3,6 +3,7 @@ package com.infect.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.infect.dto.system.EnvironmentPageDTO;
 import com.infect.entity.User;
@@ -147,6 +148,7 @@ public class WorkenvironmentinfoServiceImpl extends ServiceImpl<Workenvironmenti
 
         //构建分页条件
         Page<Workenvironmentinfo> page = Page.of(environmentPageDTO.getPageNo(), environmentPageDTO.getPageSize());
+        page.addOrder(new OrderItem("SubmissionTime",false));
 
         //分页查询
         Page<Workenvironmentinfo> p = lambdaQuery()

@@ -166,8 +166,13 @@ public class ExcelUtil {    // 读取Excel文件
             }
         }
 
+        //记录当前添加了多少数据
+        Integer listNum = 0;
+
         //遍历每行
         for(List<Object> resource:list){
+
+            listNum++;
 
             //遍历一行数据的每个对象
             for(Object obj:resource){
@@ -193,6 +198,10 @@ public class ExcelUtil {    // 读取Excel文件
 
                     //向map对应位置添加值(如果存在的话)
                     if(resultMap.containsKey(name)){
+                        //如果当前字段的数据量等于已变量数据量，则证明出现重名问题，直接跳过
+                        if(resultMap.get(name).size() == listNum){
+                            continue;
+                        }
                         resultMap.get(name).add(valueStr);
                     }
                 }

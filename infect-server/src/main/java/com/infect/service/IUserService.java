@@ -2,6 +2,7 @@ package com.infect.service;
 
 import com.infect.dto.ChangePasswordDTO;
 import com.infect.dto.UserLoginDTO;
+import com.infect.dto.system.UserBaseInfoDTO;
 import com.infect.dto.system.UserPageDTO;
 import com.infect.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -39,4 +40,6 @@ public interface IUserService extends IService<User> {
     void queryAllUserToExcel(HttpServletResponse response);
 
     List<ImportantUserInfoVO> getImportantUserInfo();
+
+    User getUserByBaseInfo(UserBaseInfoDTO userBaseInfoDTO);
 }
