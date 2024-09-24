@@ -109,7 +109,7 @@ public class DiagnosisresultsServiceImpl extends ServiceImpl<DiagnosisresultsMap
 
         //分页查询
         Page<Diagnosisresults> p = lambdaQuery()
-                .in(Diagnosisresults::getUserId,userIds)
+                .in(userIds!=null && userIds.size()!=0,Diagnosisresults::getUserId,userIds)
                 .ge(flag, Diagnosisresults::getSubmissionTime,beginDate)
                 .le(flag, Diagnosisresults::getSubmissionTime,endDate)
                 .page(page);

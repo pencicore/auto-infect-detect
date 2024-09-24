@@ -71,7 +71,7 @@ public class LabtestreportServiceImpl extends ServiceImpl<LabtestreportMapper, L
 
         //分页查询
         Page<Labtestreport> p = lambdaQuery()
-                .in(Labtestreport::getUserId, userIds)
+                .in(userIds!=null && userIds.size()!=0,Labtestreport::getUserId, userIds)
                 .ge(flag,Labtestreport::getUploadDate,beginDate)
                 .le(flag,Labtestreport::getUploadDate,endDate)
                 .page(page);

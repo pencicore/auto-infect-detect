@@ -165,6 +165,5 @@ public class LabTestServiceImpl implements MyLabTestService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 }
