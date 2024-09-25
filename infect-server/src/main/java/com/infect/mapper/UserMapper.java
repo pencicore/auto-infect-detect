@@ -48,9 +48,9 @@ public interface UserMapper extends BaseMapper<User> {
     List<Integer> selectIdsByWrapper(@Param("ew") LambdaQueryWrapper<User> wrapper);
 
     /**
-     * 根据用户id查询用户名和用户所在部门
-     * @param ids
+     * 查询HasMedicalHistory为true的用户信息
      * @return
      */
-    List<ImportantUserInfoVO> selectNameAndDepartmentByIds(List<Integer> ids);
+    @Select("select userId, name, department from user where HasMedicalHistory = true")
+    List<ImportantUserInfoVO> selectHasMedicalHistoryIsTrue();
 }

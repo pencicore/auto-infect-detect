@@ -15,7 +15,7 @@ public class ImportantUserInfoVO {
     @ApiModelProperty(value = "用户姓名", required = true, example = "张三")
     private String name;
 
-    @ApiModelProperty(value = "部门", example = "")
+    @ApiModelProperty(value = "部门", example = "安全部")
     private String department;
 
     //dailyHealth表信息
@@ -43,10 +43,10 @@ public class ImportantUserInfoVO {
     public ImportantUserInfoVO() {
     }
 
-    public ImportantUserInfoVO(Integer userId, String name, String gender, Boolean isHealth, String diagnosisDiseaseTypeName, BigDecimal longitude, BigDecimal latitude, String province, String city, String county) {
+    public ImportantUserInfoVO(Integer userId, String name, String department, Boolean isHealth, String diagnosisDiseaseTypeName, BigDecimal longitude, BigDecimal latitude, String province, String city, String county) {
         this.userId = userId;
         this.name = name;
-        this.department = gender;
+        this.department = department;
         this.isHealth = isHealth;
         this.diagnosisDiseaseTypeName = diagnosisDiseaseTypeName;
         this.longitude = longitude;
@@ -90,18 +90,18 @@ public class ImportantUserInfoVO {
 
     /**
      * 获取
-     * @return gender
+     * @return department
      */
-    public String getGender() {
+    public String getDepartment() {
         return department;
     }
 
     /**
      * 设置
-     * @param gender
+     * @param department
      */
-    public void setGender(String gender) {
-        this.department = gender;
+    public void setDepartment(String department) {
+        this.department = department;
     }
 
     /**
@@ -217,6 +217,6 @@ public class ImportantUserInfoVO {
     }
 
     public String toString() {
-        return "ImportantUserInfoVO{userId = " + userId + ", name = " + name + ", gender = " + department + ", isHealth = " + isHealth + ", diagnosisDiseaseTypeName = " + diagnosisDiseaseTypeName + ", longitude = " + longitude + ", latitude = " + latitude + ", province = " + province + ", city = " + city + ", county = " + county + "}";
+        return "ImportantUserInfoVO{userId = " + userId + ", name = " + name + ", department = " + department + ", isHealth = " + isHealth + ", diagnosisDiseaseTypeName = " + diagnosisDiseaseTypeName + ", longitude = " + longitude + ", latitude = " + latitude + ", province = " + province + ", city = " + city + ", county = " + county + "}";
     }
 }

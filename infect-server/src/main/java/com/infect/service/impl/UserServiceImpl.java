@@ -459,13 +459,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      */
     @Override
     public List<ImportantUserInfoVO> getImportantUserInfo() {
-        //查询最近3天有患病的用户id
-        List<Integer> ids = dailyhealthstatusMapper.selectUerIdByIsHealth(
-                LocalDate.now().minusDays(3),
-                LocalDate.now());
 
         //根据id查询用户部分信息
-        List<ImportantUserInfoVO> list = userMapper.selectNameAndDepartmentByIds(ids);
+        List<ImportantUserInfoVO> list = userMapper.selectHasMedicalHistoryIsTrue();
 
         //根据id查询今日签到部分信息
         for (ImportantUserInfoVO vo:list) {
