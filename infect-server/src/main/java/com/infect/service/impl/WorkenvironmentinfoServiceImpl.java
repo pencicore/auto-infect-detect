@@ -217,17 +217,11 @@ public class WorkenvironmentinfoServiceImpl extends ServiceImpl<Workenvironmenti
                 row = sheet.getRow(i + 2);
                 // 当前行为空，需要先创建该行
                 if (row == null) {
-                    row = sheet.createRow(i + 1);
+                    row = sheet.createRow(i + 2);
                 }
 
                 workenvironmentinfo = list.get(i);
                 user = userList.get(i);
-
-                for (int j = 0; j < 36; j++) {
-                    if (row == null) {
-                        row = sheet.createRow(j);
-                    }
-                }
 
                 // 序号
                 row.createCell(0).setCellValue(i + 1);
