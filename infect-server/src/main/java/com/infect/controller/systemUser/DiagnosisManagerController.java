@@ -1,5 +1,6 @@
 package com.infect.controller.systemUser;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.infect.dto.AllDiagnosisAndResultDTO;
 import com.infect.dto.system.DiagnosisPageDTO;
 import com.infect.dto.system.UserBaseInfoDTO;
@@ -13,6 +14,7 @@ import com.infect.service.IUserService;
 import com.infect.service.MyDiagnosisService;
 import com.infect.utils.BaseContext;
 import com.infect.vo.system.DiagnosisPageVO;
+import com.infect.vo.system.UserInfoVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +78,17 @@ public class DiagnosisManagerController {
     @ApiOperation(value = "导出文件：导出临床信息导出表")
     public void getExcelClinicalInformationExportForm(HttpServletResponse response){
         diagnosisService.getExcelClinicalInformationExportForm(response);
+    }
+
+    @GetMapping("/getUserInfo/{userId}")
+    @ApiOperation(value = "获取用户信息")
+    public Result<UserInfoVO> getUserInfo(@PathVariable Integer userId){
+        User user = userService.getById(userId);
+        UserInfoVO userInfoVO = BeanUtil.copyProperties(user, UserInfoVO.class);
+        if(userInfoVO == null) {
+            return Result.error("用户id不存在");
+        }
+        return Result.success(userInfoVO);
     }
 
 }

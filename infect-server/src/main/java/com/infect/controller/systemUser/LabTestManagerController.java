@@ -1,5 +1,6 @@
 package com.infect.controller.systemUser;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.infect.dto.LabTestReportDTO;
 import com.infect.dto.system.DiagnosisPageDTO;
 import com.infect.dto.system.UserBaseInfoDTO;
@@ -12,6 +13,7 @@ import com.infect.service.ILabtestreportService;
 import com.infect.service.IUserService;
 import com.infect.service.MyLabTestService;
 import com.infect.vo.system.LabTestPageVO;
+import com.infect.vo.system.UserInfoVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,4 +79,14 @@ public class LabTestManagerController {
         labTestService.getDetectionInformationExportFormExcel(response);
     }
 
+    @GetMapping("/getUserInfo/{userId}")
+    @ApiOperation(value = "获取用户信息")
+    public Result<UserInfoVO> getUserInfo(@PathVariable Integer userId){
+        User user = userService.getById(userId);
+        UserInfoVO userInfoVO = BeanUtil.copyProperties(user, UserInfoVO.class);
+        if(userInfoVO == null) {
+            return Result.error("用户id不存在");
+        }
+        return Result.success(userInfoVO);
+    }
 }
