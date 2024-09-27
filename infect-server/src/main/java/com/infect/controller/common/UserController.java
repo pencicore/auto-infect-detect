@@ -77,12 +77,4 @@ public class UserController {
         }
 
     }
-
-    @ApiOperation(value = "hello world")
-    @PostMapping("hello")
-    public Result hello(@RequestBody MultipartFile file) throws Exception {
-        List<List<String>> lists = ExcelUtil.readExcelFile(file, 0);
-        System.out.println(lists);
-        return Result.success(lists);
-    }
 }

@@ -49,7 +49,7 @@ public class ExcelUtil {    // 读取Excel文件
                 Iterator<Cell> cellIterator = row.cellIterator();
                 while (cellIterator.hasNext()) {
                     Cell cell = cellIterator.next();
-                    rowData.add(getCellValue(cell).toString());
+                    rowData.add(getCellValue(cell).toString().trim());
                 }
 
                 data.add(rowData);
