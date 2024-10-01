@@ -66,6 +66,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      */
     @Override
     public UserLoginVO login(UserLoginDTO userLoginDTO) {
+        Map<String,Object> map=new HashMap<>();
         //根据用户手机号码和密码查询用户信息
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<User>()
                 .eq(User::getPhoneNumber, userLoginDTO.getPhoneNumber())
@@ -95,24 +96,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             //铁路工人
             secretKey = jwtProperties.getRailwayEmployeeSecretKey();
             ttl = jwtProperties.getRailwayEmployeeTtl();
+            map.put(JwtConstant.USER_TYPE, JwtConstant.USER_TYPE_RAILWAY);
         } else if (user.getUserType().equals(UserEnumConstants.USER_TYPE_ADMIN)) {
             //系统管理员
             secretKey = jwtProperties.getAdminSecretKey();
             ttl = jwtProperties.getAdminTtl();
+            map.put(JwtConstant.USER_TYPE, JwtConstant.USER_TYPE_ADMIN);
         } else if (user.getUserType().equals(UserEnumConstants.USER_TYPE_CDC_STAFF)) {
             //疾控中心工作人员
             secretKey = jwtProperties.getCdcStaffSecretKey();
             ttl = jwtProperties.getCdcStaffTtl();
+            map.put(JwtConstant.USER_TYPE, JwtConstant.USER_TYPE_CDC_STAFF);
         } else if (user.getUserType().equals(UserEnumConstants.USER_TYPE_MEDICAL_STAFF)) {
             //专职医护人员
             secretKey = jwtProperties.getMedicalStaffSecretKey();
             ttl = jwtProperties.getMedicalStaffTtl();
+            map.put(JwtConstant.USER_TYPE, JwtConstant.USER_TYPE_MEDICAL_STAFF);
         } else {
             return null;
         }
         //生成jwt
-        Map<String,Object> map=new HashMap();
-        map.put(JwtConstant.UserId,user.getUserId().toString());
+        map.put(JwtConstant.USER_ID,user.getUserId().toString());
         String jwt= JwtUtil.createJWT(secretKey,ttl,map);
         userLoginVO.setToken(jwt);
         //将密码设置为空

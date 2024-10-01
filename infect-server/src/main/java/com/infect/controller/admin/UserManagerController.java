@@ -1,4 +1,4 @@
-package com.infect.controller.systemUser;
+package com.infect.controller.admin;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.infect.dto.system.UserInfoDTO;
@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Api(tags = "用户管理-用户管理")
 @RestController
-@RequestMapping("/systemUser/userManager")
+@RequestMapping("/admin/userManager")
 public class UserManagerController {
 
     @Autowired

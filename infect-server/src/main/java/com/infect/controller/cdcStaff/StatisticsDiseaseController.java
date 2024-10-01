@@ -1,4 +1,4 @@
-package com.infect.controller.systemUser;
+package com.infect.controller.cdcStaff;
 
 import cn.hutool.core.lang.Pair;
 import com.infect.dto.system.DiseaseStatisticsDTO;
@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Api(tags = "统计报表-疾病统计报表")
 @RestController
-@RequestMapping("/systemUser/statisticsDisease")
+@RequestMapping("/cdcStaff/statisticsDisease")
 public class StatisticsDiseaseController {
 
     @Autowired

@@ -1,4 +1,4 @@
-package com.infect.controller.systemUser;
+package com.infect.controller.admin;
 
 import com.infect.dto.system.HospitalPageDTO;
 import com.infect.entity.Hospital;
@@ -21,7 +21,7 @@ import java.net.URLEncoder;
 
 @Api(tags = "系统管理-医院基础数据管理")
 @RestController
-@RequestMapping("/systemUser/systemHospitalManager")
+@RequestMapping("/admin/systemHospitalManager")
 public class SystemHospitalManagerController {
 
     @Autowired

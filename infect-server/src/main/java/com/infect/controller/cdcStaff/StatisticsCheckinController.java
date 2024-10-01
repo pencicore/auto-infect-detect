@@ -1,4 +1,4 @@
-package com.infect.controller.systemUser;
+package com.infect.controller.cdcStaff;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.infect.dto.system.CheckinPageDTO;
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Api(tags = "统计报表-职工打卡信息")
 @RestController
-@RequestMapping("/systemUser/statisticsCheckin")
+@RequestMapping("/cdcStaff/statisticsCheckin")
 public class StatisticsCheckinController {
 
     @Autowired

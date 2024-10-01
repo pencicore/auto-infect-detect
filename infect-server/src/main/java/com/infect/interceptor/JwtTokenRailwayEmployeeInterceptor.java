@@ -52,7 +52,7 @@ public class JwtTokenRailwayEmployeeInterceptor implements HandlerInterceptor {
         //2、校验令牌
         try {
             Claims claims = JwtUtil.parseJWT(jwtProperties.getRailwayEmployeeSecretKey(), token);
-            Integer userId = Integer.valueOf(claims.get(JwtConstant.UserId).toString());
+            Integer userId = Integer.valueOf(claims.get(JwtConstant.USER_ID).toString());
 
             /*
             2024/3/2 02-05

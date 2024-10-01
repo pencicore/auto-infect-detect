@@ -1,4 +1,4 @@
-package com.infect.controller.systemUser;
+package com.infect.controller.medicalStaff;
 
 import com.infect.dto.ChangePasswordDTO;
 import com.infect.result.Result;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Api(tags = "用户管理-系统管理员密码管理")
 @RestController
-@RequestMapping("/systemUser/userpPassword")
+@RequestMapping("/medicalStaff/userpPassword")
 public class UserPasswordController {
 
     @Autowired

@@ -1,4 +1,4 @@
-package com.infect.controller.systemUser;
+package com.infect.controller.cdcStaff;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.infect.entity.Dailyhealthstatus;
 import com.infect.entity.User;
@@ -21,7 +21,7 @@ import java.util.List;
 
 @Api(tags = "统计报表-数据大屏")
 @RestController
-@RequestMapping("systemUser/statisticsDataView")
+@RequestMapping("cdcStaff/statisticsDataView")
 public class StatisticsDataViewController {
 
     @Autowired

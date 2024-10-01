@@ -1,4 +1,4 @@
-package com.infect.controller.systemUser;
+package com.infect.controller.medicalStaff;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.infect.dto.AllDiagnosisAndResultDTO;
@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Api(tags = "诊断信息管理")
 @RestController
-@RequestMapping("/systemUser/diagnosisManager")
+@RequestMapping("/medicalStaff/diagnosisManager")
 public class DiagnosisManagerController {
 
     @Autowired

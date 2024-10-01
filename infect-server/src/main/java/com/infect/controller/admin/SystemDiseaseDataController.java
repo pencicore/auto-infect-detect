@@ -1,4 +1,4 @@
-package com.infect.controller.systemUser;
+package com.infect.controller.admin;
 
 import com.infect.dto.system.DiseaseTypePageDTO;
 import com.infect.result.PageResult;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Api(tags = "系统管理-疾病基础数据管理")
 @RestController
-@RequestMapping("/systemUser/systemDiseaseData")
+@RequestMapping("/admin/systemDiseaseData")
 public class SystemDiseaseDataController {
 
     @Autowired

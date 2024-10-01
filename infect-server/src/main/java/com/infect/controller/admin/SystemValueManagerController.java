@@ -1,4 +1,4 @@
-package com.infect.controller.systemUser;
+package com.infect.controller.admin;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -18,7 +18,7 @@ import java.util.List;
 
 @Api(tags = "系统管理-权重管理")
 @RestController
-@RequestMapping("/systemUser/systemValueManager")
+@RequestMapping("/admin/systemValueManager")
 public class SystemValueManagerController {
 
     @Autowired

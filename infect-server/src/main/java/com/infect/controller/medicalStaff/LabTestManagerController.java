@@ -1,10 +1,9 @@
-package com.infect.controller.systemUser;
+package com.infect.controller.medicalStaff;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.infect.dto.LabTestReportDTO;
 import com.infect.dto.system.DiagnosisPageDTO;
 import com.infect.dto.system.UserBaseInfoDTO;
-import com.infect.entity.Labtestreport;
 import com.infect.entity.User;
 import com.infect.entity.armorFusion.LabtestreportWirhFileList;
 import com.infect.result.PageResult;
@@ -23,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Api(tags = "检查信息管理")
 @RestController
-@RequestMapping("/systemUser/labTestManager")
+@RequestMapping("/medicalStaff/labTestManager")
 public class LabTestManagerController {
 
     @Autowired

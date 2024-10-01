@@ -1,4 +1,4 @@
-package com.infect.controller.systemUser;
+package com.infect.controller.admin;
 
 import com.infect.dto.system.UserFeedBackPageDTO;
 import com.infect.entity.Userfeedback;
@@ -7,7 +7,6 @@ import com.infect.result.Result;
 import com.infect.service.IUserfeedbackService;
 import com.infect.vo.system.UserFeedBackPageVO;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Api(tags = "用户反馈相关接口")
 @RestController
-@RequestMapping("/systemUser/feedBackManager")
+@RequestMapping("/admin/feedBackManager")
 public class FeedBackManagerController {
 
     @Autowired

@@ -1,4 +1,4 @@
-package com.infect.controller.systemUser;
+package com.infect.controller.cdcStaff;
 
 import com.infect.dto.system.EnvironmentPageDTO;
 import com.infect.entity.Workenvironmentinfo;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Api(tags = "工作环境管理")
 @RestController
-@RequestMapping("/systemUser/workEnvironment")
+@RequestMapping("/cdcStaff/workEnvironment")
 public class WorkEnvironmentController {
 
     @Autowired
