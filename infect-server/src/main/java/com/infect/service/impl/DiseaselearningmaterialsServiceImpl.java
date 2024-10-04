@@ -197,12 +197,16 @@ public class DiseaselearningmaterialsServiceImpl extends ServiceImpl<Diseaselear
     @Transactional
     public void upOrdownMaterialSequenceNumber(Integer sequenceNumber, Boolean isUp) {
         //根据isUp找到小于/大于排序值的排序值中差值最小的一个排序值
-        Integer sequenceNumberNext = null;
+        Integer sequenceNumberNext;
         if(isUp){
             sequenceNumberNext = diseaselearningmaterialsMapper.selectSequenceNumberNextUp(sequenceNumber);
         }
         else {
             sequenceNumberNext = diseaselearningmaterialsMapper.selectSequenceNumberNextDown(sequenceNumber);
+        }
+
+        if(sequenceNumberNext == null){
+            return;
         }
 
         //交换两者的排序值
