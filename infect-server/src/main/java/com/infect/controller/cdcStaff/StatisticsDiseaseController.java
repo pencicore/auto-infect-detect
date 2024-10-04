@@ -26,7 +26,7 @@ public class StatisticsDiseaseController {
 
     @GetMapping("/getDiseaseType")
     @ApiOperation("查询疾病类型")
-    public Result getDiseaseType(){
+    public Result<List<String>> getDiseaseType(){
         return Result.success(diagnosisService.getDiseaseList());
     }
 

@@ -22,8 +22,6 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value="Diseaselearningmaterials对象", description="")
 public class Diseaselearningmaterials implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
     @TableId(value = "MaterialID", type = IdType.AUTO)
     private Integer materialId;
 
@@ -47,91 +45,200 @@ public class Diseaselearningmaterials implements Serializable {
 
     private LocalDateTime deletedDate;
 
+    public Diseaselearningmaterials() {
+    }
+
+    public Diseaselearningmaterials(Integer materialId, Integer diseaseTypeId, String diseaseTypeName, String title, String materialType, String filePath, String link, Integer sequenceNumber, LocalDateTime publishDate, Boolean isDeleted, LocalDateTime deletedDate) {
+        this.materialId = materialId;
+        this.diseaseTypeId = diseaseTypeId;
+        this.diseaseTypeName = diseaseTypeName;
+        this.title = title;
+        this.materialType = materialType;
+        this.filePath = filePath;
+        this.link = link;
+        this.sequenceNumber = sequenceNumber;
+        this.publishDate = publishDate;
+        this.isDeleted = isDeleted;
+        this.deletedDate = deletedDate;
+    }
+
+    /**
+     * 获取
+     * @return materialId
+     */
     public Integer getMaterialId() {
         return materialId;
     }
 
+    /**
+     * 设置
+     * @param materialId
+     */
     public void setMaterialId(Integer materialId) {
         this.materialId = materialId;
     }
 
+    /**
+     * 获取
+     * @return diseaseTypeId
+     */
     public Integer getDiseaseTypeId() {
         return diseaseTypeId;
     }
 
+    /**
+     * 设置
+     * @param diseaseTypeId
+     */
     public void setDiseaseTypeId(Integer diseaseTypeId) {
         this.diseaseTypeId = diseaseTypeId;
     }
 
+    /**
+     * 获取
+     * @return diseaseTypeName
+     */
     public String getDiseaseTypeName() {
         return diseaseTypeName;
     }
 
+    /**
+     * 设置
+     * @param diseaseTypeName
+     */
     public void setDiseaseTypeName(String diseaseTypeName) {
         this.diseaseTypeName = diseaseTypeName;
     }
 
+    /**
+     * 获取
+     * @return title
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * 设置
+     * @param title
+     */
     public void setTitle(String title) {
         this.title = title;
     }
 
+    /**
+     * 获取
+     * @return materialType
+     */
     public String getMaterialType() {
         return materialType;
     }
 
+    /**
+     * 设置
+     * @param materialType
+     */
     public void setMaterialType(String materialType) {
         this.materialType = materialType;
     }
 
+    /**
+     * 获取
+     * @return filePath
+     */
     public String getFilePath() {
         return filePath;
     }
 
+    /**
+     * 设置
+     * @param filePath
+     */
     public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * 获取
+     * @return link
+     */
     public String getLink() {
         return link;
     }
 
+    /**
+     * 设置
+     * @param link
+     */
     public void setLink(String link) {
         this.link = link;
     }
 
+    /**
+     * 获取
+     * @return sequenceNumber
+     */
     public Integer getSequenceNumber() {
         return sequenceNumber;
     }
 
+    /**
+     * 设置
+     * @param sequenceNumber
+     */
     public void setSequenceNumber(Integer sequenceNumber) {
         this.sequenceNumber = sequenceNumber;
     }
 
+    /**
+     * 获取
+     * @return publishDate
+     */
     public LocalDateTime getPublishDate() {
         return publishDate;
     }
 
+    /**
+     * 设置
+     * @param publishDate
+     */
     public void setPublishDate(LocalDateTime publishDate) {
         this.publishDate = publishDate;
     }
 
-    public Boolean getDeleted() {
+    /**
+     * 获取
+     * @return isDeleted
+     */
+    public Boolean getIsDeleted() {
         return isDeleted;
     }
 
-    public void setDeleted(Boolean deleted) {
-        isDeleted = deleted;
+    /**
+     * 设置
+     * @param isDeleted
+     */
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
+    /**
+     * 获取
+     * @return deletedDate
+     */
     public LocalDateTime getDeletedDate() {
         return deletedDate;
     }
 
+    /**
+     * 设置
+     * @param deletedDate
+     */
     public void setDeletedDate(LocalDateTime deletedDate) {
         this.deletedDate = deletedDate;
+    }
+
+    public String toString() {
+        return "Diseaselearningmaterials{materialId = " + materialId + ", diseaseTypeId = " + diseaseTypeId + ", diseaseTypeName = " + diseaseTypeName + ", title = " + title + ", materialType = " + materialType + ", filePath = " + filePath + ", link = " + link + ", sequenceNumber = " + sequenceNumber + ", publishDate = " + publishDate + ", isDeleted = " + isDeleted + ", deletedDate = " + deletedDate + "}";
     }
 }

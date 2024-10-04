@@ -38,14 +38,15 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
                 .addPathPatterns("/railwayemployee/**")
                 .excludePathPatterns("/railwayemployee/labtest/file","/railwayemployee/diagnosis/file");
 
-        registry.addInterceptor(jwtTokenAdminInterceptor)
-                .addPathPatterns("/admin/**");
-
-        registry.addInterceptor(jwtTokenCDCStaffInterceptor)
-                .addPathPatterns("/cdcStaff/**");
-
-        registry.addInterceptor(jwtTokenMedicalStaffInterceptor)
-                .addPathPatterns("/medicalStaff/**");
+//        registry.addInterceptor(jwtTokenAdminInterceptor)
+//                .addPathPatterns("/admin/**");
+//
+//        registry.addInterceptor(jwtTokenCDCStaffInterceptor)
+//                .addPathPatterns("/cdcStaff/**");
+//                .excludePathPatterns("/cdcStaff/promotionalMaterialsManager/getLearningMaterialFile/**")
+//
+//        registry.addInterceptor(jwtTokenMedicalStaffInterceptor)
+//                .addPathPatterns("/medicalStaff/**");
     }
 
     @Bean
@@ -99,6 +100,39 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         return docket;
     }
 
+    @Bean
+    public Docket api3() {
+        ApiInfo apiInfo = new ApiInfoBuilder()
+                .title("项目接口文档")
+                .version("2.0")
+                .description("项目接口文档")
+                .build();
+        Docket docket = new Docket(DocumentationType.SWAGGER_2)
+                .groupName("疾控中心管理人员接口")
+                .apiInfo(apiInfo)
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.infect.controller.cdcStaff"))
+                .paths(PathSelectors.any())
+                .build();
+        return docket;
+    }
+
+    @Bean
+    public Docket api4() {
+        ApiInfo apiInfo = new ApiInfoBuilder()
+                .title("项目接口文档")
+                .version("2.0")
+                .description("项目接口文档")
+                .build();
+        Docket docket = new Docket(DocumentationType.SWAGGER_2)
+                .groupName("医护人员接口")
+                .apiInfo(apiInfo)
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.infect.controller.medicalStaff"))
+                .paths(PathSelectors.any())
+                .build();
+        return docket;
+    }
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/doc.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");

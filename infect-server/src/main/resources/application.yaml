@@ -44,4 +44,5 @@ infect:
   path:
     diagnosis-file-path: diagnosisReports
     lab-test-file-path: labTestFilePath
+    disease-learning-material-path: diseaseLearningMaterialPath
 

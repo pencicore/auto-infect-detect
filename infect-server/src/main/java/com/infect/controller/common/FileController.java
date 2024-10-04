@@ -4,6 +4,7 @@ import com.infect.dto.DiagnosisReportsDTO;
 import com.infect.dto.LabTestFileDTO;
 import com.infect.entity.Diagnosisreports;
 import com.infect.entity.Labtestfiles;
+import com.infect.properties.PathProperties;
 import com.infect.result.Result;
 import com.infect.service.IDiagnosisreportsService;
 import com.infect.service.ILabtestfilesService;
@@ -12,11 +13,18 @@ import com.infect.service.MyLabTestService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Api(tags = "文件相关接口")
 @RestController
@@ -34,6 +42,9 @@ public class FileController {
 
     @Autowired
     private ILabtestfilesService labtestfilesService;
+
+    @Autowired
+    private PathProperties pathProperties;
 
     @ApiOperation(value = "提交诊断报告文件")
     @PostMapping("/saveDiagnosisReport")
@@ -127,4 +138,32 @@ public class FileController {
         }
     }
 
+
+    @ApiOperation("根据文件名，获取疾病宣传资料文件")
+    @GetMapping("getLearningMaterialFile/{filename}")
+    public ResponseEntity<Resource> getLearningMaterialFile(@PathVariable String filename) {
+        // 获取文件路径
+        Path filePath = Paths.get(System.getProperty("user.dir") + "/" + pathProperties.getDiseaseLearningMaterialPath() + "/" + filename);
+        System.out.println(filePath);
+        try {
+            // 加载文件资源
+            Resource resource = new UrlResource(filePath.toUri());
+            if (!resource.exists()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            // 自动检测文件的Content-Type
+            String contentType = Files.probeContentType(filePath);
+            if (contentType == null) {
+                // 如果无法检测到文件类型，设置为通用二进制流类型
+                contentType = "application/octet-stream";
+            }
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(contentType)) // 设置具体的媒体类型
+                    .body(resource);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
