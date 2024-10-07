@@ -38,15 +38,15 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
                 .addPathPatterns("/railwayemployee/**")
                 .excludePathPatterns("/railwayemployee/labtest/file","/railwayemployee/diagnosis/file");
 
-//        registry.addInterceptor(jwtTokenAdminInterceptor)
-//                .addPathPatterns("/admin/**");
-//
-//        registry.addInterceptor(jwtTokenCDCStaffInterceptor)
-//                .addPathPatterns("/cdcStaff/**");
-//                .excludePathPatterns("/cdcStaff/promotionalMaterialsManager/getLearningMaterialFile/**")
-//
-//        registry.addInterceptor(jwtTokenMedicalStaffInterceptor)
-//                .addPathPatterns("/medicalStaff/**");
+        registry.addInterceptor(jwtTokenAdminInterceptor)
+                .addPathPatterns("/admin/**");
+
+        registry.addInterceptor(jwtTokenCDCStaffInterceptor)
+                .addPathPatterns("/cdcStaff/**")
+                .excludePathPatterns("/cdcStaff/promotionalMaterialsManager/getLearningMaterialFile/**");
+
+        registry.addInterceptor(jwtTokenMedicalStaffInterceptor)
+                .addPathPatterns("/medicalStaff/**");
     }
 
     @Bean

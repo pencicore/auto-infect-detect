@@ -59,7 +59,7 @@ public class DiseasetypeServiceImpl extends ServiceImpl<DiseasetypeMapper, Disea
 
         //分页查询
         Page<Diseasetype> p = lambdaQuery()
-                .like(text!=null, Diseasetype::getDiseaseTypeName, text)
+                .like(text!=null && !text.isEmpty(), Diseasetype::getDiseaseTypeName, text)
                 .page(page);
 
         //封装VO结果

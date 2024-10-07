@@ -54,9 +54,9 @@ public class UserfeedbackServiceImpl extends ServiceImpl<UserfeedbackMapper, Use
 
         //分页查询
         Page<Userfeedback> p = lambdaQuery()
-                .like(name!=null, Userfeedback::getName, name)
-                .like(phoneNumber!=null, Userfeedback::getPhoneNumber, phoneNumber)
-                .like(feedbackTitle!=null, Userfeedback::getFeedbackTitle, feedbackTitle)
+                .like(name!=null && !name.isEmpty(), Userfeedback::getName, name)
+                .like(phoneNumber!=null && !phoneNumber.isEmpty(), Userfeedback::getPhoneNumber, phoneNumber)
+                .like(feedbackTitle!=null && !feedbackTitle.isEmpty(), Userfeedback::getFeedbackTitle, feedbackTitle)
                 .page(page);
 
         //封装VO结果
@@ -98,7 +98,7 @@ public class UserfeedbackServiceImpl extends ServiceImpl<UserfeedbackMapper, Use
     public void getExcelUserFeedbackInformationExportTable(HttpServletResponse response) {
         //获取文件绝对路径
         String projectDir = System.getProperty("user.dir");
-        String fileName = projectDir + "\\infect-server\\src\\main\\resources\\templates\\用户反馈信息导出表.xlsx";
+        String fileName = projectDir + "/infect-server/src/main/resources/templates/用户反馈信息导出表.xlsx";
 
         //查询用户反馈信息
         List<Userfeedback> userfeedbackList = userfeedbackMapper.selectList(null);

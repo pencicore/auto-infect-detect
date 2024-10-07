@@ -56,7 +56,10 @@ public class SystemValueManagerController {
     @ApiOperation("根据疾病id批量更新疾病权重信息")
     @PostMapping("/updateBatchWeightScoring")
     public Result updateBatchWeightScoring(@RequestBody List<UpdateBatchWeightScoringDTO> updateDTOList){
-        symptomweightingService.updateBatchWeightScoring(updateDTOList);
+        boolean res = symptomweightingService.updateBatchWeightScoring(updateDTOList);
+        if(!res){
+            return Result.error("修改后权重之和应与修改前相同");
+        }
         return Result.success();
     }
 

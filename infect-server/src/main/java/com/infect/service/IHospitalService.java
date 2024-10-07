@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface IHospitalService extends IService<Hospital> {
 
-    void putHospitalDataByExcel(MultipartFile file) throws Exception;
+    int putHospitalDataByExcel(MultipartFile file) throws Exception;
 
     void getExcelHospitalBasicInformationImportForm(HttpServletResponse response);
 

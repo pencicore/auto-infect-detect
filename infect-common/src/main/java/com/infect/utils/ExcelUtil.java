@@ -82,7 +82,12 @@ public class ExcelUtil {    // 读取Excel文件
         //2.利用反射获取对应字段的数据列表
         Map<String, List<String>> mysqlDataMap;
         try {
-            mysqlDataMap = getDataBaseNameValueList(listData);
+            if(listData!=null && listData.size()!=0){
+                mysqlDataMap = getDataBaseNameValueList(listData);
+            }
+            else {
+                mysqlDataMap = new HashMap<>();
+            }
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }

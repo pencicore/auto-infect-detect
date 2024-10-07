@@ -131,7 +131,7 @@ public class LabTestServiceImpl implements MyLabTestService {
     public void getDetectionInformationExportFormExcel(HttpServletResponse response) {
         //获取文件绝对路径
         String projectDir = System.getProperty("user.dir");
-        String fileName = projectDir + "\\infect-server\\src\\main\\resources\\templates\\检测信息导出表.xlsx";
+        String fileName = projectDir + "/infect-server/src/main/resources/templates/检测信息导出表.xlsx";
 
         //查询实验室检测信息
         List<Labtestreport> labtestreportList = labtestreportMapper.selectList(null);

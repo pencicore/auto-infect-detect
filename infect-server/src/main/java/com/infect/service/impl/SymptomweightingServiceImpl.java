@@ -12,7 +12,6 @@ import com.infect.mapper.SymptomweightingMapper;
 import com.infect.service.ISymptomweightingService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.infect.utils.ExcelUtil;
-import org.apache.poi.hpsf.Decimal;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -222,11 +221,29 @@ public class SymptomweightingServiceImpl extends ServiceImpl<SymptomweightingMap
 
     /**
      * 根据疾病id批量更新疾病权重信息
+     *
      * @param updateDTOList
+     * @return
      */
     @Override
-    public void updateBatchWeightScoring(List<UpdateBatchWeightScoringDTO> updateDTOList) {
+    public boolean updateBatchWeightScoring(List<UpdateBatchWeightScoringDTO> updateDTOList) {
+        //查询原来的这些字段的总分数
+        BigDecimal sumOld = symptomweightingMapper.selectCountByUpdateDTOList(updateDTOList);
+
+        //将更新后的总分数相加
+        BigDecimal sumNew = BigDecimal.valueOf(0);
+        for(UpdateBatchWeightScoringDTO dto:updateDTOList){
+           sumNew = sumNew.add(dto.getWeightScore());
+        }
+
+        //如果更新前和更新后的分数不同，则返回false
+        if(sumOld != sumNew) {
+            return false;
+        }
+
+        //相同则进行批量更新
         List<Symptomweighting> list = BeanUtil.copyToList(updateDTOList,Symptomweighting.class);
         this.updateBatchById(list,50);
+        return true;
     }
 }

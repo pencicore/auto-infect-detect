@@ -1,7 +1,11 @@
 package com.infect.mapper;
 
+import com.infect.dto.system.UpdateBatchWeightScoringDTO;
 import com.infect.entity.Symptomweighting;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +17,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SymptomweightingMapper extends BaseMapper<Symptomweighting> {
 
+    BigDecimal selectCountByUpdateDTOList(List<UpdateBatchWeightScoringDTO> updateDTOList);
 }

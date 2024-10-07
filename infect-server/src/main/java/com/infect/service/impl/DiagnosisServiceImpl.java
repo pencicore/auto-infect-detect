@@ -396,7 +396,7 @@ public class DiagnosisServiceImpl implements MyDiagnosisService {
 
         //获取文件绝对路径
         String projectDir = System.getProperty("user.dir");
-        String fileName = projectDir + "\\infect-server\\src\\main\\resources\\templates\\临床诊断信息导出表.xlsx";
+        String fileName = projectDir + "/infect-server/src/main/resources/templates/临床诊断信息导出表.xlsx";
 
         //查询打卡信息
         List<Diagnosisresults> diagnosisresultsList = diagnosisresultsMapper.selectList(null);

@@ -202,7 +202,7 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
 
         //获取文件绝对路径
         String projectDir = System.getProperty("user.dir");
-        String fileName = projectDir + "\\infect-server\\src\\main\\resources\\templates\\职工打卡信息导出表.xlsx";
+        String fileName = projectDir + "/infect-server/src/main/resources/templates/职工打卡信息导出表.xlsx";
 
         //查询打卡信息
         List<Dailyhealthstatus> dailyhealthstatusList = dailyhealthstatusMapper.selectList(null);
@@ -280,7 +280,7 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
 
         //获取文件绝对路径
         String projectDir = System.getProperty("user.dir");
-        String fileName = projectDir + "\\infect-server\\src\\main\\resources\\templates\\职工打卡信息导出表(含AI预测数据）.xlsx";
+        String fileName = projectDir + "/infect-server/src/main/resources/templates/职工打卡信息导出表(含AI预测数据）.xlsx";
 
         //查询打卡信息
         List<Dailyhealthstatus> dailyhealthstatusList = dailyhealthstatusMapper.selectList(null);

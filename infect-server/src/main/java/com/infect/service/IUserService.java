@@ -29,7 +29,7 @@ public interface IUserService extends IService<User> {
 
     boolean changePassword(ChangePasswordDTO changePasswordDTO);
 
-    void addManyUser(MultipartFile multipartFile) throws Exception;
+    int addManyUser(MultipartFile multipartFile) throws Exception;
 
     void changeUserActive(Integer userId);
 

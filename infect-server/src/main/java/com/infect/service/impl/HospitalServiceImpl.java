@@ -1,7 +1,7 @@
 package com.infect.service.impl;
 
-import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.infect.constants.FilePathConstant;
 import com.infect.dto.system.HospitalPageDTO;
 import com.infect.entity.*;
 import com.infect.mapper.HospitalMapper;
@@ -13,6 +13,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
@@ -37,11 +38,13 @@ public class HospitalServiceImpl extends ServiceImpl<HospitalMapper, Hospital> i
 
     /**
      * 导入数据：将医院基础信息导出表信息导入到数据库中
+     *
      * @param file
+     * @return
      */
     @Override
     @Transactional
-    public void putHospitalDataByExcel(MultipartFile file) throws Exception {
+    public int putHospitalDataByExcel(@RequestParam("file") MultipartFile file) throws Exception {
         //获取excel表sheet0数据
         List<List<String>> lists = ExcelUtil.readExcelFile(file, 0);
 
@@ -66,11 +69,21 @@ public class HospitalServiceImpl extends ServiceImpl<HospitalMapper, Hospital> i
                 continue;
             }
 
+            Long count = lambdaQuery()
+                    .eq(Hospital::getHospitalName, hospitalName)
+                    .count();
+
+            if(count!=0) {
+                continue;
+            }
+
             hospitalList.add(hospital);
         }
 
         //插入数据库
         this.saveBatch(hospitalList, 20);
+
+        return hospitalList.size();
     }
 
     /**
@@ -80,8 +93,7 @@ public class HospitalServiceImpl extends ServiceImpl<HospitalMapper, Hospital> i
     @Override
     public void getExcelHospitalBasicInformationImportForm(HttpServletResponse response) {
 
-        String projectDir = System.getProperty("user.dir");
-        String filePath = projectDir + "\\infect-server\\src\\main\\resources\\templates\\医院基础信息导入表.xlsx";
+        String filePath = FilePathConstant.FILE_PATH + "医院基础信息导入表.xlsx";
 
         List<List<Object>> listList = new ArrayList<>();
         List<Hospital> hospitalList = hospitalMapper.selectList(null);
@@ -117,7 +129,7 @@ public class HospitalServiceImpl extends ServiceImpl<HospitalMapper, Hospital> i
 
         //分页查询
         Page<Hospital> p = lambdaQuery()
-                .like(hospitalName!=null, Hospital::getHospitalName, hospitalName)
+                .like(hospitalName!=null && hospitalName.isEmpty(), Hospital::getHospitalName, hospitalName)
                 .page(page);
 
         //封装返回结果

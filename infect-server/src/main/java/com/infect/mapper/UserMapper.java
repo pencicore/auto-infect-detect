@@ -53,4 +53,13 @@ public interface UserMapper extends BaseMapper<User> {
      */
     @Select("select userId, name, department from user where HasMedicalHistory = true")
     List<ImportantUserInfoVO> selectHasMedicalHistoryIsTrue();
+
+    /**
+     * 根据身份证和电话查询是否有重复用户
+     * @param phoneNumber
+     * @param idNumber
+     * @return
+     */
+    @Select("select count(*) from user where IDNumber = #{idNumber} or PhoneNumber = #{phoneNumber}")
+    Integer selectCountByIdNumberOrPhoneNumber(String phoneNumber, String idNumber);
 }

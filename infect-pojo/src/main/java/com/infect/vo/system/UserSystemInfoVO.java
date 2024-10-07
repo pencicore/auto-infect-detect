@@ -20,6 +20,9 @@ public class UserSystemInfoVO {
     @ApiModelProperty(value = "性别", example = "男")
     private String gender;
 
+    @ApiModelProperty(value = "年龄", example = "30")
+    private Integer age;
+
     @ApiModelProperty(value = "民族", example = "汉族")
     private String ethnicity;
 
@@ -41,11 +44,13 @@ public class UserSystemInfoVO {
     public UserSystemInfoVO() {
     }
 
-    public UserSystemInfoVO(String userType, String name, String phoneNumber, String gender, String ethnicity, String educationLevel, LocalDate workOnPlateauStartDate, String department, String specificOccupation, Boolean isActived) {
+    public UserSystemInfoVO(Integer userId, String userType, String name, String phoneNumber, String gender, Integer age, String ethnicity, String educationLevel, LocalDate workOnPlateauStartDate, String department, String specificOccupation, Boolean isActived) {
+        this.userId = userId;
         this.userType = userType;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.gender = gender;
+        this.age = age;
         this.ethnicity = ethnicity;
         this.educationLevel = educationLevel;
         this.workOnPlateauStartDate = workOnPlateauStartDate;
@@ -54,18 +59,20 @@ public class UserSystemInfoVO {
         this.isActived = isActived;
     }
 
-    public UserSystemInfoVO(Integer userId, String userType, String name, String phoneNumber, String gender, String ethnicity, String educationLevel, LocalDate workOnPlateauStartDate, String department, String specificOccupation, Boolean isActived) {
+    /**
+     * 获取
+     * @return userId
+     */
+    public Integer getUserId() {
+        return userId;
+    }
+
+    /**
+     * 设置
+     * @param userId
+     */
+    public void setUserId(Integer userId) {
         this.userId = userId;
-        this.userType = userType;
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.gender = gender;
-        this.ethnicity = ethnicity;
-        this.educationLevel = educationLevel;
-        this.workOnPlateauStartDate = workOnPlateauStartDate;
-        this.department = department;
-        this.specificOccupation = specificOccupation;
-        this.isActived = isActived;
     }
 
     /**
@@ -130,6 +137,22 @@ public class UserSystemInfoVO {
      */
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    /**
+     * 获取
+     * @return age
+     */
+    public Integer getAge() {
+        return age;
+    }
+
+    /**
+     * 设置
+     * @param age
+     */
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
     /**
@@ -229,22 +252,6 @@ public class UserSystemInfoVO {
     }
 
     public String toString() {
-        return "UserSystemInfoVO{userType = " + userType + ", name = " + name + ", phoneNumber = " + phoneNumber + ", gender = " + gender + ", ethnicity = " + ethnicity + ", educationLevel = " + educationLevel + ", workOnPlateauStartDate = " + workOnPlateauStartDate + ", department = " + department + ", specificOccupation = " + specificOccupation + ", isActived = " + isActived + "}";
-    }
-
-    /**
-     * 获取
-     * @return userId
-     */
-    public Integer getUserId() {
-        return userId;
-    }
-
-    /**
-     * 设置
-     * @param userId
-     */
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+        return "UserSystemInfoVO{userId = " + userId + ", userType = " + userType + ", name = " + name + ", phoneNumber = " + phoneNumber + ", gender = " + gender + ", age = " + age + ", ethnicity = " + ethnicity + ", educationLevel = " + educationLevel + ", workOnPlateauStartDate = " + workOnPlateauStartDate + ", department = " + department + ", specificOccupation = " + specificOccupation + ", isActived = " + isActived + "}";
     }
 }

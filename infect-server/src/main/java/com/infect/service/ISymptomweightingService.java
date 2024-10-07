@@ -22,5 +22,5 @@ public interface ISymptomweightingService extends IService<Symptomweighting> {
 
     void getExcelInitialWeightScoringTableForInfectiousDiseases(HttpServletResponse response);
 
-    void updateBatchWeightScoring(List<UpdateBatchWeightScoringDTO> updateDTOList);
+    boolean updateBatchWeightScoring(List<UpdateBatchWeightScoringDTO> updateDTOList);
 }

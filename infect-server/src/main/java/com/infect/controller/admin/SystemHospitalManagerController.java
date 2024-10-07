@@ -28,14 +28,15 @@ public class SystemHospitalManagerController {
     private IHospitalService hospitalService;
 
     @ApiOperation("导入数据：将医院基础信息导出表信息导入到数据库中")
-    @PostMapping("putHospitalDataByExcel")
-    public Result putHospitalDataByExcel(@RequestParam("file") MultipartFile file) {
+    @PostMapping("/putHospitalDataByExcel")
+    public Result<Integer> putHospitalDataByExcel(@RequestParam("file") MultipartFile file) {
+        int count;
         try {
-            hospitalService.putHospitalDataByExcel(file);
+            count = hospitalService.putHospitalDataByExcel(file);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return Result.success();
+        return Result.success(count);
     }
 
     @ApiOperation("导出文件：导出医院基础信息导入表模板")

@@ -154,12 +154,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     /**
      * 将excel表中用户数据插入用户表中
+     *
      * @param file
+     * @return
      * @throws Exception
      */
     @Transactional
     @Override
-    public void addManyUser(MultipartFile file) throws Exception {
+    public int addManyUser(MultipartFile file) throws Exception {
         //获取excel表sheet1页的用户数据
         List<List<String>> lists = ExcelUtil.readExcelFile(file, 0);
 
@@ -335,14 +337,44 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                 user.setIsVaccinatedForCOVID(Boolean.parseBoolean(list.get(48)));  // IsVaccinatedForCOVID
             }
             if (list.get(49) != null && !list.get(49).isEmpty()) {
-                user.setIsVaccinatedForFlu(Boolean.parseBoolean(list.get(49)));
+                user.setIsVaccinatedForFlu(Boolean.parseBoolean(list.get(49))); // IsVaccinatedForFlu
+            }
+            if (list.get(50) != null && !list.get(50).isEmpty()) {
+                user.setIsVaccinatedForPlague(Boolean.parseBoolean(list.get(50))); // IsVaccinatedForPlague
+            }
+            if (list.get(51) != null && !list.get(51).isEmpty()) {
+                user.setIsVaccinatedForBCG(Boolean.parseBoolean(list.get(51))); // IsVaccinatedForFlu
+            }
+            if (list.get(52) != null && !list.get(52).isEmpty()) {
+                user.setIsVaccinatedForHepatitis(Boolean.parseBoolean(list.get(52))); // IsVaccinatedForFlu
             }
 
+
             user.setPassword(user.getIdNumber().substring(12));
+
+            String phoneNumber = user.getPhoneNumber();
+            String idNumber = user.getIdNumber();
+
+            //电话号码为空，或者身份证号为空，跳过该句
+            if(phoneNumber == null || idNumber == null || phoneNumber.isEmpty() || idNumber.isEmpty()){
+                continue;
+            }
+
+            //判断该用户是否已存在
+            Integer count = userMapper.selectCountByIdNumberOrPhoneNumber(phoneNumber,idNumber);
+            if(count!=0){
+                continue;
+            }
+
             listUser.add(user);
         }
 
-        this.saveBatch(listUser, 500);
+        boolean flag = this.saveBatch(listUser, 500);
+
+        if(flag) {
+            return listUser.size();
+        }
+        return 0;
     }
 
     /**
@@ -397,11 +429,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         //分页查询
         Page<User> p = lambdaQuery()
-                .like(name!=null, User::getName, name)
-                .eq(phoneNumber!=null, User::getPhoneNumber, phoneNumber)
-                .eq(department!=null, User::getDepartment, department)
-                .eq(specificOccupation!=null, User::getSpecificOccupation, specificOccupation)
-                .eq(userType!=null, User::getUserType, userType)
+                .like(name!=null && !name.isEmpty(), User::getName, name)
+                .eq(phoneNumber!=null && !phoneNumber.isEmpty(), User::getPhoneNumber, phoneNumber)
+                .eq(department!=null && !department.isEmpty(), User::getDepartment, department)
+                .eq(specificOccupation!=null && !specificOccupation.isEmpty(), User::getSpecificOccupation, specificOccupation)
+                .eq(userType!=null && !userType.isEmpty(), User::getUserType, userType)
                 .page(page);
 
         //封装VO结果
@@ -424,7 +456,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      */
     public void queryAllUserToExcel(HttpServletResponse response){
         String projectDir = System.getProperty("user.dir");
-        String filePath = projectDir + "\\infect-server\\src\\main\\resources\\templates\\个人信息导出表.xlsx";
+        String filePath = projectDir + "/infect-server/src/main/resources/templates/个人信息导出表.xlsx";
 
         List<User> listUser = userMapper.selectList(null);
         List<List<Object>> listList = new ArrayList<>();
@@ -503,68 +535,4 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         return userMapper.selectOne(lambdaQueryWrapper);
     }
 
-    //老方法
-//    /**
-//     * 将用户信息导出为excel表
-//     * @param response
-//     */
-//    @Override
-//    public void queryAllUserToExcel(HttpServletResponse response) {
-//        //0.设置 HTTP 响应头，指定文件名和 MIME 类型
-//        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-//        response.setHeader("Content-Disposition", "attachment; filename=\"users.xlsx\"");
-//
-//        //1.查询数据库，获取用户信息
-//        List<User> list = userMapper.selectList(null);
-//
-//        //2.通过POI将数据写入到EXcel文件
-//        InputStream in = this.getClass().getClassLoader().getResourceAsStream("templates/个人信息导出表.xlsx");
-//
-//        try {
-//            // 根据模板创建一个新Excel文件
-//            XSSFWorkbook excel = new XSSFWorkbook(in);
-//            XSSFSheet sheet = excel.getSheet("个人信息导出表");
-//
-//            // 填充数据
-//            int n = list.size();
-//            XSSFRow row;
-//            User user;
-//
-//            for (int i = 0; i < n; i++) {
-//                row = sheet.getRow(i + 1);
-//                // 如果当前行为空，需要先创建该行
-//                if (row == null) {
-//                    row = sheet.createRow(i + 1);
-//                }
-//                user = list.get(i);
-//
-//                for (int j=0; j<53;j++){
-//                    if(row.getCell(j)==null){
-//                        row.createCell(j);
-//                    }
-//                }
-//
-//                // 序号
-//                row.createCell(0).setCellValue(i + 1);
-//
-//// 用户类型
-//                if (user.getUserType() != null) {
-//                    row.createCell(1).setCellValue(user.getUserType());
-//                }
-//
-//// 姓名
-//
-//            //3.通过输出流将Excel文件下载到客户端中
-//            ServletOutputStream out=response.getOutputStream();
-//            excel.write(out);
-//
-//            //4.关闭资源
-//            in.close();
-//            out.close();
-//            excel.close();
-//
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
 }

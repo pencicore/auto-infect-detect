@@ -71,7 +71,7 @@ public class DiseaselearningmaterialsServiceImpl extends ServiceImpl<Diseaselear
 
         //分页查询
         Page<Diseaselearningmaterials> p = lambdaQuery()
-                .eq(Diseaselearningmaterials::getDiseaseTypeName, diseaseTypeName)
+                .eq(diseaseTypeName!=null && !diseaseTypeName.isEmpty(), Diseaselearningmaterials::getDiseaseTypeName, diseaseTypeName)
                 .page(page);
 
         //封装VO结果

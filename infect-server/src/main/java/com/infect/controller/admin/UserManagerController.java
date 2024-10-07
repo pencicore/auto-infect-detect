@@ -59,9 +59,9 @@ public class UserManagerController {
 
     @PostMapping("/addManyUserByExcel")
     @ApiOperation(value = "根据.xlsx文件批量添加用户")
-    public Result addManyUser(@RequestParam("file") MultipartFile multipartFile) throws Exception {
-        userService.addManyUser(multipartFile);
-        return Result.success();
+    public Result<Integer> addManyUser(@RequestParam("file") MultipartFile file) throws Exception {
+        int number = userService.addManyUser(file);
+        return Result.success(number);
     }
 
     @PutMapping("/changeUserActive/{userId}")
@@ -81,7 +81,12 @@ public class UserManagerController {
     @GetMapping("/pageSelectUser")
     @ApiOperation(value = "根据用户类型，用户名分页查询用户列表")
     public Result<PageResult<UserSystemInfoVO>> pageSelectUser(UserPageDTO userPageDTO){
-//        System.out.println(userPageDTO);
+        if (userPageDTO.getPageNo() == null || userPageDTO.getPageSize()==null){
+            return Result.error("pageNo和pageSize不能为空");
+        }
+        if(userPageDTO.getPageNo() == 0){
+            return Result.error("pageNo不能为0");
+        }
         PageResult<UserSystemInfoVO> pageResult = userService.queryUserspage(userPageDTO);
         return Result.success(pageResult);
     }
