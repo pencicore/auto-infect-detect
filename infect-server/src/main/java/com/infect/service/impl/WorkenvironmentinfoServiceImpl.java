@@ -144,7 +144,7 @@ public class WorkenvironmentinfoServiceImpl extends ServiceImpl<Workenvironmenti
         String beginYearMonth = environmentPageDTO.getBeginYearMonth();
         String endYearMonth = environmentPageDTO.getEndYearMonth();
 
-        Boolean haveTimeLimit = beginYearMonth!=null && endYearMonth!=null && beginYearMonth.isEmpty() && endYearMonth.isEmpty();
+        Boolean haveTimeLimit = beginYearMonth!=null && endYearMonth!=null && !beginYearMonth.isEmpty() && !endYearMonth.isEmpty();
 
         //构建分页条件
         Page<Workenvironmentinfo> page = Page.of(environmentPageDTO.getPageNo(), environmentPageDTO.getPageSize());
@@ -153,8 +153,8 @@ public class WorkenvironmentinfoServiceImpl extends ServiceImpl<Workenvironmenti
         //分页查询
         Page<Workenvironmentinfo> p = lambdaQuery()
                 .like(workStationName!=null && !workStationName.isEmpty(), Workenvironmentinfo::getWorkStationName, workStationName)
-                .gt(haveTimeLimit, Workenvironmentinfo::getYearMonth,beginYearMonth)
-                .lt(haveTimeLimit, Workenvironmentinfo::getYearMonth,endYearMonth)
+                .ge(haveTimeLimit, Workenvironmentinfo::getYearMonth,beginYearMonth)
+                .le(haveTimeLimit, Workenvironmentinfo::getYearMonth,endYearMonth)
                 .page(page);
 
         //封装VO结果
@@ -223,26 +223,22 @@ public class WorkenvironmentinfoServiceImpl extends ServiceImpl<Workenvironmenti
                 workenvironmentinfo = list.get(i);
                 user = userList.get(i);
 
-                // 序号
-                row.createCell(0).setCellValue(i + 1);
-
-                // 姓名
-                row.createCell(1).setCellValue(user.getName() != null ? user.getName() : "");
-
-                // 性别
-                row.createCell(2).setCellValue(user.getGender() != null ? user.getGender() : "");
-
-                // 年龄
-                row.createCell(3).setCellValue(user.getAge() != null ? user.getAge().toString() : "");
-
-                // 民族
-                row.createCell(4).setCellValue(user.getEthnicity() != null ? user.getEthnicity() : "");
-
-                // 部门
-                row.createCell(5).setCellValue(user.getDepartment() != null ? user.getDepartment() : "");
-
-                // 电话号码
-                row.createCell(6).setCellValue(user.getPhoneNumber() != null ? user.getPhoneNumber() : "");
+                if(user!=null){
+                    // 序号
+                    row.createCell(0).setCellValue(i + 1);
+                    // 姓名
+                    row.createCell(1).setCellValue(user.getName() != null ? user.getName() : "");
+                    // 性别
+                    row.createCell(2).setCellValue(user.getGender() != null ? user.getGender() : "");
+                    // 年龄
+                    row.createCell(3).setCellValue(user.getAge() != null ? user.getAge().toString() : "");
+                    // 民族
+                    row.createCell(4).setCellValue(user.getEthnicity() != null ? user.getEthnicity() : "");
+                    // 部门
+                    row.createCell(5).setCellValue(user.getDepartment() != null ? user.getDepartment() : "");
+                    // 电话号码
+                    row.createCell(6).setCellValue(user.getPhoneNumber() != null ? user.getPhoneNumber() : "");
+                }
 
                 // 其他字段（同样做非空判断）
                 row.createCell(7).setCellValue(workenvironmentinfo.getYearMonth() != null ? workenvironmentinfo.getYearMonth() : "");

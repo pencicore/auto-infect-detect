@@ -349,6 +349,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                 user.setIsVaccinatedForHepatitis(Boolean.parseBoolean(list.get(52))); // IsVaccinatedForFlu
             }
 
+            //设置既往病史
+            user.updateMedicalHistoryStatus();
 
             user.setPassword(user.getIdNumber().substring(12));
 

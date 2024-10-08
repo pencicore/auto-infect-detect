@@ -3,7 +3,7 @@
 <mapper namespace="com.infect.mapper.LabtestfilesMapper">
 
     <update id="updateLabTestReportIdByFileIds">
-        UPDATE LabTestFiles
+        UPDATE labtestfiles
         SET LabTestReportID = #{goalNum}
         WHERE LabTestReportID = #{labTestReportId}
         AND FileID NOT IN

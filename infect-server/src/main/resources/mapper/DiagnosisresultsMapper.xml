@@ -3,7 +3,7 @@
 <mapper namespace="com.infect.mapper.DiagnosisresultsMapper">
 
     <select id="selectDiseaseStatisticsList" resultType="com.infect.temporary.DiseaseStatisticsInfoTemp">
-        SELECT submissionTime,diseaseType,COUNT(*) AS count FROM DiagnosisResults
+        SELECT submissionTime,diseaseType,COUNT(*) AS count FROM diagnosisresults
         <where>
             <if test="sourceType == '自动诊断'">
                 AND DiscoveryMethod = 'APP填报'

@@ -53,7 +53,7 @@ public class PromotionalMaterialsManagerController {
 
     @ApiOperation("根据id修改疾病防控宣传资料")
     @PostMapping("updateMaterialById")
-    public Result updateMaterialById(@RequestBody LearningMaterialUpdateDTO learningMaterialUpdateDTO){
+    public Result updateMaterialById(@ModelAttribute LearningMaterialUpdateDTO learningMaterialUpdateDTO){
         diseaselearningmaterialsService.updateMaterialById(learningMaterialUpdateDTO);
         return Result.success();
     }
@@ -61,14 +61,20 @@ public class PromotionalMaterialsManagerController {
     @ApiOperation("禁用/启用疾病防控宣传资料")
     @PutMapping("startOrStopMaterial")
     public Result startOrStopMaterial(Integer materialId, Boolean isDelete){
-        diseaselearningmaterialsService.startOrStopMaterial(materialId,isDelete);
+        boolean res = diseaselearningmaterialsService.startOrStopMaterial(materialId, isDelete);
+        if(!res) {
+            return Result.error("修改失败");
+        }
         return Result.success();
     }
 
     @ApiOperation("根据id，升/降序，交换排序顺序")
     @PutMapping("upOrdownMaterialSequenceNumber")
     public Result upOrdownMaterialSequenceNumber(Integer sequenceNumber, Boolean isUp){
-        diseaselearningmaterialsService.upOrdownMaterialSequenceNumber(sequenceNumber, isUp);
+        boolean res = diseaselearningmaterialsService.upOrdownMaterialSequenceNumber(sequenceNumber, isUp);
+        if(!res) {
+            return Result.error("修改失败");
+        }
         return Result.success();
     }
 

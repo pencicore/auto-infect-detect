@@ -21,5 +21,5 @@ public interface DiseaselearningmaterialsMapper extends BaseMapper<Diseaselearni
     Integer selectSequenceNumberNextDown(Integer sequenceNumber);
 
     @Select("update diseaselearningmaterials set SequenceNumber = #{b} where SequenceNumber = #{a};")
-    void updateSequenceNumberAndSequenceNumber(Integer a, Integer b);
+    Integer updateSequenceNumberAndSequenceNumber(Integer a, Integer b);
 }

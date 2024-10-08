@@ -9,6 +9,7 @@ import com.infect.result.PageResult;
 import com.infect.temporary.DiseaseNameNumberPairTemp;
 import com.infect.temporary.StationTemp;
 import com.infect.vo.DailyhealthstatusGetVO;
+import com.infect.vo.system.CheckinDailyNumberSumVO;
 import com.infect.vo.system.CheckinDailyNumberVO;
 import com.infect.vo.system.CheckinInfoStatisticsVO;
 import com.infect.vo.system.CheckinInfoVO;
@@ -61,5 +62,5 @@ public interface IDailyhealthstatusService extends IService<Dailyhealthstatus> {
 
     List<CheckinInfoStatisticsVO> getChickInInfoByText(String phoneNumber, Integer infoNumber);
 
-    List<CheckinDailyNumberVO> getCheckInDailyNumber(LocalDate startDate, LocalDate endDate);
+    List<CheckinDailyNumberSumVO> getCheckInDailyNumber(List<LocalDate> dateList);
 }

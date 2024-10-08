@@ -4,7 +4,7 @@
     <!-- 统计权重分数之和 -->
     <select id="selectCountByUpdateDTOList" resultType="java.math.BigDecimal">
         SELECT SUM(weightScore)
-        FROM SymptomWeighting
+        FROM symptomweighting
         WHERE symptomWeightingId IN
         <foreach collection="updateDTOList" item="item" index="index" open="(" separator="," close=")">
             #{item.symptomWeightingId}

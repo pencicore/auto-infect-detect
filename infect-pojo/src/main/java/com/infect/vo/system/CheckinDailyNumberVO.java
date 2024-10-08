@@ -4,32 +4,32 @@ import java.time.LocalDate;
 
 public class CheckinDailyNumberVO {
 
-    private LocalDate checkInDate;
+    private String DiseaseTypeName;
 
     private Integer count;
 
     public CheckinDailyNumberVO() {
     }
 
-    public CheckinDailyNumberVO(LocalDate checkInDate, Integer count) {
-        this.checkInDate = checkInDate;
+    public CheckinDailyNumberVO(String DiseaseTypeName, Integer count) {
+        this.DiseaseTypeName = DiseaseTypeName;
         this.count = count;
     }
 
     /**
      * 获取
-     * @return checkInDate
+     * @return DiseaseTypeName
      */
-    public LocalDate getCheckInDate() {
-        return checkInDate;
+    public String getDiseaseTypeName() {
+        return DiseaseTypeName;
     }
 
     /**
      * 设置
-     * @param checkInDate
+     * @param DiseaseTypeName
      */
-    public void setCheckInDate(LocalDate checkInDate) {
-        this.checkInDate = checkInDate;
+    public void setDiseaseTypeName(String DiseaseTypeName) {
+        this.DiseaseTypeName = DiseaseTypeName;
     }
 
     /**
@@ -49,6 +49,6 @@ public class CheckinDailyNumberVO {
     }
 
     public String toString() {
-        return "CheckinDailyNumberVO{checkInDate = " + checkInDate + ", count = " + count + "}";
+        return "CheckinDailyNumberVO{DiseaseTypeName = " + DiseaseTypeName + ", count = " + count + "}";
     }
 }

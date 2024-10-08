@@ -17,6 +17,7 @@ import com.infect.temporary.StationTemp;
 import com.infect.utils.BaseContext;
 import com.infect.utils.ExcelUtil;
 import com.infect.vo.DailyhealthstatusGetVO;
+import com.infect.vo.system.CheckinDailyNumberSumVO;
 import com.infect.vo.system.CheckinDailyNumberVO;
 import com.infect.vo.system.CheckinInfoStatisticsVO;
 import com.infect.vo.system.CheckinInfoVO;
@@ -140,21 +141,27 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
         LocalDate checkInDateEnd = checkinPageDTO.getCheckInDateEnd();
         boolean dateFlag = checkInDateBegin!=null && checkInDateEnd!=null;
 
-        System.out.println(checkinPageDTO);
+
 
         //根据查询条件，获取用户id列表
         List<Integer> listUserId=null;
 
-        if(checkinPageDTO.getName()!=null
-        || checkinPageDTO.getPhoneNumber()!=null
-        || checkinPageDTO.getDepartment()!=null
-        || checkinPageDTO.getSpecificOccupation()!=null) {
+        String name = checkinPageDTO.getName();
+        String phoneNumber = checkinPageDTO.getPhoneNumber();
+        String department = checkinPageDTO.getDepartment();
+        String specificOccupation = checkinPageDTO.getSpecificOccupation();
+
+        if ((name != null && !name.isEmpty())
+                || (phoneNumber != null && !phoneNumber.isEmpty())
+                || (department != null && !department.isEmpty())
+                || (specificOccupation != null && !specificOccupation.isEmpty())) {
 
             LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<User>()
-                    .like(checkinPageDTO.getName()!=null, User::getName, checkinPageDTO.getName())
-                    .like(checkinPageDTO.getPhoneNumber()!=null, User::getPhoneNumber, checkinPageDTO.getPhoneNumber())
-                    .like(checkinPageDTO.getDepartment()!=null, User::getDepartment, checkinPageDTO.getDepartment())
-                    .like(checkinPageDTO.getSpecificOccupation()!=null, User::getSpecificOccupation, checkinPageDTO.getSpecificOccupation());
+                    .like(name != null && !name.isEmpty(), User::getName, name)
+                    .like(phoneNumber != null && !phoneNumber.isEmpty(), User::getPhoneNumber, phoneNumber)
+                    .like(department != null && !department.isEmpty(), User::getDepartment, department)
+                    .like(specificOccupation != null && !specificOccupation.isEmpty(), User::getSpecificOccupation, specificOccupation);
+
             listUserId = userMapper.selectIdsByWrapper(wrapper);
         }
 
@@ -388,19 +395,33 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
         List<CheckinInfoStatisticsVO> list = dailyhealthstatusMapper.selectChickInInfo(idList,infoNumber);
 
         //根据用户名逐条查询用户id
-        for (CheckinInfoStatisticsVO vo:
-             list) {
+        for (CheckinInfoStatisticsVO vo: list) {
             vo.setName(userMapper.selectNameById(vo.getUserId()));
         }
 
         return list;
     }
 
+    /**
+     * 获取一段时间的打卡时间分布
+     * @param dateList
+     * @return
+     */
     @Override
-    public List<CheckinDailyNumberVO> getCheckInDailyNumber(LocalDate startDate, LocalDate endDate) {
-        List<CheckinDailyNumberVO> list = dailyhealthstatusMapper.selectChickInDailyNumber(startDate,endDate);
-        System.out.println(list);
-        return list;
+    public List<CheckinDailyNumberSumVO> getCheckInDailyNumber(List<LocalDate> dateList) {
+        int n = dateList.size();
+        List<CheckinDailyNumberSumVO> voList = new ArrayList<>();
+
+        for (int l=0,r=1;r<n;l++,r++){
+            LocalDate startDate = dateList.get(l);
+            LocalDate endDate = dateList.get(r);
+
+            List<CheckinDailyNumberVO> temp = dailyhealthstatusMapper.selectChickInDailyNumber(startDate, endDate);
+
+            CheckinDailyNumberSumVO vo = new CheckinDailyNumberSumVO(startDate,endDate,temp);
+            voList.add(vo);
+        }
+        return voList;
     }
 
 

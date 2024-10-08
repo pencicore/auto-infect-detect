@@ -12,9 +12,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -43,21 +41,18 @@ public class StatisticsDataViewController {
                 dailyhealthstatusService.count(
                         new LambdaQueryWrapper<Dailyhealthstatus>()
                                 .eq(Dailyhealthstatus::getIsHealth, false)
-                                .eq(Dailyhealthstatus::getCheckInTime, LocalDate.now())
+                                .eq(Dailyhealthstatus::getCheckInDate, LocalDate.now())
                 )
         );
         Integer userHealthNumber = Math.toIntExact(
                 dailyhealthstatusService.count(
                         new LambdaQueryWrapper<Dailyhealthstatus>()
                                 .eq(Dailyhealthstatus::getIsHealth, true)
-                                .eq(Dailyhealthstatus::getCheckInTime, LocalDate.now())
+                                .eq(Dailyhealthstatus::getCheckInDate, LocalDate.now())
                 )
         );
         Integer checkInNumber = Math.toIntExact(
-                dailyhealthstatusService.count(
-                        new LambdaQueryWrapper<Dailyhealthstatus>()
-                                .eq(Dailyhealthstatus::getCheckInTime, LocalDate.now())
-                )
+                dailyhealthstatusService.count()
         );
 
         statisticsDataVO.setUserNumber(userNumber);
@@ -92,20 +87,13 @@ public class StatisticsDataViewController {
         return Result.success(list);
     }
 
-    @GetMapping("/getCheckInDailyNumber")
+    @PostMapping("/getCheckInDailyNumber")
     @ApiOperation("获取一段时间的打卡时间分布")
-    public Result<List<CheckinDailyNumberVO>> getCheckInDailyNumber(
-            @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-            @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate
-    ){
-        if(startDate==null || endDate==null){
-            return Result.error("未设置完整的请求参数");
-        }
-        List<CheckinDailyNumberVO> list = dailyhealthstatusService.getCheckInDailyNumber(startDate,endDate);
-        return Result.success(list);
+    public Result<List<CheckinDailyNumberSumVO>> getCheckInDailyNumber(@RequestBody @DateTimeFormat(pattern = "yyyy-MM-dd") List<LocalDate> dateList){
+        List<CheckinDailyNumberSumVO> voList = dailyhealthstatusService.getCheckInDailyNumber(dateList);
+        return Result.success(voList);
     }
 
-    /*重点人员：三天内（包括今天）有上报症状的工人*/
     @GetMapping("/getImportantUserInfo")
     @ApiOperation("获取重点人员跟踪信息")
     public Result<List<ImportantUserInfoVO>> getImportantUserInfo(){

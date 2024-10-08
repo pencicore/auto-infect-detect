@@ -24,7 +24,7 @@ public interface IDiseaselearningmaterialsService extends IService<Diseaselearni
 
     void updateMaterialById(LearningMaterialUpdateDTO learningMaterialUpdateDTO);
 
-    void startOrStopMaterial(Integer materialId, Boolean isDelete);
+    boolean startOrStopMaterial(Integer materialId, Boolean isDelete);
 
-    void upOrdownMaterialSequenceNumber(Integer sequenceNumber, Boolean isUp);
+    boolean upOrdownMaterialSequenceNumber(Integer sequenceNumber, Boolean isUp);
 }

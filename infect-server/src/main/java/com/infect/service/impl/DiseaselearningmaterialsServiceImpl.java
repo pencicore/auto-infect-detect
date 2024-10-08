@@ -9,7 +9,6 @@ import com.infect.dto.system.LearningMaterialDTO;
 import com.infect.dto.system.LearningMaterialUpdateDTO;
 import com.infect.entity.Diseaselearningmaterials;
 import com.infect.entity.Materiallearningrecords;
-import com.infect.entity.Userfeedback;
 import com.infect.enums.DiseaseLearningMaterialsEnumConstants;
 import com.infect.mapper.DiseaselearningmaterialsMapper;
 import com.infect.mapper.DiseasetypeMapper;
@@ -19,7 +18,6 @@ import com.infect.result.PageResult;
 import com.infect.service.IDiseaselearningmaterialsService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.infect.vo.system.DiseaseLearningMaterialsPageVO;
-import com.infect.vo.system.UserFeedBackPageVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -154,7 +152,27 @@ public class DiseaselearningmaterialsServiceImpl extends ServiceImpl<Diseaselear
      */
     @Override
     public void updateMaterialById(LearningMaterialUpdateDTO learningMaterialUpdateDTO) {
-        Diseaselearningmaterials diseaselearningmaterials = BeanUtil.copyProperties(learningMaterialUpdateDTO, Diseaselearningmaterials.class);
+        String diseaseTypeName = learningMaterialUpdateDTO.getDiseaseTypeName();
+        String link = learningMaterialUpdateDTO.getLink();
+        Integer materialId = learningMaterialUpdateDTO.getMaterialId();
+        String materialType = learningMaterialUpdateDTO.getMaterialType();
+        String title = learningMaterialUpdateDTO.getTitle();
+
+        Diseaselearningmaterials diseaselearningmaterials =new Diseaselearningmaterials();
+        diseaselearningmaterials.setMaterialId(materialId);
+
+        if(diseaseTypeName!=null && !diseaseTypeName.isEmpty()){
+            diseaselearningmaterials.setDiseaseTypeName(diseaseTypeName);
+        }
+        if(link!=null && !link.isEmpty()){
+            diseaselearningmaterials.setLink(link);
+        }
+        if(materialType!=null && !materialType.isEmpty()){
+            diseaselearningmaterials.setMaterialType(materialType);
+        }
+        if(title!=null && !title.isEmpty()){
+            diseaselearningmaterials.setTitle(title);
+        }
 
         //当有文件更新时
         if(learningMaterialUpdateDTO.getFile()!=null){
@@ -168,34 +186,47 @@ public class DiseaselearningmaterialsServiceImpl extends ServiceImpl<Diseaselear
             diseaselearningmaterials.setFilePath(filePath);
         }
 
+        System.out.println(diseaselearningmaterials);
+
         //更新信息
         diseaselearningmaterialsMapper.updateById(diseaselearningmaterials);
     }
 
     /**
      * 禁用/启用疾病防控宣传资料
+     *
      * @param materialId
      * @param isDelete
+     * @return
      */
     @Override
-    public void startOrStopMaterial(Integer materialId, Boolean isDelete) {
+    public boolean startOrStopMaterial(Integer materialId, Boolean isDelete) {
         Diseaselearningmaterials diseaselearningmaterials = new Diseaselearningmaterials();
         diseaselearningmaterials.setIsDeleted(isDelete);
         diseaselearningmaterials.setMaterialId(materialId);
         if (isDelete){
             diseaselearningmaterials.setDeletedDate(LocalDateTime.now());
         }
-        diseaselearningmaterialsMapper.updateById(diseaselearningmaterials);
+        int count = diseaselearningmaterialsMapper.updateById(diseaselearningmaterials);
+        return count>0;
     }
 
     /**
      * 根据id，升/降序，交换排序顺序
+     *
      * @param sequenceNumber
      * @param isUp
+     * @return
      */
     @Override
     @Transactional
-    public void upOrdownMaterialSequenceNumber(Integer sequenceNumber, Boolean isUp) {
+    public boolean upOrdownMaterialSequenceNumber(Integer sequenceNumber, Boolean isUp) {
+
+        //根据sequenceNumber，查询是否有数据sequenceNumber为该值
+        if(lambdaQuery().eq(Diseaselearningmaterials::getSequenceNumber,sequenceNumber).count()!=1){
+            return false;
+        }
+
         //根据isUp找到小于/大于排序值的排序值中差值最小的一个排序值
         Integer sequenceNumberNext;
         if(isUp){
@@ -205,14 +236,16 @@ public class DiseaselearningmaterialsServiceImpl extends ServiceImpl<Diseaselear
             sequenceNumberNext = diseaselearningmaterialsMapper.selectSequenceNumberNextDown(sequenceNumber);
         }
 
+        //若未找到，返回失败结果
         if(sequenceNumberNext == null){
-            return;
+            return false;
         }
 
         //交换两者的排序值
-        diseaselearningmaterialsMapper.updateSequenceNumberAndSequenceNumber(sequenceNumber,-1);
+        diseaselearningmaterialsMapper.updateSequenceNumberAndSequenceNumber(sequenceNumber, -1);
         diseaselearningmaterialsMapper.updateSequenceNumberAndSequenceNumber(sequenceNumberNext,sequenceNumber);
         diseaselearningmaterialsMapper.updateSequenceNumberAndSequenceNumber(-1,sequenceNumberNext);
+        return true;
     }
 
     /**

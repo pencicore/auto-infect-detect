@@ -129,7 +129,7 @@ public class HospitalServiceImpl extends ServiceImpl<HospitalMapper, Hospital> i
 
         //分页查询
         Page<Hospital> p = lambdaQuery()
-                .like(hospitalName!=null && hospitalName.isEmpty(), Hospital::getHospitalName, hospitalName)
+                .like(hospitalName!=null && !hospitalName.isEmpty(), Hospital::getHospitalName, hospitalName)
                 .page(page);
 
         //封装返回结果
