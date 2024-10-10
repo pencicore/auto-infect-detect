@@ -89,30 +89,48 @@ public class LabTestServiceImpl implements MyLabTestService {
 
     @Override
     public Result saveLabTest(LabTestReportDTO labTestReportDTO, Integer userId) {
-        // 查询数据，获取 id 字段
+//        // 查询数据，获取 id 字段
+//        List<Integer> labTestReportIds = labtestreportMapper.selectLabTestReportIdByUserIdAndDate(userId, LocalDate.now());
+//
+//        if (labTestReportIds.isEmpty()) {
+//            // 处理没有找到的情况
+//            return Result.error("未找到相关数据");
+//        } else if (labTestReportIds.size() > 1) {
+//            return Result.error("您今日已经提交过了");
+//        } else {
+//            // 创建 LabTestReport 实体类
+//            Labtestreport labtestreport = BeanUtil.copyProperties(labTestReportDTO, Labtestreport.class);
+//            labtestreport.setUserId(userId);
+//            labtestreport.setUploadDate(LocalDate.now());
+//
+//            // 插入数据
+//            labtestreportMapper.insert(labtestreport);
+//            // 只有一个结果
+//            Integer labTestReportId = labTestReportIds.get(0);
+//            // 变量文件 id 数组，修改文件字段中的实验室检测报告 id
+//            for (Integer fileId : labTestReportDTO.getLabTestFileIds()) {
+//                labtestfilesMapper.updateLabTestReportIdByFileId(fileId, labTestReportId);
+//            }
+//            return Result.success();
+//        }
         List<Integer> labTestReportIds = labtestreportMapper.selectLabTestReportIdByUserIdAndDate(userId, LocalDate.now());
-
         if (labTestReportIds.isEmpty()) {
-            // 处理没有找到的情况
-            return Result.error("未找到相关数据");
-        } else if (labTestReportIds.size() > 1) {
-            return Result.error("您今日已经提交过了");
-        } else {
-            // 创建 LabTestReport 实体类
-            Labtestreport labtestreport = BeanUtil.copyProperties(labTestReportDTO, Labtestreport.class);
-            labtestreport.setUserId(userId);
-            labtestreport.setUploadDate(LocalDate.now());
-
-            // 插入数据
-            labtestreportMapper.insert(labtestreport);
-            // 只有一个结果
-            Integer labTestReportId = labTestReportIds.get(0);
-            // 变量文件 id 数组，修改文件字段中的实验室检测报告 id
             for (Integer fileId : labTestReportDTO.getLabTestFileIds()) {
-                labtestfilesMapper.updateLabTestReportIdByFileId(fileId, labTestReportId);
+                Labtestreport labtestreport = new Labtestreport();
+                labtestreport.setPathogenicTestResults(labTestReportDTO.getPathogenicTestResults());
+                labtestreport.setSerologicalTestDone(labTestReportDTO.getSerologicalTestDone());
+                labtestreport.setVirusAntigenTestDone(labTestReportDTO.getVirusAntigenTestDone());
+                labtestreport.setVirusCultureIsolationDone(labTestReportDTO.getVirusCultureIsolationDone());
+                labtestreport.setVirusNucleicAcidTestDone(labTestReportDTO.getVirusNucleicAcidTestDone());
+                labtestreport.setUserId(userId);
+                labtestreport.setUploadDate(LocalDate.now());
+                labtestreport.setLabTestReportId(fileId);
+                labtestreportMapper.insert(labtestreport);
             }
-            return Result.success();
+        }else{
+            return Result.error("您今日已经提交过了");
         }
+        return Result.success();
     }
 
     @Override

@@ -109,6 +109,14 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
             dailyhealthstatusGetVO.setHasSignedToday(true);
         }
 
+        LambdaQueryWrapper<Diseasescoring> wrapper1 = null;
+        if (dailyhealthstatus != null && dailyhealthstatus.getStatusId() != null && date != null) {
+            wrapper1 = new LambdaQueryWrapper<Diseasescoring>()
+                    .eq(Diseasescoring::getStatusId, dailyhealthstatus.getStatusId())
+                    .eq(Diseasescoring::getSymptomTime, date);
+            List<Diseasescoring> diseasescorings = diseasescoringMapper.selectList(wrapper1);
+            dailyhealthstatusGetVO.setDiseasescoringList(diseasescorings);
+        }
         return dailyhealthstatusGetVO;
     }
 
@@ -302,7 +310,7 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
         List<Dailyhealthstatus> dailyhealthstatuses = dailyhealthstatusMapper.selectList(
                 new QueryWrapper<Dailyhealthstatus>()
                         .eq("UserId", currentId)
-                        .like("CheckInDate", yearMonth + "%")
+                        .like("CheckInDate", yearMonth )
         );
         List<MonthlyHealthStatusVO> monthlyHealthStatusVOS = new ArrayList<>();
         for (Dailyhealthstatus dailyhealthstatus : dailyhealthstatuses) {
@@ -319,7 +327,7 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
         List<Diagnosisresults> diagnosisresults = diagnosisresultsMapper.selectList(
                 new QueryWrapper<Diagnosisresults>()
                         .eq("UserID", currentId)
-                        .like("SubmissionTime", yearMonth + "%")
+                        .like("SubmissionTime", yearMonth)
         );
         // 遍历 diagnosisresults 并更新 clearHealthCostsGetVO
         for (MonthlyHealthStatusVO vo : clearHealthCostsGetVO) {
@@ -338,7 +346,7 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
         List<Labtestreport> labtestreports = labtestreportMapper.selectList(
                 new QueryWrapper<Labtestreport>()
                         .eq("UserID", currentId)
-                        .like("UploadDate", yearMonth + "%")
+                        .like("UploadDate", yearMonth )
         );
         // 遍历 diagnosisresults 并更新 clearHealthCostsGetVO
         for (MonthlyHealthStatusVO vo : newClearHealthCostsGetVO) {

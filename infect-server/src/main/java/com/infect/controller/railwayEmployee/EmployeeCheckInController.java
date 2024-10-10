@@ -50,14 +50,25 @@ public class EmployeeCheckInController {
         // 解析字符串并转换为 LocalDate
         LocalDate localDate = LocalDate.parse(date, formatter);
         DailyhealthstatusGetVO dailyhealthstatusGetVO = dailyhealthstatusService.getDailyCheckIn(localDate);
+        date = date.substring(0, date.length()-3);
+        Workenvironmentinfo workenvironmentinfo = workenvironmentinfoService.getEnvironmentInfo(BaseContext.getCurrentId(),date);
+        if (workenvironmentinfo != null){
+            dailyhealthstatusGetVO.setHasMonthSigned(true);
+        }else{
+            dailyhealthstatusGetVO.setHasMonthSigned(false);
+        }
         return Result.success(dailyhealthstatusGetVO);
     }
+
 
     @ApiOperation(value = "根据id和year和month查询工人本月的打卡情况")
     @PostMapping("/select/month")
     public Result<List<MonthlyHealthStatusVO>> getMonthCheckIn(
             @ApiParam(value = "查询时间", required = true, example = "2024-08")
             @RequestBody String yearMonth) {
+        if (yearMonth.charAt(5) != '1'){
+            yearMonth = yearMonth.substring(0, 5) + "0" + yearMonth.charAt(5);
+        }
         List<MonthlyHealthStatusVO> ClearHealthCostsGetVO = dailyhealthstatusService.getWorkEnvironmentInfo(BaseContext.getCurrentId(),yearMonth);
         List<MonthlyHealthStatusVO> NewClearHealthCostsGetVO= dailyhealthstatusService.getDiagnoseInfo(yearMonth,BaseContext.getCurrentId(),ClearHealthCostsGetVO);
         List<MonthlyHealthStatusVO> FinalHealthCostsGetVO = dailyhealthstatusService.getExamineInfo(BaseContext.getCurrentId(),yearMonth,NewClearHealthCostsGetVO);

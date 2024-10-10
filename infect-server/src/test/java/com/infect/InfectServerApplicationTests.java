@@ -78,6 +78,43 @@ class InfectServerApplicationTests {
 //            System.out.println(lists);
 //            System.out.println(lists.get(2).get(3));
 //            System.out.println(lists.get(2).get(117));
+//
+//            System.out.println(lists.get(2).get(3));
+//            System.out.println(lists.get(2).get(117));
+//
+//            System.out.println(lists.get(2).get(3));
+//            System.out.println(lists.get(2).get(117));
+//
+//            System.out.println(lists.get(3).get(3));
+//            System.out.println(lists.get(3).get(117));
+//
+//            System.out.println(lists.get(4).get(3));
+//            System.out.println(lists.get(4).get(117));
+//
+//            System.out.println(lists.get(5).get(3));
+//            System.out.println(lists.get(5).get(117));
+//
+//            System.out.println(lists.get(6).get(3));
+//            System.out.println(lists.get(6).get(117));
+//
+//            System.out.println(lists.get(7).get(3));
+//            System.out.println(lists.get(7).get(117));
+//
+//            System.out.println(lists.get(8).get(3));
+//            System.out.println(lists.get(8).get(117));
+//
+//            System.out.println(lists.get(9).get(3));
+//            System.out.println(lists.get(9).get(117));
+//
+//            System.out.println(lists.get(10).get(3));
+//            System.out.println(lists.get(10).get(117));
+//
+//            System.out.println(lists.get(11).get(3));
+//            System.out.println(lists.get(11).get(117));
+//
+//            System.out.println(lists.get(12).get(3));
+//            System.out.println(lists.get(12).get(117));
+//
 //        }catch(Exception e){
 //                e.printStackTrace();
 //        }
@@ -107,3 +144,6 @@ class InfectServerApplicationTests {
     }
 
 }
+
+
+

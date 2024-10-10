@@ -17,8 +17,6 @@ import io.swagger.annotations.ApiModelProperty;
  * @author author
  * @since 2024-08-24
  */
-//@EqualsAndHashCode(callSuper = false)
-//@Accessors(chain = true)
 @TableName("diseasescoring")
 @ApiModel(value="Diseasescoring对象", description="")
 public class Diseasescoring implements Serializable {

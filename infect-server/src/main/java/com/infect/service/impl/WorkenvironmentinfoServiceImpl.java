@@ -70,13 +70,13 @@ public class WorkenvironmentinfoServiceImpl extends ServiceImpl<Workenvironmenti
         workenvironmentinfo.setYearMonth(yearMonth);
         workenvironmentinfo.setSubmissionTime(LocalDateTime.now());
         if (workenvironmentinfo.getWorkStationAltitude() == null || workenvironmentinfo.getWorkStationAltitude() <= 0){
-            workenvironmentinfo.setWorkStationAltitude(1500);
+            workenvironmentinfo.setWorkStationAltitude(0);
         }
         if (workenvironmentinfo.getWorkStationName() == null || workenvironmentinfo.getWorkStationName().equals("")){
             workenvironmentinfo.setWorkStationName("无");
         }
         if (workenvironmentinfo.getWindowOpenArea() == null){
-            workenvironmentinfo.setWindowOpenArea(BigDecimal.valueOf(12.75));
+            workenvironmentinfo.setWindowOpenArea(BigDecimal.valueOf(0.00));
         }
         if (workenvironmentinfo.getVentilationCondition()== null){
             workenvironmentinfo.setVentilationCondition("不开窗通风");
