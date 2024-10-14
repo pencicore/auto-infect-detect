@@ -20,10 +20,12 @@ public class DiseaseLearningMaterialsPageVO {
 
     private Boolean isDeleted;
 
+    private String materialType;
+
     public DiseaseLearningMaterialsPageVO() {
     }
 
-    public DiseaseLearningMaterialsPageVO(Integer materialId, String title, String filePath, String link, LocalDateTime publishDate, Long studyCount, Integer sequenceNumber, Boolean isDeleted) {
+    public DiseaseLearningMaterialsPageVO(Integer materialId, String title, String filePath, String link, LocalDateTime publishDate, Long studyCount, Integer sequenceNumber, Boolean isDeleted, String materialType) {
         this.materialId = materialId;
         this.title = title;
         this.filePath = filePath;
@@ -32,6 +34,7 @@ public class DiseaseLearningMaterialsPageVO {
         this.studyCount = studyCount;
         this.sequenceNumber = sequenceNumber;
         this.isDeleted = isDeleted;
+        this.materialType = materialType;
     }
 
     /**
@@ -162,7 +165,23 @@ public class DiseaseLearningMaterialsPageVO {
         this.isDeleted = isDeleted;
     }
 
+    /**
+     * 获取
+     * @return materialType
+     */
+    public String getMaterialType() {
+        return materialType;
+    }
+
+    /**
+     * 设置
+     * @param materialType
+     */
+    public void setMaterialType(String materialType) {
+        this.materialType = materialType;
+    }
+
     public String toString() {
-        return "DiseaseLearningMaterialsPageVO{materialId = " + materialId + ", title = " + title + ", filePath = " + filePath + ", link = " + link + ", publishDate = " + publishDate + ", studyCount = " + studyCount + ", sequenceNumber = " + sequenceNumber + ", isDeleted = " + isDeleted + "}";
+        return "DiseaseLearningMaterialsPageVO{materialId = " + materialId + ", title = " + title + ", filePath = " + filePath + ", link = " + link + ", publishDate = " + publishDate + ", studyCount = " + studyCount + ", sequenceNumber = " + sequenceNumber + ", isDeleted = " + isDeleted + ", materialType = " + materialType + "}";
     }
 }

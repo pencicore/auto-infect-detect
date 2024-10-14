@@ -96,4 +96,14 @@ public class SystemHospitalManagerController {
         );
     }
 
+    @ApiOperation("根据id删除医院信息")
+    @DeleteMapping("/deleteHospitalInfo/{hospitalId}")
+    public Result deleteHospitalInfo(@PathVariable Integer hospitalId){
+        boolean res = hospitalService.removeById(hospitalId);
+        if(!res){
+            return Result.error("该ID不存在");
+        }
+        return Result.success();
+    }
+
 }

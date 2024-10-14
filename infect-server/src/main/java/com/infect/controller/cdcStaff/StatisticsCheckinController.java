@@ -8,6 +8,7 @@ import com.infect.result.PageResult;
 import com.infect.result.Result;
 import com.infect.service.IDailyhealthstatusService;
 import com.infect.service.IUserService;
+import com.infect.vo.system.CheckInStationVO;
 import com.infect.vo.system.CheckinInfoVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,8 +37,15 @@ public class StatisticsCheckinController {
 
     @GetMapping("/selectCheckinById/{dailyHealthId}")
     @ApiOperation("根据id获取用户打卡信息")
-    public Result<Dailyhealthstatus> selectCheckinById(@PathVariable Integer dailyHealthId){
-        return Result.success(dailyhealthstatusService.getById(dailyHealthId));
+    public Result<CheckInStationVO> selectCheckinById(@PathVariable Integer dailyHealthId){
+        CheckInStationVO checkInStationVO = new CheckInStationVO();
+        BeanUtil.copyProperties(
+                dailyhealthstatusService.getById(dailyHealthId),checkInStationVO
+        );
+        BeanUtil.copyProperties(
+                userService.getById(checkInStationVO.getUserId()), checkInStationVO
+        );
+        return Result.success(checkInStationVO);
     }
 
     @GetMapping("/selectCheckinInfoById/{dailyHealthId}")

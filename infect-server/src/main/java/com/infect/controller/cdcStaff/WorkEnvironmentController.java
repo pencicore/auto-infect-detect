@@ -28,15 +28,15 @@ public class WorkEnvironmentController {
         return Result.success(workInfoById);
     }
 
-    @PostMapping("/updateWorkInfoById")
-    @ApiOperation(value = "根据id修改用户某月工作环境基本信息")
-    public Result updateWorkInfoById(@RequestBody Workenvironmentinfo workenvironmentinfo){
-        //防止误操作
-        workenvironmentinfo.setUserId(null);
-        workenvironmentinfo.setSubmissionTime(null);
-        workenvironmentinfoService.updateById(workenvironmentinfo);
-        return Result.success();
-    }
+//    @PostMapping("/updateWorkInfoById")
+//    @ApiOperation(value = "根据id修改用户某月工作环境基本信息")
+//    public Result updateWorkInfoById(@RequestBody Workenvironmentinfo workenvironmentinfo){
+//        //防止误操作
+//        workenvironmentinfo.setUserId(null);
+//        workenvironmentinfo.setSubmissionTime(null);
+//        workenvironmentinfoService.updateById(workenvironmentinfo);
+//        return Result.success();
+//    }
 
     @PostMapping("/pageSelectWorkEnvironment")
     @ApiOperation(value = "根据地点名和时间分页查询用户填写得每月工作环境")
