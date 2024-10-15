@@ -100,10 +100,7 @@ public class LabTestServiceImpl implements MyLabTestService {
         // 查询数据，获取 id 字段
         List<Integer> labTestReportIds = labtestreportMapper.selectLabTestReportIdByUserIdAndDate(userId, LocalDate.now());
 
-        if (labTestReportIds.isEmpty()) {
-            // 处理没有找到的情况
-            return Result.error("未找到相关数据");
-        } else if (labTestReportIds.size() > 1) {
+        if (labTestReportIds.size() != 0) {
             return Result.error("您今日已经提交过了");
         } else {
             // 创建 LabTestReport 实体类
@@ -114,6 +111,7 @@ public class LabTestServiceImpl implements MyLabTestService {
             // 插入数据
             labtestreportMapper.insert(labtestreport);
             // 只有一个结果
+            labTestReportIds = labtestreportMapper.selectLabTestReportIdByUserIdAndDate(userId, LocalDate.now());
             Integer labTestReportId = labTestReportIds.get(0);
             // 变量文件 id 数组，修改文件字段中的实验室检测报告 id
             for (Integer fileId : labTestReportDTO.getLabTestFileIds()) {

@@ -61,17 +61,35 @@ public class LabtestreportServiceImpl extends ServiceImpl<LabtestreportMapper, L
         Page<Labtestreport> page = Page.of(labTestPageDTO.getPageNo(),labTestPageDTO.getPageSize());
         page.addOrder(new OrderItem("UploadDate",false));
 
+        //判断是否有用户名，电话，部门条件
+        boolean isQuery;
+        if((name!=null && !name.isEmpty())
+        || (phoneNumber!=null && !phoneNumber.isEmpty())
+        || (department!=null && !department.isEmpty())){
+            isQuery = true;
+        }
+        else {
+            isQuery = false;
+        }
+        
         //根据用户名，电话，部门获取用户id
-        List<Integer> userIds = userMapper.selectIdsByWrapper(
-                new LambdaQueryWrapper<User>()
-                        .like(name!=null, User::getName, name)
-                        .like(phoneNumber!=null, User::getPhoneNumber, phoneNumber)
-                        .like(department!=null, User::getDepartment, department)
-        );
+        List<Integer> userIds = null;
+        if(isQuery){
+            userIds = userMapper.selectIdsByWrapper(
+                    new LambdaQueryWrapper<User>()
+                            .like(name!=null && !name.isEmpty(), User::getName, name)
+                            .like(phoneNumber!=null && !phoneNumber.isEmpty(), User::getPhoneNumber, phoneNumber)
+                            .like(department!=null && !department.isEmpty(), User::getDepartment, department)
+            );
+
+            if(userIds.size()==0){
+                return new PageResult<>();
+            }
+        }
 
         //分页查询
         Page<Labtestreport> p = lambdaQuery()
-                .in(userIds!=null && userIds.size()!=0,Labtestreport::getUserId, userIds)
+                .in(isQuery && userIds!=null,Labtestreport::getUserId, userIds)
                 .ge(flag,Labtestreport::getUploadDate,beginDate)
                 .le(flag,Labtestreport::getUploadDate,endDate)
                 .page(page);

@@ -12,6 +12,7 @@ import com.infect.service.ILabtestreportService;
 import com.infect.service.IUserService;
 import com.infect.service.MyLabTestService;
 import com.infect.vo.system.LabTestPageVO;
+import com.infect.vo.system.UserBaseInfo;
 import com.infect.vo.system.UserInfoVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -57,10 +58,10 @@ public class LabTestManagerController {
 
     @PostMapping("/getUserByBaseInfo")
     @ApiOperation(value = "根据用户名，性别，联系电话，年龄查找对应用户信息")
-    public Result<User> getUserByBaseInfo(@RequestBody UserBaseInfoDTO userBaseInfoDTO){
-        User user = userService.getUserByBaseInfo(userBaseInfoDTO);
+    public Result<UserBaseInfo> getUserByBaseInfo(@RequestBody UserBaseInfoDTO userBaseInfoDTO){
+        UserBaseInfo user = userService.getUserByBaseInfo(userBaseInfoDTO);
         if(user == null) {
-            return Result.error("信息不够精确");
+            return Result.error("信息不够精确 或 信息不正确");
         }
         return Result.success(user);
     }
@@ -68,8 +69,10 @@ public class LabTestManagerController {
     @PostMapping("/saveLabTestReport")
     @ApiOperation("添加检查信息")
     public Result saveLabTestReport(@RequestBody LabTestReportDTO labTestReportDTO, Integer userId){
-        labTestService.saveLabTest(labTestReportDTO, userId);
-        return Result.success();
+        if(userId==null) {
+            return Result.error("userId为空");
+        }
+        return labTestService.saveLabTest(labTestReportDTO, userId);
     }
 
     @GetMapping("/getDetectionInformationExportFormExcel")

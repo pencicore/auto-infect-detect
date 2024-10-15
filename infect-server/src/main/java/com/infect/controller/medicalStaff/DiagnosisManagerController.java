@@ -64,15 +64,15 @@ public class DiagnosisManagerController {
         return Result.success();
     }
 
-    @PostMapping("/getUserByBaseInfo")
-    @ApiOperation(value = "根据用户名，性别，联系电话，年龄查找对应用户信息")
-    public Result<User> getUserByBaseInfo(@RequestBody UserBaseInfoDTO userBaseInfoDTO){
-        User user = userService.getUserByBaseInfo(userBaseInfoDTO);
-        if(user == null) {
-            return Result.error("信息不够精确");
-        }
-        return Result.success(user);
-    }
+//    @PostMapping("/getUserByBaseInfo")
+//    @ApiOperation(value = "根据用户名，性别，联系电话，年龄查找对应用户信息")
+//    public Result<User> getUserByBaseInfo(@RequestBody UserBaseInfoDTO userBaseInfoDTO){
+//        User user = userService.getUserByBaseInfo(userBaseInfoDTO);
+//        if(user == null) {
+//            return Result.error("信息不够精确");
+//        }
+//        return Result.success(user);
+//    }
 
     @GetMapping("/getExcelClinicalInformationExportForm")
     @ApiOperation(value = "导出文件：导出临床信息导出表")
@@ -80,15 +80,15 @@ public class DiagnosisManagerController {
         diagnosisService.getExcelClinicalInformationExportForm(response);
     }
 
-    @GetMapping("/getUserInfo/{userId}")
-    @ApiOperation(value = "获取用户信息")
-    public Result<UserInfoVO> getUserInfo(@PathVariable Integer userId){
-        User user = userService.getById(userId);
-        UserInfoVO userInfoVO = BeanUtil.copyProperties(user, UserInfoVO.class);
-        if(userInfoVO == null) {
-            return Result.error("用户id不存在");
-        }
-        return Result.success(userInfoVO);
-    }
+//    @GetMapping("/getUserInfo/{userId}")
+//    @ApiOperation(value = "获取用户信息")
+//    public Result<UserInfoVO> getUserInfo(@PathVariable Integer userId){
+//        User user = userService.getById(userId);
+//        UserInfoVO userInfoVO = BeanUtil.copyProperties(user, UserInfoVO.class);
+//        if(userInfoVO == null) {
+//            return Result.error("用户id不存在");
+//        }
+//        return Result.success(userInfoVO);
+//    }
 
 }

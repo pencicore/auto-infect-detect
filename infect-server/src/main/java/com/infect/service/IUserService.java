@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.infect.result.PageResult;
 import com.infect.vo.UserLoginVO;
 import com.infect.vo.system.ImportantUserInfoVO;
+import com.infect.vo.system.UserBaseInfo;
 import com.infect.vo.system.UserSystemInfoVO;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -41,5 +42,5 @@ public interface IUserService extends IService<User> {
 
     List<ImportantUserInfoVO> getImportantUserInfo();
 
-    User getUserByBaseInfo(UserBaseInfoDTO userBaseInfoDTO);
+    UserBaseInfo getUserByBaseInfo(UserBaseInfoDTO userBaseInfoDTO);
 }

@@ -23,6 +23,7 @@ import com.infect.utils.ExcelUtil;
 import com.infect.utils.JwtUtil;
 import com.infect.vo.UserLoginVO;
 import com.infect.vo.system.ImportantUserInfoVO;
+import com.infect.vo.system.UserBaseInfo;
 import com.infect.vo.system.UserSystemInfoVO;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -512,7 +513,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    public User getUserByBaseInfo(UserBaseInfoDTO userBaseInfoDTO) {
+    public UserBaseInfo getUserByBaseInfo(UserBaseInfoDTO userBaseInfoDTO) {
         String name = userBaseInfoDTO.getName();
         String phoneNumber = userBaseInfoDTO.getPhoneNumber();
         String gender = userBaseInfoDTO.getGender();
@@ -520,21 +521,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         //根据查询条件构造wrapper条件
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<User>()
-                .like(name!=null, User::getName, name)
-                .like(phoneNumber!=null,User::getPhoneNumber,phoneNumber)
-                .eq(gender!=null,User::getGender,gender)
+                .like(name!=null && !name.isEmpty(), User::getName, name)
+                .like(phoneNumber!=null && !phoneNumber.isEmpty(),User::getPhoneNumber,phoneNumber)
+                .eq(gender!=null && !gender.isEmpty(),User::getGender,gender)
                 .eq(age!=null,User::getAge,age);
 
         //根据构造条件查询对应用户数量
         Integer count = Math.toIntExact(userMapper.selectCount(lambdaQueryWrapper));
 
+        System.out.println(count);
         //数量不等于1，返回失败信息
         if(count!=1){
             return null;
         }
 
         //查询用户信息，并返回
-        return userMapper.selectOne(lambdaQueryWrapper);
+        return BeanUtil.copyProperties(
+                userMapper.selectOne(lambdaQueryWrapper), UserBaseInfo.class
+        );
     }
 
 }

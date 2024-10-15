@@ -39,6 +39,7 @@ public class Labtestreport implements Serializable {
 
     private String pathogenicTestResults;
 
+
     public Labtestreport() {
     }
 
@@ -53,68 +54,52 @@ public class Labtestreport implements Serializable {
         this.pathogenicTestResults = pathogenicTestResults;
     }
 
+    /**
+     * 获取
+     * @return labTestReportId
+     */
     public Integer getLabTestReportId() {
         return labTestReportId;
     }
 
+    /**
+     * 设置
+     * @param labTestReportId
+     */
     public void setLabTestReportId(Integer labTestReportId) {
         this.labTestReportId = labTestReportId;
     }
 
+    /**
+     * 获取
+     * @return userId
+     */
     public Integer getUserId() {
         return userId;
     }
 
+    /**
+     * 设置
+     * @param userId
+     */
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
+    /**
+     * 获取
+     * @return uploadDate
+     */
     public LocalDate getUploadDate() {
         return uploadDate;
     }
 
+    /**
+     * 设置
+     * @param uploadDate
+     */
     public void setUploadDate(LocalDate uploadDate) {
         this.uploadDate = uploadDate;
-    }
-
-    public Boolean getVirusAntigenTestDone() {
-        return isVirusAntigenTestDone;
-    }
-
-    public void setVirusAntigenTestDone(Boolean virusAntigenTestDone) {
-        isVirusAntigenTestDone = virusAntigenTestDone;
-    }
-
-    public Boolean getVirusNucleicAcidTestDone() {
-        return isVirusNucleicAcidTestDone;
-    }
-
-    public void setVirusNucleicAcidTestDone(Boolean virusNucleicAcidTestDone) {
-        isVirusNucleicAcidTestDone = virusNucleicAcidTestDone;
-    }
-
-    public Boolean getVirusCultureIsolationDone() {
-        return isVirusCultureIsolationDone;
-    }
-
-    public void setVirusCultureIsolationDone(Boolean virusCultureIsolationDone) {
-        isVirusCultureIsolationDone = virusCultureIsolationDone;
-    }
-
-    public Boolean getSerologicalTestDone() {
-        return isSerologicalTestDone;
-    }
-
-    public void setSerologicalTestDone(Boolean serologicalTestDone) {
-        isSerologicalTestDone = serologicalTestDone;
-    }
-
-    public String getPathogenicTestResults() {
-        return pathogenicTestResults;
-    }
-
-    public void setPathogenicTestResults(String pathogenicTestResults) {
-        this.pathogenicTestResults = pathogenicTestResults;
     }
 
     /**
@@ -179,6 +164,22 @@ public class Labtestreport implements Serializable {
      */
     public void setIsSerologicalTestDone(Boolean isSerologicalTestDone) {
         this.isSerologicalTestDone = isSerologicalTestDone;
+    }
+
+    /**
+     * 获取
+     * @return pathogenicTestResults
+     */
+    public String getPathogenicTestResults() {
+        return pathogenicTestResults;
+    }
+
+    /**
+     * 设置
+     * @param pathogenicTestResults
+     */
+    public void setPathogenicTestResults(String pathogenicTestResults) {
+        this.pathogenicTestResults = pathogenicTestResults;
     }
 
     public String toString() {
