@@ -9,7 +9,7 @@ import java.awt.*;
 
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author author
@@ -22,6 +22,16 @@ public interface DiagnosisreportsMapper extends BaseMapper<Diagnosisreports> {
 
     @Select("select DiagnosisResultsID from diagnosisreports where FilePath=#{s}")
     Integer selectIdByFilePath(String s);
+
     @Select("select ReportID from diagnosisreports where DiagnosisResultsID=#{userId}")
     List selectFileIdsByDiagnosisResultId(Integer userId);
+
+    /**
+     * 根据诊断结果id查询诊断报告文件id列表
+     * 
+     * @param diagnosisResultsID
+     * @return
+     */
+    @Select("select ReportID from diagnosisreports where DiagnosisResultsID = #{diagnosisResultsID}")
+    List<Integer> selectIdsByDiagnosisResultsID(Integer diagnosisResultsID);
 }
