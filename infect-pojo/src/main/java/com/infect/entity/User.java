@@ -200,6 +200,44 @@ public class User implements Serializable {
     @ApiModelProperty(value = "是否接种肝炎疫苗", example = "true")
     private Boolean isVaccinatedForHepatitis;
 
+    // 检查是否有任意一个病史字段为 true，并设置 hasMedicalHistory
+    public void updateMedicalHistoryStatus() {
+        // 如果任意一个字段为 true，则 hasMedicalHistory 也应该为 true
+        if (isTrue(hasHypertension) ||
+                isTrue(hasDiabetes) ||
+                isTrue(hasHyperlipidemia) ||
+                isTrue(hasHyperuricemia) ||
+                isTrue(hasCoronaryHeartDisease) ||
+                isTrue(hasStroke) ||
+                isTrue(hasOtherCardiovascularDiseases) ||
+                isTrue(hasAsthma) ||
+                isTrue(hasCOPD) ||
+                isTrue(hasPepticUlcer) ||
+                isTrue(hasMalignantTumor) ||
+                isTrue(hasLungCancer) ||
+                isTrue(hasOtherCancer) ||
+                isTrue(hasSevereMentalDisorders) ||
+                isTrue(hasTuberculosis) ||
+                isTrue(hasHepatitis) ||
+                isTrue(hasOccupationalDisease) ||
+                isTrue(hasChronicKidneyDisease) ||
+                isTrue(hasChronicLiverDisease) ||
+                isTrue(hasImmunodeficiency) ||
+                isTrue(hasTyphus) ||
+                isTrue(isPostpartumInSixWeeks) ||
+                isTrue(hasDustExposure) ||
+                isTrue(hasOtherDiseases)) {
+            hasMedicalHistory = true;
+        } else {
+            hasMedicalHistory = false;
+        }
+    }
+
+    // 辅助方法：处理字段可能为 null 的情况，只有为 true 才返回 true
+    private boolean isTrue(Boolean field) {
+        return Boolean.TRUE.equals(field);
+    }
+
     public User() {
     }
 

@@ -2,13 +2,17 @@ package com.infect.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.infect.constants.JwtConstant;
 import com.infect.dto.ChangePasswordDTO;
 import com.infect.dto.UserLoginDTO;
+import com.infect.dto.system.UserBaseInfoDTO;
 import com.infect.dto.system.UserPageDTO;
+import com.infect.entity.Dailyhealthstatus;
 import com.infect.entity.User;
 import com.infect.enums.UserEnumConstants;
+import com.infect.mapper.DailyhealthstatusMapper;
 import com.infect.mapper.UserMapper;
 import com.infect.properties.JwtProperties;
 import com.infect.result.PageResult;
@@ -18,6 +22,8 @@ import com.infect.utils.BaseContext;
 import com.infect.utils.ExcelUtil;
 import com.infect.utils.JwtUtil;
 import com.infect.vo.UserLoginVO;
+import com.infect.vo.system.ImportantUserInfoVO;
+import com.infect.vo.system.UserBaseInfo;
 import com.infect.vo.system.UserSystemInfoVO;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +55,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     private UserMapper userMapper;
 
     @Autowired
+    private DailyhealthstatusMapper dailyhealthstatusMapper;
+
+    @Autowired
     private JwtProperties jwtProperties;
 
     /**
@@ -58,6 +67,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      */
     @Override
     public UserLoginVO login(UserLoginDTO userLoginDTO) {
+        Map<String,Object> map=new HashMap<>();
         //根据用户手机号码和密码查询用户信息
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<User>()
                 .eq(User::getPhoneNumber, userLoginDTO.getPhoneNumber())
@@ -87,24 +97,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             //铁路工人
             secretKey = jwtProperties.getRailwayEmployeeSecretKey();
             ttl = jwtProperties.getRailwayEmployeeTtl();
+            map.put(JwtConstant.USER_TYPE, JwtConstant.USER_TYPE_RAILWAY);
         } else if (user.getUserType().equals(UserEnumConstants.USER_TYPE_ADMIN)) {
             //系统管理员
             secretKey = jwtProperties.getAdminSecretKey();
             ttl = jwtProperties.getAdminTtl();
+            map.put(JwtConstant.USER_TYPE, JwtConstant.USER_TYPE_ADMIN);
         } else if (user.getUserType().equals(UserEnumConstants.USER_TYPE_CDC_STAFF)) {
             //疾控中心工作人员
             secretKey = jwtProperties.getCdcStaffSecretKey();
             ttl = jwtProperties.getCdcStaffTtl();
+            map.put(JwtConstant.USER_TYPE, JwtConstant.USER_TYPE_CDC_STAFF);
         } else if (user.getUserType().equals(UserEnumConstants.USER_TYPE_MEDICAL_STAFF)) {
             //专职医护人员
             secretKey = jwtProperties.getMedicalStaffSecretKey();
             ttl = jwtProperties.getMedicalStaffTtl();
+            map.put(JwtConstant.USER_TYPE, JwtConstant.USER_TYPE_MEDICAL_STAFF);
         } else {
             return null;
         }
         //生成jwt
-        Map<String,Object> map=new HashMap();
-        map.put(JwtConstant.UserId,user.getUserId().toString());
+        map.put(JwtConstant.USER_ID,user.getUserId().toString());
         String jwt= JwtUtil.createJWT(secretKey,ttl,map);
         userLoginVO.setToken(jwt);
         //将密码设置为空
@@ -142,20 +155,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     /**
      * 将excel表中用户数据插入用户表中
-     * @param multipartFile
+     *
+     * @param file
+     * @return
      * @throws Exception
      */
     @Transactional
     @Override
-    public void addManyUser(MultipartFile multipartFile) throws Exception {
+    public int addManyUser(MultipartFile file) throws Exception {
         //获取excel表sheet1页的用户数据
-        List<List<String>> lists = ExcelUtil.readExcelFile(multipartFile, 0);
-
-        for (Object t : lists) {
-            System.out.println(t);
-        }
-
-        if(1==1) return;
+        List<List<String>> lists = ExcelUtil.readExcelFile(file, 0);
 
         //将‘是’转换为 true, ‘否’转换为false
         for (List<String> list : lists) {
@@ -329,14 +338,46 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                 user.setIsVaccinatedForCOVID(Boolean.parseBoolean(list.get(48)));  // IsVaccinatedForCOVID
             }
             if (list.get(49) != null && !list.get(49).isEmpty()) {
-                user.setIsVaccinatedForFlu(Boolean.parseBoolean(list.get(49)));
+                user.setIsVaccinatedForFlu(Boolean.parseBoolean(list.get(49))); // IsVaccinatedForFlu
+            }
+            if (list.get(50) != null && !list.get(50).isEmpty()) {
+                user.setIsVaccinatedForPlague(Boolean.parseBoolean(list.get(50))); // IsVaccinatedForPlague
+            }
+            if (list.get(51) != null && !list.get(51).isEmpty()) {
+                user.setIsVaccinatedForBCG(Boolean.parseBoolean(list.get(51))); // IsVaccinatedForFlu
+            }
+            if (list.get(52) != null && !list.get(52).isEmpty()) {
+                user.setIsVaccinatedForHepatitis(Boolean.parseBoolean(list.get(52))); // IsVaccinatedForFlu
             }
 
+            //设置既往病史
+            user.updateMedicalHistoryStatus();
+
             user.setPassword(user.getIdNumber().substring(12));
+
+            String phoneNumber = user.getPhoneNumber();
+            String idNumber = user.getIdNumber();
+
+            //电话号码为空，或者身份证号为空，跳过该句
+            if(phoneNumber == null || idNumber == null || phoneNumber.isEmpty() || idNumber.isEmpty()){
+                continue;
+            }
+
+            //判断该用户是否已存在
+            Integer count = userMapper.selectCountByIdNumberOrPhoneNumber(phoneNumber,idNumber);
+            if(count!=0){
+                continue;
+            }
+
             listUser.add(user);
         }
 
-        this.saveBatch(listUser, 500);
+        boolean flag = this.saveBatch(listUser, 500);
+
+        if(flag) {
+            return listUser.size();
+        }
+        return 0;
     }
 
     /**
@@ -387,14 +428,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         //构建分页条件
         Page<User> page = Page.of(userPageDTO.getPageNo(), userPageDTO.getPageSize());
+        page.addOrder(new OrderItem("userId",false));
 
         //分页查询
         Page<User> p = lambdaQuery()
-                .like(name!=null, User::getName, name)
-                .eq(phoneNumber!=null, User::getPhoneNumber, phoneNumber)
-                .eq(department!=null, User::getDepartment, department)
-                .eq(specificOccupation!=null, User::getSpecificOccupation, specificOccupation)
-                .eq(userType!=null, User::getUserType, userType)
+                .like(name!=null && !name.isEmpty(), User::getName, name)
+                .eq(phoneNumber!=null && !phoneNumber.isEmpty(), User::getPhoneNumber, phoneNumber)
+                .eq(department!=null && !department.isEmpty(), User::getDepartment, department)
+                .eq(specificOccupation!=null && !specificOccupation.isEmpty(), User::getSpecificOccupation, specificOccupation)
+                .eq(userType!=null && !userType.isEmpty(), User::getUserType, userType)
                 .page(page);
 
         //封装VO结果
@@ -417,9 +459,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      */
     public void queryAllUserToExcel(HttpServletResponse response){
         String projectDir = System.getProperty("user.dir");
-        System.out.println("项目根目录: " + projectDir);
-
-        String filePath = projectDir + "\\infect-server\\src\\main\\resources\\templates\\个人信息导出表.xlsx";
+        String filePath = projectDir + "/infect-server/src/main/resources/templates/个人信息导出表.xlsx";
 
         List<User> listUser = userMapper.selectList(null);
         List<List<Object>> listList = new ArrayList<>();
@@ -440,270 +480,65 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             excel.write(out);
 
             excel.close();
+            out.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    //老方法
-//    /**
-//     * 将用户信息导出为excel表
-//     * @param response
-//     */
-//    @Override
-//    public void queryAllUserToExcel(HttpServletResponse response) {
-//        //0.设置 HTTP 响应头，指定文件名和 MIME 类型
-//        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-//        response.setHeader("Content-Disposition", "attachment; filename=\"users.xlsx\"");
-//
-//        //1.查询数据库，获取用户信息
-//        List<User> list = userMapper.selectList(null);
-//
-//        //2.通过POI将数据写入到EXcel文件
-//        InputStream in = this.getClass().getClassLoader().getResourceAsStream("templates/个人信息导出表.xlsx");
-//
-//        try {
-//            // 根据模板创建一个新Excel文件
-//            XSSFWorkbook excel = new XSSFWorkbook(in);
-//            XSSFSheet sheet = excel.getSheet("个人信息导出表");
-//
-//            // 填充数据
-//            int n = list.size();
-//            XSSFRow row;
-//            User user;
-//
-//            for (int i = 0; i < n; i++) {
-//                row = sheet.getRow(i + 1);
-//                // 如果当前行为空，需要先创建该行
-//                if (row == null) {
-//                    row = sheet.createRow(i + 1);
-//                }
-//                user = list.get(i);
-//
-//                for (int j=0; j<53;j++){
-//                    if(row.getCell(j)==null){
-//                        row.createCell(j);
-//                    }
-//                }
-//
-//                // 序号
-//                row.createCell(0).setCellValue(i + 1);
-//
-//// 用户类型
-//                if (user.getUserType() != null) {
-//                    row.createCell(1).setCellValue(user.getUserType());
-//                }
-//
-//// 姓名
-//                if (user.getName() != null) {
-//                    row.createCell(2).setCellValue(user.getName());
-//                }
-//
-//// 性别
-//                if (user.getGender() != null) {
-//                    row.createCell(3).setCellValue(user.getGender());
-//                }
-//
-//// 是否怀孕
-//                row.createCell(4).setCellValue(user.getIsPregnant() != null && user.getIsPregnant() ? "是" : "否");
-//
-//// 怀孕周数
-//                if (user.getPregnancyWeeks() != null) {
-//                    row.createCell(5).setCellValue(user.getPregnancyWeeks().toString());
-//                } else {
-//                    row.createCell(5).setCellValue("");
-//                }
-//
-//// 身份证号
-//                if (user.getIdNumber() != null) {
-//                    row.createCell(6).setCellValue(user.getIdNumber());
-//                }
-//
-//// 年龄
-//                if (user.getAge() != null) {
-//                    row.createCell(7).setCellValue(user.getAge());
-//                }
-//
-//// 民族
-//                if (user.getEthnicity() != null) {
-//                    row.createCell(8).setCellValue(user.getEthnicity());
-//                }
-//
-//// 教育水平
-//                if (user.getEducationLevel() != null) {
-//                    row.createCell(9).setCellValue(user.getEducationLevel());
-//                }
-//
-//// 在高原工作的开始日期
-//                if (user.getWorkOnPlateauStartDate() != null) {
-//                    row.createCell(10).setCellValue(user.getWorkOnPlateauStartDate().toString());
-//                } else {
-//                    row.createCell(10).setCellValue("");
-//                }
-//
-//// 部门
-//                if (user.getDepartment() != null) {
-//                    row.createCell(11).setCellValue(user.getDepartment());
-//                }
-//
-//// 特殊职业
-//                if (user.getSpecificOccupation() != null) {
-//                    row.createCell(12).setCellValue(user.getSpecificOccupation());
-//                }
-//
-//// 医务人员类别
-//                if (user.getMedicalPersonnelType() != null) {
-//                    row.createCell(13).setCellValue(user.getMedicalPersonnelType());
-//                }
-//
-//// 其他职位名称
-//                if (user.getOtherPositionName() != null) {
-//                    row.createCell(14).setCellValue(user.getOtherPositionName());
-//                }
-//
-//// 电话号码
-//                if (user.getPhoneNumber() != null) {
-//                    row.createCell(15).setCellValue(user.getPhoneNumber());
-//                }
-//
-//// 其他电话号码
-//                if (user.getOtherPhoneNumber() != null) {
-//                    row.createCell(16).setCellValue(user.getOtherPhoneNumber());
-//                }
-//
-//// 是否有既往病史
-//                row.createCell(17).setCellValue(user.getHasMedicalHistory() != null && user.getHasMedicalHistory() ? "是" : "否");
-//
-//// 是否有高血压
-//                row.createCell(18).setCellValue(user.getHasHypertension() != null && user.getHasHypertension() ? "是" : "否");
-//
-//// 是否有糖尿病
-//                row.createCell(19).setCellValue(user.getHasDiabetes() != null && user.getHasDiabetes() ? "是" : "否");
-//
-//// 是否有高脂血症
-//                row.createCell(20).setCellValue(user.getHasHyperlipidemia() != null && user.getHasHyperlipidemia() ? "是" : "否");
-//
-//// 是否有高尿酸血症
-//                row.createCell(21).setCellValue(user.getHasHyperuricemia() != null && user.getHasHyperuricemia() ? "是" : "否");
-//
-//// 是否有冠心病
-//                row.createCell(22).setCellValue(user.getHasCoronaryHeartDisease() != null && user.getHasCoronaryHeartDisease() ? "是" : "否");
-//
-//// 是否有中风
-//                row.createCell(23).setCellValue(user.getHasStroke() != null && user.getHasStroke() ? "是" : "否");
-//
-//// 是否有其他心血管疾病
-//                row.createCell(24).setCellValue(user.getHasOtherCardiovascularDiseases() != null && user.getHasOtherCardiovascularDiseases() ? "是" : "否");
-//
-//// 是否有哮喘
-//                row.createCell(25).setCellValue(user.getHasAsthma() != null && user.getHasAsthma() ? "是" : "否");
-//
-//// 是否有慢阻肺
-//                row.createCell(26).setCellValue(user.getHasCOPD() != null && user.getHasCOPD() ? "是" : "否");
-//
-//// 是否有消化性溃疡
-//                row.createCell(27).setCellValue(user.getHasPepticUlcer() != null && user.getHasPepticUlcer() ? "是" : "否");
-//
-//// 是否有恶性肿瘤
-//                row.createCell(28).setCellValue(user.getHasMalignantTumor() != null && user.getHasMalignantTumor() ? "是" : "否");
-//
-//// 是否有肺癌
-//                row.createCell(29).setCellValue(user.getHasLungCancer() != null && user.getHasLungCancer() ? "是" : "否");
-//
-//// 是否有其他癌症
-//                row.createCell(30).setCellValue(user.getHasOtherCancer() != null && user.getHasOtherCancer() ? "是" : "否");
-//
-//// 其他癌症名称
-//                if (user.getOtherCancerName() != null) {
-//                    row.createCell(31).setCellValue(user.getOtherCancerName());
-//                }
-//
-//// 是否有严重精神障碍
-//                row.createCell(32).setCellValue(user.getHasSevereMentalDisorders() != null && user.getHasSevereMentalDisorders() ? "是" : "否");
-//
-//// 是否有结核病
-//                row.createCell(33).setCellValue(user.getHasTuberculosis() != null && user.getHasTuberculosis() ? "是" : "否");
-//
-//// 是否有肝炎
-//                row.createCell(34).setCellValue(user.getHasHepatitis() != null && user.getHasHepatitis() ? "是" : "否");
-//
-//// 是否有职业病
-//                row.createCell(35).setCellValue(user.getHasOccupationalDisease() != null && user.getHasOccupationalDisease() ? "是" : "否");
-//
-//// 是否有慢性肾病
-//                row.createCell(36).setCellValue(user.getHasChronicKidneyDisease() != null && user.getHasChronicKidneyDisease() ? "是" : "否");
-//
-//// 是否有慢性肝病
-//                row.createCell(37).setCellValue(user.getHasChronicLiverDisease() != null && user.getHasChronicLiverDisease() ? "是" : "否");
-//
-//// 是否有免疫缺陷
-//                row.createCell(38).setCellValue(user.getHasImmunodeficiency() != null && user.getHasImmunodeficiency() ? "是" : "否");
-//
-//// 是否有斑疹伤寒
-//                row.createCell(39).setCellValue(user.getHasTyphus() != null && user.getHasTyphus() ? "是" : "否");
-//
-//// 是否在六周内产后
-//                row.createCell(40).setCellValue(user.getIsPostpartumInSixWeeks() != null && user.getIsPostpartumInSixWeeks() ? "是" : "否");
-//
-//// 是否有粉尘暴露
-//                row.createCell(41).setCellValue(user.getHasDustExposure() != null && user.getHasDustExposure() ? "是" : "否");
-//
-//// 是否有其他疾病
-//                row.createCell(42).setCellValue(user.getHasOtherDiseases() != null && user.getHasOtherDiseases() ? "是" : "否");
-//
-//// 其他疾病名称
-//                if (user.getOtherDiseasesName() != null) {
-//                    row.createCell(43).setCellValue(user.getOtherDiseasesName());
-//                }
-//
-//// 吸烟状态
-//                if (user.getSmokingStatus() != null) {
-//                    row.createCell(44).setCellValue(user.getSmokingStatus());
-//                }
-//
-//// 饮酒状态
-//                if (user.getDrinkingStatus() != null) {
-//                    row.createCell(45).setCellValue(user.getDrinkingStatus());
-//                }
-//
-//// 身高
-//                if (user.getHeight() != null) {
-//                    row.createCell(46).setCellValue(user.getHeight());
-//                }
-//
-//// 体重
-//                if (user.getWeight() != null) {
-//                    row.createCell(47).setCellValue(user.getWeight());
-//                }
-//
-//// 是否接种新冠疫苗
-//                row.createCell(48).setCellValue(user.getIsVaccinatedForCOVID() != null && user.getIsVaccinatedForCOVID() ? "是" : "否");
-//
-//// 是否接种流感疫苗
-//                row.createCell(49).setCellValue(user.getIsVaccinatedForFlu() != null && user.getIsVaccinatedForFlu() ? "是" : "否");
-//
-//// 是否接种鼠疫疫苗
-//                row.createCell(50).setCellValue(user.getIsVaccinatedForPlague() != null && user.getIsVaccinatedForPlague() ? "是" : "否");
-//
-//// 是否接种卡介苗
-//                row.createCell(51).setCellValue(user.getIsVaccinatedForBCG() != null && user.getIsVaccinatedForBCG() ? "是" : "否");
-//
-//// 是否接种肝炎疫苗
-//                row.createCell(52).setCellValue(user.getIsVaccinatedForHepatitis() != null && user.getIsVaccinatedForHepatitis() ? "是" : "否");
-//
-//            }
-//
-//            //3.通过输出流将Excel文件下载到客户端中
-//            ServletOutputStream out=response.getOutputStream();
-//            excel.write(out);
-//
-//            //4.关闭资源
-//            in.close();
-//            out.close();
-//            excel.close();
-//
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+    /**
+     * 获取重点人员跟踪信息
+     * @return
+     */
+    @Override
+    public List<ImportantUserInfoVO> getImportantUserInfo() {
+
+        //根据id查询用户部分信息
+        List<ImportantUserInfoVO> list = userMapper.selectHasMedicalHistoryIsTrue();
+
+        //根据id查询今日签到部分信息
+        for (ImportantUserInfoVO vo:list) {
+            Dailyhealthstatus dailyhealthstatus = dailyhealthstatusMapper.selectOne(
+                    new LambdaQueryWrapper<Dailyhealthstatus>()
+                            .eq(Dailyhealthstatus::getUserId, vo.getUserId())
+                            .eq(Dailyhealthstatus::getCheckInDate, LocalDate.now())
+            );
+
+            if(dailyhealthstatus!=null){
+                BeanUtil.copyProperties(dailyhealthstatus,vo);
+            }
+        }
+
+        return list;
+    }
+
+    @Override
+    public UserBaseInfo getUserByBaseInfo(UserBaseInfoDTO userBaseInfoDTO) {
+        String name = userBaseInfoDTO.getName();
+        String phoneNumber = userBaseInfoDTO.getPhoneNumber();
+        String gender = userBaseInfoDTO.getGender();
+        Integer age = userBaseInfoDTO.getAge();
+
+        //根据查询条件构造wrapper条件
+        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<User>()
+                .like(name!=null && !name.isEmpty(), User::getName, name)
+                .like(phoneNumber!=null && !phoneNumber.isEmpty(),User::getPhoneNumber,phoneNumber)
+                .eq(gender!=null && !gender.isEmpty(),User::getGender,gender)
+                .eq(age!=null,User::getAge,age);
+
+        //根据构造条件查询对应用户数量
+        Integer count = Math.toIntExact(userMapper.selectCount(lambdaQueryWrapper));
+
+        System.out.println(count);
+        //数量不等于1，返回失败信息
+        if(count!=1){
+            return null;
+        }
+
+        //查询用户信息，并返回
+        return BeanUtil.copyProperties(
+                userMapper.selectOne(lambdaQueryWrapper), UserBaseInfo.class
+        );
+    }
+
 }

@@ -2,8 +2,8 @@ package com.infect.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.infect.dto.AllSymptomsDTO;
 import com.infect.dto.RailwayEmployeeCheckInDTO;
 import com.infect.dto.system.CheckinPageDTO;
@@ -12,11 +12,17 @@ import com.infect.mapper.*;
 import com.infect.result.PageResult;
 import com.infect.service.IDailyhealthstatusService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.infect.temporary.DiseaseNameNumberPairTemp;
+import com.infect.temporary.StationTemp;
 import com.infect.utils.BaseContext;
-import com.infect.utils.ExcelPencilUtil;
+import com.infect.utils.ExcelUtil;
 import com.infect.utils.ExcelUtil;
 import com.infect.vo.DailyhealthstatusGetVO;
+import com.infect.vo.system.CheckinDailyNumberSumVO;
+import com.infect.vo.system.CheckinDailyNumberVO;
+import com.infect.vo.system.CheckinInfoStatisticsVO;
 import com.infect.vo.system.CheckinInfoVO;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import com.infect.vo.MonthlyHealthStatusVO;
 import org.apache.commons.compress.utils.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +30,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
-import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -50,7 +52,8 @@ import static com.infect.utils.ExcelUtil.readExcelFile;
  * @since 2024-08-24
  */
 @Service
-public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusMapper, Dailyhealthstatus> implements IDailyhealthstatusService {
+public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusMapper, Dailyhealthstatus>
+        implements IDailyhealthstatusService {
 
     @Autowired
     private UserMapper userMapper;
@@ -96,13 +99,13 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
 
     @Override
     public DailyhealthstatusGetVO getDailyCheckIn(LocalDate date) {
-        //根据用户id和日期查询每日健康签到记录
+        // 根据用户id和日期查询每日健康签到记录
         LambdaQueryWrapper<Dailyhealthstatus> wrapper = new LambdaQueryWrapper<Dailyhealthstatus>()
                 .eq(Dailyhealthstatus::getUserId, BaseContext.getCurrentId())
                 .eq(Dailyhealthstatus::getCheckInDate, date);
         Dailyhealthstatus dailyhealthstatus = dailyhealthstatusMapper.selectOne(wrapper);
 
-        //构造VO对象
+        // 构造VO对象
         DailyhealthstatusGetVO dailyhealthstatusGetVO = new DailyhealthstatusGetVO();
         if (dailyhealthstatus == null) {
             dailyhealthstatusGetVO.setHasSignedToday(false);
@@ -124,7 +127,8 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
 
     @Override
     public void userCheckIn(RailwayEmployeeCheckInDTO railwayEmployeeCheckInDTO) {
-        Dailyhealthstatus dailyhealthstatus = BeanUtil.copyProperties(railwayEmployeeCheckInDTO, Dailyhealthstatus.class);
+        Dailyhealthstatus dailyhealthstatus = BeanUtil.copyProperties(railwayEmployeeCheckInDTO,
+                Dailyhealthstatus.class);
         dailyhealthstatus.setIsHealth(railwayEmployeeCheckInDTO.getHealth());
         dailyhealthstatus.setUserId(BaseContext.getCurrentId());
         dailyhealthstatus.setCheckInTime(LocalTime.now());
@@ -132,11 +136,11 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
         dailyhealthstatusMapper.insert(dailyhealthstatus);
     }
 
-    /*提交所有症状信息*/
+    /* 提交所有症状信息 */
     @Transactional
     @Override
     public List<Diseasescoring> saveAllSymptoms(AllSymptomsDTO allSymptomsDTO) {
-        //TODO 这里先暂时暴力处理，后期优化
+        // TODO 这里先暂时暴力处理，后期优化
         // 提交全身症状信息
         saveGeneralSymptoms(allSymptomsDTO.getGeneralsymptoms());
         // 提交呼吸系统症状信息
@@ -1158,10 +1162,12 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
             listUserId = userMapper.selectIdsByWrapper(wrapper);
         }
 
-        //构建分页条件
+        // 构建分页条件
         Page<Dailyhealthstatus> page = Page.of(checkinPageDTO.getPageNo(), checkinPageDTO.getPageSize());
+        page.addOrder(new OrderItem("CheckInDate", false));
+        page.addOrder(new OrderItem("CheckInTime", false));
 
-        //分页条件查询
+        // 分页条件查询
         Page<Dailyhealthstatus> p = lambdaQuery()
                 .in(listUserId != null, Dailyhealthstatus::getUserId, listUserId)
                 .gt(dateFlag, Dailyhealthstatus::getCheckInDate, checkInDateBegin)
@@ -1187,7 +1193,7 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
         pageResult.setRecords(list);
         pageResult.setTotal(p.getTotal());
 
-        //返回
+        // 返回
         return pageResult;
     }
 
@@ -1198,19 +1204,50 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
      */
     @Override
     public void getEmployeeCheckInExcel(HttpServletResponse response) {
-        //TODO
 
+        // 获取文件绝对路径
         String projectDir = System.getProperty("user.dir");
+        String fileName = projectDir + "/infect-server/src/main/resources/templates/职工打卡信息导出表.xlsx";
 
-        String fileName = projectDir + "\\infect-server\\src\\main\\resources\\templates\\个人信息导出表.xlsx";
-
-        List<User> listUser = userMapper.selectList(null);
+        // 查询打卡信息
+        List<Dailyhealthstatus> dailyhealthstatusList = dailyhealthstatusMapper.selectList(null);
         List<List<Object>> listList = new ArrayList<>();
 
         for (Object obj :
                 listUser) {
             List<Object> temp = new ArrayList<>();
+
             temp.add(obj);
+
+            temp.add(userMapper.selectById(obj.getUserId()));
+
+            Integer statusId = obj.getStatusId();
+
+            temp.add(generalsymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Generalsymptoms>()
+                            .eq(Generalsymptoms::getStatusId, statusId)));
+            temp.add(respiratorysymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Respiratorysymptoms>()
+                            .eq(Respiratorysymptoms::getStatusId, statusId)));
+            temp.add(digestivesymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Digestivesymptoms>()
+                            .eq(Digestivesymptoms::getStatusId, statusId)));
+            temp.add(circulatorysymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Circulatorysymptoms>()
+                            .eq(Circulatorysymptoms::getStatusId, statusId)));
+            temp.add(neurologicalsymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Neurologicalsymptoms>()
+                            .eq(Neurologicalsymptoms::getStatusId, statusId)));
+            temp.add(localsymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Localsymptoms>()
+                            .eq(Localsymptoms::getStatusId, statusId)));
+            temp.add(othersymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Othersymptoms>()
+                            .eq(Othersymptoms::getStatusId, statusId)));
+            temp.add(riskfactorsandexposureMapper.selectOne(
+                    new LambdaQueryWrapper<Riskfactorsandexposure>()
+                            .eq(Riskfactorsandexposure::getStatusId, statusId)));
+
             listList.add(temp);
         }
 
@@ -1222,24 +1259,73 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
 
 
     @Override
-    public List<MonthlyHealthStatusVO> getWorkEnvironmentInfo(Integer currentId, String yearMonth) {
+    public void getEmployeeCheckInExcelAI(HttpServletResponse response) {
 
+        // 获取文件绝对路径
+        String projectDir = System.getProperty("user.dir");
+        String fileName = projectDir + "/infect-server/src/main/resources/templates/职工打卡信息导出表(含AI预测数据）.xlsx";
 
-        List<Dailyhealthstatus> dailyhealthstatuses = dailyhealthstatusMapper.selectList(
-                new QueryWrapper<Dailyhealthstatus>()
-                        .eq("UserId", currentId)
-                        .like("CheckInDate", yearMonth)
-        );
-        List<MonthlyHealthStatusVO> monthlyHealthStatusVOS = new ArrayList<>();
-        for (Dailyhealthstatus dailyhealthstatus : dailyhealthstatuses) {
-            MonthlyHealthStatusVO monthlyHealthStatusVO = new MonthlyHealthStatusVO();
-            monthlyHealthStatusVO.setDate(dailyhealthstatus.getCheckInDate().toString());
-            monthlyHealthStatusVO.setHealth(dailyhealthstatus.getIsHealth());
-            monthlyHealthStatusVOS.add(monthlyHealthStatusVO);
+        // 查询打卡信息
+        List<Dailyhealthstatus> dailyhealthstatusList = dailyhealthstatusMapper.selectList(null);
+        List<List<Object>> listList = new ArrayList<>();
+
+        // 生成二维数组
+        for (Dailyhealthstatus obj : dailyhealthstatusList) {
+            List<Object> temp = new ArrayList<>();
+
+            temp.add(obj);
+
+            temp.add(userMapper.selectById(obj.getUserId()));
+
+            Integer statusId = obj.getStatusId();
+
+            temp.add(generalsymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Generalsymptoms>()
+                            .eq(Generalsymptoms::getStatusId, statusId)));
+            temp.add(respiratorysymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Respiratorysymptoms>()
+                            .eq(Respiratorysymptoms::getStatusId, statusId)));
+            temp.add(digestivesymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Digestivesymptoms>()
+                            .eq(Digestivesymptoms::getStatusId, statusId)));
+            temp.add(circulatorysymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Circulatorysymptoms>()
+                            .eq(Circulatorysymptoms::getStatusId, statusId)));
+            temp.add(neurologicalsymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Neurologicalsymptoms>()
+                            .eq(Neurologicalsymptoms::getStatusId, statusId)));
+            temp.add(localsymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Localsymptoms>()
+                            .eq(Localsymptoms::getStatusId, statusId)));
+            temp.add(othersymptomsMapper.selectOne(
+                    new LambdaQueryWrapper<Othersymptoms>()
+                            .eq(Othersymptoms::getStatusId, statusId)));
+            temp.add(riskfactorsandexposureMapper.selectOne(
+                    new LambdaQueryWrapper<Riskfactorsandexposure>()
+                            .eq(Riskfactorsandexposure::getStatusId, statusId)));
+
+            listList.add(temp);
         }
-        return monthlyHealthStatusVOS;
+
+        XSSFWorkbook excel = ExcelUtil.getExcelFile(response, "职工打卡信息导出表(含AI预测数据）.xlsx", fileName, 2, 1, 185, 2, 1,
+                listList);
+
+        try {
+            ServletOutputStream out = response.getOutputStream();
+            excel.write(out);
+
+            excel.close();
+            out.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
+    /**
+     * 获取当日疾病分布
+     *
+     * @return
+     */
     @Override
     public List<MonthlyHealthStatusVO> getDiagnoseInfo(String yearMonth, Integer currentId, List<MonthlyHealthStatusVO> clearHealthCostsGetVO) {
         List<Diagnosisresults> diagnosisresults = diagnosisresultsMapper.selectList(
@@ -1260,6 +1346,18 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
     }
 
     @Override
+    public List<CheckinDailyNumberSumVO> getCheckInDailyNumber(List<LocalDate> dateList) {
+        int n = dateList.size();
+        List<CheckinDailyNumberSumVO> voList = new ArrayList<>();
+
+        for (int l = 0, r = 1; r < n; l++, r++) {
+            LocalDate startDate = dateList.get(l);
+            LocalDate endDate = dateList.get(r);
+
+            List<CheckinDailyNumberVO> temp = dailyhealthstatusMapper.selectChickInDailyNumber(startDate, endDate);
+
+            CheckinDailyNumberSumVO vo = new CheckinDailyNumberSumVO(startDate, endDate, temp);
+            voList.add(vo);
     public List<MonthlyHealthStatusVO> getExamineInfo(Integer currentId, String yearMonth, List<MonthlyHealthStatusVO> newClearHealthCostsGetVO) {
         List<Labtestreport> labtestreports = labtestreportMapper.selectList(
                 new QueryWrapper<Labtestreport>()
@@ -1275,39 +1373,38 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
                 }
             }
         }
-        return newClearHealthCostsGetVO;
+        return voList;
     }
-
 
     /*提交全身症状信息*/
     @Override
     public void saveGeneralSymptoms(Generalsymptoms generalsymptoms) {
-        //通过用户id和今天的日期获取健康签到表的id
+        // 通过用户id和今天的日期获取健康签到表的id
         Dailyhealthstatus dailyhealthstatus = getDailyhealthstatus(BaseContext.getCurrentId());
-        //添加签到表id字段
+        // 添加签到表id字段
         generalsymptoms.setStatusId(dailyhealthstatus.getStatusId());
-        //查询今日是否已经填写了信息，如果已填，直接退出不能修改
+        // 查询今日是否已经填写了信息，如果已填，直接退出不能修改
         Generalsymptoms generalsymptoms1 = generalsymptomsMapper.selectById(dailyhealthstatus.getStatusId());
         if (generalsymptoms1 != null) {
             return;
         }
-        //向全身症状表中添加数据
+        // 向全身症状表中添加数据
         generalsymptomsMapper.insert(generalsymptoms);
     }
 
-    /*提交呼吸系统症状信息*/
+    /* 提交呼吸系统症状信息 */
     @Override
     public void saveRespiratorysymptoms(Respiratorysymptoms respiratorysymptoms) {
-        //通过用户id和今天的日期获取健康签到表的id
+        // 通过用户id和今天的日期获取健康签到表的id
         Dailyhealthstatus dailyhealthstatus = getDailyhealthstatus(BaseContext.getCurrentId());
-        //添加签到表id字段
+        // 添加签到表id字段
         respiratorysymptoms.setStatusId(dailyhealthstatus.getStatusId());
         //查询今日是否已经填写了信息，如果已填，直接退出不能修改
         Respiratorysymptoms respiratorysymptoms1 = respiratorysymptomsMapper.selectById(respiratorysymptoms.getStatusId());
         if (respiratorysymptoms1 != null) {
             return;
         }
-        //向全身症状表中添加数据
+        // 向全身症状表中添加数据
         respiratorysymptomsMapper.insert(respiratorysymptoms);
     }
 
@@ -1319,7 +1416,8 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
         // 添加签到表id字段
         digestivesymptoms.setStatusId(dailyhealthstatus.getStatusId());
         // 查询今日是否已经填写了信息，如果已填，直接退出不能修改
-        Digestivesymptoms existingDigestiveSymptoms = digestivesymptomsMapper.selectById(digestivesymptoms.getStatusId());
+        Digestivesymptoms existingDigestiveSymptoms = digestivesymptomsMapper
+                .selectById(digestivesymptoms.getStatusId());
         if (existingDigestiveSymptoms != null) {
             return;
         }
@@ -1335,7 +1433,8 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
         // 添加签到表id字段
         circulatorysymptoms.setStatusId(dailyhealthstatus.getStatusId());
         // 查询今日是否已经填写了信息，如果已填，直接退出不能修改
-        Circulatorysymptoms existingCirculatorySymptoms = circulatorysymptomsMapper.selectById(circulatorysymptoms.getStatusId());
+        Circulatorysymptoms existingCirculatorySymptoms = circulatorysymptomsMapper
+                .selectById(circulatorysymptoms.getStatusId());
         if (existingCirculatorySymptoms != null) {
             return;
         }
@@ -1351,7 +1450,8 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
         // 添加签到表id字段
         neurologicalSymptoms.setStatusId(dailyhealthstatus.getStatusId());
         // 查询今日是否已经填写了信息，如果已填，直接退出不能修改
-        Neurologicalsymptoms existingNeurologicalSymptoms = neurologicalsymptomsMapper.selectById(neurologicalSymptoms.getStatusId());
+        Neurologicalsymptoms existingNeurologicalSymptoms = neurologicalsymptomsMapper
+                .selectById(neurologicalSymptoms.getStatusId());
         if (existingNeurologicalSymptoms != null) {
             return;
         }
@@ -1402,7 +1502,8 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
         // 添加签到表id字段
         riskFactorsAndExposure.setStatusId(dailyhealthstatus.getStatusId());
         // 查询今日是否已经填写了信息，如果已填，直接退出不能修改
-        Riskfactorsandexposure existingRiskFactorsAndExposure = riskfactorsandexposureMapper.selectById(riskFactorsAndExposure.getStatusId());
+        Riskfactorsandexposure existingRiskFactorsAndExposure = riskfactorsandexposureMapper
+                .selectById(riskFactorsAndExposure.getStatusId());
         if (existingRiskFactorsAndExposure != null) {
             return;
         }
@@ -1417,5 +1518,390 @@ public class DailyhealthstatusServiceImpl extends ServiceImpl<DailyhealthstatusM
                 .eq(Dailyhealthstatus::getUserId, userId)
                 .eq(Dailyhealthstatus::getCheckInDate, LocalDate.now());
         return dailyhealthstatusMapper.selectOne(wrapper);
+    }
+
+    private Diseasescoring inputDiseaseScoring(String diseaseName, List<String> lists, AllSymptomsDTO allSymptomsDTO){
+        Diseasescoring diseasescoring = new Diseasescoring();
+        diseasescoring.setDiseaseTypeName(diseaseName);
+        diseasescoring.setScore(calculateScore(lists, allSymptomsDTO));
+        diseasescoring.setSymptomTime(LocalDate.now());
+        Dailyhealthstatus dailyhealthstatus = getDailyhealthstatus(BaseContext.getCurrentId());
+        diseasescoring.setStatusId(dailyhealthstatus.getStatusId());
+        diseasescoring.setDiseaseTypeId(dailyhealthstatus.getStatusId());
+        return diseasescoring;
+    }
+
+    private BigDecimal calculateScore(List<String> lists, AllSymptomsDTO results){
+        int totalScore = 0;
+        // 根据症状信息累加权重
+        if (results.getGeneralsymptoms() != null) {
+            if(results.getGeneralsymptoms().getHasFever()){
+                totalScore += Integer.parseInt(lists.get(3));
+            }
+            if(results.getGeneralsymptoms().getHasChills()){
+                totalScore += Integer.parseInt(lists.get(4));
+            }
+            if(results.getGeneralsymptoms().getHasSweating()){
+                totalScore += Integer.parseInt(lists.get(5));
+            }
+            if(results.getGeneralsymptoms().getHasFatigue()){
+                totalScore += Integer.parseInt(lists.get(6));
+            }
+            if(results.getGeneralsymptoms().getHasHeadache()){
+                totalScore += Integer.parseInt(lists.get(7));
+            }
+            if(results.getGeneralsymptoms().getHasMusclePain()){
+                totalScore += Integer.parseInt(lists.get(8));
+            }
+            if(results.getGeneralsymptoms().getHasJointPain()){
+                totalScore += Integer.parseInt(lists.get(9));
+            }
+            if(results.getGeneralsymptoms().getHasLymphNodeSwelling()){
+                totalScore += Integer.parseInt(lists.get(10));
+            }
+            if(results.getGeneralsymptoms().getHasCyanosis()){
+                totalScore += Integer.parseInt(lists.get(11));
+            }
+            if(results.getGeneralsymptoms().getHasSubcutaneousAndMucosalBleedingSpots	()){
+                totalScore += Integer.parseInt(lists.get(12));
+            }
+            if(results.getGeneralsymptoms().getHasPainfulRedRash()){
+                totalScore += Integer.parseInt(lists.get(13));
+            }
+            if(results.getGeneralsymptoms().getHasBloodBlisters()){
+                totalScore += Integer.parseInt(lists.get(14));
+            }
+            if(results.getGeneralsymptoms().getHasSkinUlcer()){
+                totalScore += Integer.parseInt(lists.get(15));
+            }
+            if(results.getGeneralsymptoms().getHasCongestiveOrPetechialRash()){
+                totalScore += Integer.parseInt(lists.get(16));
+            }
+            if(results.getGeneralsymptoms().getItchyRashOnBackOfHands()||results.getGeneralsymptoms().getItchyRashOnFace()||results.getGeneralsymptoms().getItchyRashOnFeet()||results.getGeneralsymptoms().getItchyRashOnFingers()
+                    ||results.getGeneralsymptoms().getItchyRashOnLowerLimbs()||results.getGeneralsymptoms().getItchyRashOnOther()){
+                totalScore += Integer.parseInt(lists.get(17));
+            }
+            if (results.getGeneralsymptoms().getHasDehydration()){
+                totalScore += Integer.parseInt(lists.get(18));
+            }
+            if (results.getGeneralsymptoms().getHasItchyRash()){
+                totalScore += Integer.parseInt(lists.get(19));
+            }
+            if (results.getGeneralsymptoms().getHasEdema()){
+                totalScore += Integer.parseInt(lists.get(20));
+            }
+            if (results.getGeneralsymptoms().getHasNightSweats()){
+                totalScore += Integer.parseInt(lists.get(21));
+            }
+            if (results.getGeneralsymptoms().getHasWeightLoss()){
+                totalScore += Integer.parseInt(lists.get(22));
+            }
+            if (results.getGeneralsymptoms().getHasExhaustion()){
+                totalScore += Integer.parseInt(lists.get(23));
+            }
+        }
+        if (results.getRespiratorysymptoms() != null) {
+            if (results.getRespiratorysymptoms().getHasCough()){
+                totalScore += Integer.parseInt(lists.get(24));
+            }
+            if (results.getRespiratorysymptoms().getHasSputum()){
+                totalScore += Integer.parseInt(lists.get(25));
+            }
+            if (results.getRespiratorysymptoms().getHasBloodySputum()){
+                totalScore += Integer.parseInt(lists.get(26));
+            }
+            if (results.getRespiratorysymptoms().getHasHemoptysis()){
+                totalScore += Integer.parseInt(lists.get(27));
+            }
+            if (results.getRespiratorysymptoms().getHasSoreThroat()){
+                totalScore += Integer.parseInt(lists.get(28));
+            }
+            if (results.getRespiratorysymptoms().getHasDryThroat()){
+                totalScore += Integer.parseInt(lists.get(29));
+            }
+            if (results.getRespiratorysymptoms().getHasNasalCongestion()){
+                totalScore += Integer.parseInt(lists.get(30));
+            }
+            if (results.getRespiratorysymptoms().getHasRunnyNose()){
+                totalScore += Integer.parseInt(lists.get(31));
+            }
+            if (results.getRespiratorysymptoms().getHasChestTightness()){
+                totalScore += Integer.parseInt(lists.get(32));
+            }
+            if (results.getRespiratorysymptoms().getHasShortnessOfBreath()){
+                totalScore += Integer.parseInt(lists.get(33));
+            }
+            if (results.getRespiratorysymptoms().getHasBreathingDifficulty()){
+                totalScore += Integer.parseInt(lists.get(34));
+            }
+            if (results.getRespiratorysymptoms().getHasHoarseness()){
+                totalScore += Integer.parseInt(lists.get(35));
+            }
+            if (results.getRespiratorysymptoms().getHasBronchitis()){
+                totalScore += Integer.parseInt(lists.get(36));
+            }
+        }
+        if (results.getDigestivesymptoms() != null) {
+            if (results.getDigestivesymptoms().getArrheaFrequencyGEThreeTimesPerDay()){
+                totalScore += Integer.parseInt(lists.get(37));
+            }
+            if (results.getDigestivesymptoms().getHasStoolType1()){
+                totalScore += Integer.parseInt(lists.get(38));
+            }
+            if (results.getDigestivesymptoms().getHasStoolType2()){
+                totalScore += Integer.parseInt(lists.get(39));
+            }
+            if (results.getDigestivesymptoms().getHasVomiting()){
+                totalScore += Integer.parseInt(lists.get(40));
+            }
+            if (results.getDigestivesymptoms().getHasNausea()){
+                totalScore += Integer.parseInt(lists.get(41));
+            }
+            if (results.getDigestivesymptoms().getHasAppetiteLoss()){
+                totalScore += Integer.parseInt(lists.get(42));
+            }
+            if (results.getDigestivesymptoms().getHasAbdominalDistension()){
+                totalScore += Integer.parseInt(lists.get(43));
+            }
+            if (results.getDigestivesymptoms().getHasAbdominalPain()){
+                totalScore += Integer.parseInt(lists.get(44));
+            }
+            if (results.getDigestivesymptoms().getHasBorborygmus()){
+                totalScore += Integer.parseInt(lists.get(45));
+            }
+            if (results.getDigestivesymptoms().getHasUpperAbdominalDiscomfort()){
+                totalScore += Integer.parseInt(lists.get(46));
+            }
+            if (results.getDigestivesymptoms().getHasConstipation()){
+                totalScore += Integer.parseInt(lists.get(47));
+            }
+            if (results.getDigestivesymptoms().getHasOliguriaOrAnuria()){
+                totalScore += Integer.parseInt(lists.get(48));
+            }
+        }
+        if (results.getCirculatorysymptoms() != null) {
+            if (results.getCirculatorysymptoms().getHasArrhythmia()){
+                totalScore += Integer.parseInt(lists.get(49));
+            }
+            if (results.getCirculatorysymptoms().getHasChestPain()){
+                totalScore += Integer.parseInt(lists.get(50));
+            }
+            if (results.getCirculatorysymptoms().getHasRapidPulse()){
+                totalScore += Integer.parseInt(lists.get(51));
+            }
+            if (results.getCirculatorysymptoms().getHasPalpitation()){
+                totalScore += Integer.parseInt(lists.get(52));
+            }
+            if (results.getCirculatorysymptoms().getHasLowBloodPressure()){
+                totalScore += Integer.parseInt(lists.get(53));
+            }
+        }
+        if (results.getNeurologicalSymptoms() != null) {
+            if (results.getNeurologicalSymptoms().getHasDelirium()){
+                totalScore += Integer.parseInt(lists.get(54));
+            }
+            if (results.getNeurologicalSymptoms().getHasConvulsion()){
+                totalScore += Integer.parseInt(lists.get(55));
+            }
+            if (results.getNeurologicalSymptoms().getHasDrowsiness()){
+                totalScore += Integer.parseInt(lists.get(56));
+            }
+            if (results.getNeurologicalSymptoms().getHasComa()){
+                totalScore += Integer.parseInt(lists.get(57));
+            }
+            if (results.getNeurologicalSymptoms().getHasStiffNeck()){
+                totalScore += Integer.parseInt(lists.get(58));
+            }
+            if (results.getNeurologicalSymptoms().getHasRestlessness()){
+                totalScore += Integer.parseInt(lists.get(59));
+            }
+            if (results.getNeurologicalSymptoms().getHasMuscleParalysisNeckShoulder()){
+                totalScore += Integer.parseInt(lists.get(60));
+            }
+            if (results.getNeurologicalSymptoms().getHasMuscleParalysisLimbs()){
+                totalScore += Integer.parseInt(lists.get(61));
+            }
+            if (results.getNeurologicalSymptoms().getHasSwallowingDifficulty()){
+                totalScore += Integer.parseInt(lists.get(62));
+            }
+            if (results.getNeurologicalSymptoms().getHasSpeechDisorder()){
+                totalScore += Integer.parseInt(lists.get(63));
+            }
+            if (results.getNeurologicalSymptoms().getHasConsciousnessDisorder()){
+                totalScore += Integer.parseInt(lists.get(64));
+            }
+            if (results.getNeurologicalSymptoms().getHasDizziness()){
+                totalScore += Integer.parseInt(lists.get(65));
+            }
+            if (results.getNeurologicalSymptoms().getHasTinnitus()){
+                totalScore += Integer.parseInt(lists.get(66));
+            }
+            if (results.getNeurologicalSymptoms().getHasHearingLoss()){
+                totalScore += Integer.parseInt(lists.get(67));
+            }
+        }
+        if (results.getLocalSymptoms() != null) {
+            if (results.getLocalSymptoms().getHasConjunctivitis()){
+                totalScore += Integer.parseInt(lists.get(68));
+            }
+            if (results.getLocalSymptoms().getHasConjunctivalCongestion()){
+                totalScore += Integer.parseInt(lists.get(69));
+            }
+            if (results.getLocalSymptoms().getHasEyelidEdema()){
+                totalScore += Integer.parseInt(lists.get(70));
+            }
+            if (results.getLocalSymptoms().getHasSmellTasteLoss()){
+                totalScore += Integer.parseInt(lists.get(71));
+            }
+            if (results.getLocalSymptoms().getHasFacialRednessOrPallor()){
+                totalScore += Integer.parseInt(lists.get(72));
+            }
+            if (results.getLocalSymptoms().getHasRednessNeckChest()){
+                totalScore += Integer.parseInt(lists.get(73));
+            }
+            if (results.getLocalSymptoms().getHasLipCyanosis()){
+                totalScore += Integer.parseInt(lists.get(74));
+            }
+            if (results.getLocalSymptoms().getHasSkinPallorOrBruising()){
+                totalScore += Integer.parseInt(lists.get(75));
+            }
+            if (results.getLocalSymptoms().getHasGumBleeding()){
+                totalScore += Integer.parseInt(lists.get(76));
+            }
+            if (results.getLocalSymptoms().getHasKidneyPain()){
+                totalScore += Integer.parseInt(lists.get(77));
+            }
+            if (results.getLocalSymptoms().getHasLowBackPain()){
+                totalScore += Integer.parseInt(lists.get(78));
+            }
+            if (results.getLocalSymptoms().getHasOrbitalPain()){
+                totalScore += Integer.parseInt(lists.get(79));
+            }
+            if (results.getLocalSymptoms().getHasMucosalBleedingInOralOrNasal()){
+                totalScore += Integer.parseInt(lists.get(80));
+            }
+            if (results.getLocalSymptoms().getHasSkinBleedingPoints()){
+                totalScore += Integer.parseInt(lists.get(81));
+            }
+        }
+        if (results.getOtherSymptoms() != null) {
+            if (results.getOtherSymptoms().getHasSuddenOnset()){
+                totalScore += Integer.parseInt(lists.get(82));
+            }
+            if (results.getOtherSymptoms().getHasRapidProgress()){
+                totalScore += Integer.parseInt(lists.get(83));
+            }
+            if (results.getOtherSymptoms().getHasPeriodicAttack()){
+                totalScore += Integer.parseInt(lists.get(84));
+            }
+            if (results.getOtherSymptoms().getHasForcedPosture()){
+                totalScore += Integer.parseInt(lists.get(85));
+            }
+            if (results.getOtherSymptoms().getHasCalfMusclePain()){
+                totalScore += Integer.parseInt(lists.get(86));
+            }
+            if (results.getOtherSymptoms().getSleepQuality().equals("差")){
+                totalScore += Integer.parseInt(lists.get(87));
+            }
+            if (results.getOtherSymptoms().getNutritionStatus().equals("差")){
+                totalScore += Integer.parseInt(lists.get(88));
+            }
+            if (results.getOtherSymptoms().getWorkLifeStress().equals("大")){
+                totalScore += Integer.parseInt(lists.get(89));
+            }
+            if (results.getOtherSymptoms().getSymptomSeverity().equals("重")){
+                totalScore += Integer.parseInt(lists.get(90));
+            }
+            if (results.getOtherSymptoms().getHasOtherSymptoms()){
+                totalScore += Integer.parseInt(lists.get(91));
+            }
+        }
+        if (results.getRiskFactorsAndExposure()!= null){
+            if (results.getRiskFactorsAndExposure().getContactWithFeverPatient().equals("是")){
+                totalScore += Integer.parseInt(lists.get(92));
+            }
+            if (results.getRiskFactorsAndExposure().getContactWithDiarrheaPatient().equals("是")){
+                totalScore += Integer.parseInt(lists.get(93));
+            }
+            if (results.getRiskFactorsAndExposure().getContactWithRashPatient().equals("是")){
+                totalScore += Integer.parseInt(lists.get(94));
+            }
+            if (results.getRiskFactorsAndExposure().getContactWithTuberculosisPatient().equals("是")){
+                totalScore += Integer.parseInt(lists.get(95));
+            }
+            if (results.getRiskFactorsAndExposure().getHasDrinkingRawWater()){
+                totalScore += Integer.parseInt(lists.get(96));
+            }
+            if (results.getRiskFactorsAndExposure().getHasEatingRawFood()){
+                totalScore += Integer.parseInt(lists.get(97));
+            }
+            if (results.getRiskFactorsAndExposure().getHasEatingColdCookedFood()){
+                totalScore += Integer.parseInt(lists.get(98));
+            }
+            if (results.getRiskFactorsAndExposure().getHasEatingSeafood()){
+                totalScore += Integer.parseInt(lists.get(99));
+            }
+            if (results.getRiskFactorsAndExposure().getGroupOutbreak().equals("是")){
+                totalScore += Integer.parseInt(lists.get(100));
+            }
+            if (results.getRiskFactorsAndExposure().getOutdoorStayOrWorkWithinMonth().equals("是")){
+                totalScore += Integer.parseInt(lists.get(101));
+            }
+            if (results.getRiskFactorsAndExposure().getPlagueArea().equals("是")){
+                totalScore += Integer.parseInt(lists.get(102));
+            }
+            if (results.getRiskFactorsAndExposure().getAnthraxArea().equals("是")){
+                totalScore += Integer.parseInt(lists.get(103));
+            }
+            if (results.getRiskFactorsAndExposure().getMalariaArea().equals("是")){
+                totalScore += Integer.parseInt(lists.get(104));
+            }
+            if (results.getRiskFactorsAndExposure().getContactWithAnimalProducts().equals("是")){
+                totalScore += Integer.parseInt(lists.get(105));
+            }
+            if (results.getRiskFactorsAndExposure().getHasContactWithWolf()||results.getRiskFactorsAndExposure().getHasContactWithTiger()
+                    ||results.getRiskFactorsAndExposure().getHasContactWithSheep()||results.getRiskFactorsAndExposure().getHasContactWithRat()
+                    ||results.getRiskFactorsAndExposure().getHasContactWithRabbit()||results.getRiskFactorsAndExposure().getHasContactWithPig()
+                    ||results.getRiskFactorsAndExposure().getHasContactWithOtherAnimal()||results.getRiskFactorsAndExposure().getHasContactWithMule()
+                    ||results.getRiskFactorsAndExposure().getHasContactWithMarmot()||results.getRiskFactorsAndExposure().getHasContactWithLice()
+                    ||results.getRiskFactorsAndExposure().getHasContactWithHorse()||results.getRiskFactorsAndExposure().getHasContactWithFlea()
+                    ||results.getRiskFactorsAndExposure().getHasContactWithDonkey()||results.getRiskFactorsAndExposure().getHasContactWithDog()
+                    ||results.getRiskFactorsAndExposure().getHasContactWithCow()||results.getRiskFactorsAndExposure().getHasContactWithCat()
+                    ||results.getRiskFactorsAndExposure().getHasContactWithBird()){
+                totalScore += Integer.parseInt(lists.get(106));
+            }
+            if (results.getRiskFactorsAndExposure().getOutdoorStayOrWorkWithinMonth().equals("是")){
+                totalScore += Integer.parseInt(lists.get(107));
+                totalScore += Integer.parseInt(lists.get(108));
+            }
+            if (results.getRiskFactorsAndExposure().getHasMosquitoBite()){
+                totalScore += Integer.parseInt(lists.get(109));
+            }
+            if (results.getRiskFactorsAndExposure().getTickBite().equals("是")){
+                totalScore += Integer.parseInt(lists.get(110));
+            }
+            if (results.getRiskFactorsAndExposure().getFleaBite().equals("是")){
+                totalScore += Integer.parseInt(lists.get(111));
+            }
+            if (results.getRiskFactorsAndExposure().getContactWithRatIn2Months().equals("是")){
+                totalScore += Integer.parseInt(lists.get(112));
+            }
+            if (results.getRiskFactorsAndExposure().getEatenFoodContaminatedByRatFeces().equals("是")){
+                totalScore += Integer.parseInt(lists.get(113));
+            }
+            if (results.getRiskFactorsAndExposure().getDrunkWaterFromDitchesOrPonds().equals("是")){
+                totalScore += Integer.parseInt(lists.get(114));
+            }
+            if (results.getRiskFactorsAndExposure().getRestedNearRatHoles().equals("是")){
+                totalScore += Integer.parseInt(lists.get(115));
+            }
+            if (results.getRiskFactorsAndExposure().getRatOrRatDroppingsAtWorkplace().equals("是")){
+                totalScore += Integer.parseInt(lists.get(116));
+            }
+            if (results.getRiskFactorsAndExposure().getContactWithPatientExcreta().equals("是")){
+                totalScore += Integer.parseInt(lists.get(117));
+            }
+        }
+        return new BigDecimal(totalScore);
     }
 }

@@ -27,7 +27,7 @@ public class CheckinPageDTO {
     @ApiModelProperty(value = "签到日期，格式为 yyyy-MM-dd", example = "2024-10-08")
     private LocalDate checkInDateBegin;
 
-    @ApiModelProperty(value = "签到日期，格式为 yyyy-MM-dd", example = "2024-10-08")
+    @ApiModelProperty(value = "签到日期，格式为 yyyy-MM-dd", example = "2020-10-08")
     private LocalDate checkInDateEnd;
 
     @ApiModelProperty(value = "页码",example = "0")

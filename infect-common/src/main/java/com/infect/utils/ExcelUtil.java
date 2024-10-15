@@ -49,7 +49,7 @@ public class ExcelUtil {    // 读取Excel文件
                 Iterator<Cell> cellIterator = row.cellIterator();
                 while (cellIterator.hasNext()) {
                     Cell cell = cellIterator.next();
-                    rowData.add(getCellValue(cell).toString());
+                    rowData.add(getCellValue(cell).toString().trim());
                 }
 
                 data.add(rowData);
@@ -82,7 +82,12 @@ public class ExcelUtil {    // 读取Excel文件
         //2.利用反射获取对应字段的数据列表
         Map<String, List<String>> mysqlDataMap;
         try {
-            mysqlDataMap = getDataBaseNameValueList(listData);
+            if(listData!=null && listData.size()!=0){
+                mysqlDataMap = getDataBaseNameValueList(listData);
+            }
+            else {
+                mysqlDataMap = new HashMap<>();
+            }
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
@@ -105,8 +110,11 @@ public class ExcelUtil {    // 读取Excel文件
 
             //4.通过POI将数据写入到Excel文件中
             int n = listData.size();
+
             for(int i=0;i<n;i++){
-                sheet.createRow(writeStartY+i);
+                sheet.createRow(writeStartY+i)
+                        .createCell(writeStartX-1)
+                        .setCellValue(i+1);
             }
 
             for(int i=0;i<total;i++){
@@ -146,6 +154,10 @@ public class ExcelUtil {    // 读取Excel文件
 
         //获取所有类的所有变量名，初始化map集合
         for(Object obj:list.get(0)){
+            if(obj==null) {
+                continue;
+            }
+
             // 获取对象的类
             Class<?> clazz = obj.getClass();
 
@@ -156,13 +168,22 @@ public class ExcelUtil {    // 读取Excel文件
                 String fieldName = field.getName().toLowerCase();
                 //如果字段名重复，返回空，文件生成失败
                 if(resultMap.containsKey(fieldName)) {
-                    return null;
+//                    return null;
+                    continue;
                 }
                 resultMap.put(fieldName, new ArrayList<>());
             }
         }
 
+        //记录当前添加了多少数据
+        Integer listNum = 0;
+
+        //遍历每行
         for(List<Object> resource:list){
+
+            listNum++;
+
+            //遍历一行数据的每个对象
             for(Object obj:resource){
                 if(obj==null) continue;
                 // 获取对象的类
@@ -170,6 +191,7 @@ public class ExcelUtil {    // 读取Excel文件
                 // 获取所有声明的字段
                 Field[] fields = clazz.getDeclaredFields();
 
+                //遍历对象中所有字段
                 for (Field field:fields) {
                     //获取该字段对应的值和字段名
                     field.setAccessible(true);
@@ -185,6 +207,10 @@ public class ExcelUtil {    // 读取Excel文件
 
                     //向map对应位置添加值(如果存在的话)
                     if(resultMap.containsKey(name)){
+                        //如果当前字段的数据量等于已变量数据量，则证明出现重名问题，直接跳过
+                        if(resultMap.get(name).size() == listNum){
+                            continue;
+                        }
                         resultMap.get(name).add(valueStr);
                     }
                 }

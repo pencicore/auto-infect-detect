@@ -10,6 +10,7 @@ spring:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
+      enabled: true
 logging:
   level:
     com.infect: debug
@@ -44,3 +45,5 @@ infect:
   path:
     diagnosis-file-path: diagnosisReports
     lab-test-file-path: labTestFilePath
+    disease-learning-material-path: diseaseLearningMaterialPath
+
