@@ -30,6 +30,9 @@ public class CheckinInfoVO {
     @ApiModelProperty(value = "部门", example = "工程技术部")
     private String department;
 
+    @ApiModelProperty(value = "民族", example = "汉族")
+    private String ethnicity;
+
     @ApiModelProperty(value = "健康状态，true 表示健康，false 表示不健康", required = true, example = "true")
     private Boolean isHealth;
 
@@ -54,13 +57,16 @@ public class CheckinInfoVO {
     public CheckinInfoVO() {
     }
 
-    public CheckinInfoVO(String userType, String name, String phoneNumber, String gender, Integer age, String department, Boolean isHealth, String province, String city, String county, String locationName, LocalDate checkInDate, String diseaseTypeName) {
+    public CheckinInfoVO(Integer statusId, Integer userId, String userType, String name, String phoneNumber, String gender, Integer age, String department, String ethnicity, Boolean isHealth, String province, String city, String county, String locationName, LocalDate checkInDate, String diseaseTypeName) {
+        this.statusId = statusId;
+        this.userId = userId;
         this.userType = userType;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.gender = gender;
         this.age = age;
         this.department = department;
+        this.ethnicity = ethnicity;
         this.isHealth = isHealth;
         this.province = province;
         this.city = city;
@@ -70,22 +76,36 @@ public class CheckinInfoVO {
         this.diseaseTypeName = diseaseTypeName;
     }
 
-    public CheckinInfoVO(Integer statusId, Integer userId, String userType, String name, String phoneNumber, String gender, Integer age, String department, Boolean isHealth, String province, String city, String county, String locationName, LocalDate checkInDate, String diseaseTypeName) {
+    /**
+     * 获取
+     * @return statusId
+     */
+    public Integer getStatusId() {
+        return statusId;
+    }
+
+    /**
+     * 设置
+     * @param statusId
+     */
+    public void setStatusId(Integer statusId) {
         this.statusId = statusId;
+    }
+
+    /**
+     * 获取
+     * @return userId
+     */
+    public Integer getUserId() {
+        return userId;
+    }
+
+    /**
+     * 设置
+     * @param userId
+     */
+    public void setUserId(Integer userId) {
         this.userId = userId;
-        this.userType = userType;
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.gender = gender;
-        this.age = age;
-        this.department = department;
-        this.isHealth = isHealth;
-        this.province = province;
-        this.city = city;
-        this.county = county;
-        this.locationName = locationName;
-        this.checkInDate = checkInDate;
-        this.diseaseTypeName = diseaseTypeName;
     }
 
     /**
@@ -182,6 +202,22 @@ public class CheckinInfoVO {
      */
     public void setDepartment(String department) {
         this.department = department;
+    }
+
+    /**
+     * 获取
+     * @return ethnicity
+     */
+    public String getEthnicity() {
+        return ethnicity;
+    }
+
+    /**
+     * 设置
+     * @param ethnicity
+     */
+    public void setEthnicity(String ethnicity) {
+        this.ethnicity = ethnicity;
     }
 
     /**
@@ -297,38 +333,6 @@ public class CheckinInfoVO {
     }
 
     public String toString() {
-        return "CheckinInfoVO{userType = " + userType + ", name = " + name + ", phoneNumber = " + phoneNumber + ", gender = " + gender + ", age = " + age + ", department = " + department + ", isHealth = " + isHealth + ", province = " + province + ", city = " + city + ", county = " + county + ", locationName = " + locationName + ", checkInDate = " + checkInDate + ", diseaseTypeName = " + diseaseTypeName + "}";
-    }
-
-    /**
-     * 获取
-     * @return statusId
-     */
-    public Integer getStatusId() {
-        return statusId;
-    }
-
-    /**
-     * 设置
-     * @param statusId
-     */
-    public void setStatusId(Integer statusId) {
-        this.statusId = statusId;
-    }
-
-    /**
-     * 获取
-     * @return userId
-     */
-    public Integer getUserId() {
-        return userId;
-    }
-
-    /**
-     * 设置
-     * @param userId
-     */
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+        return "CheckinInfoVO{statusId = " + statusId + ", userId = " + userId + ", userType = " + userType + ", name = " + name + ", phoneNumber = " + phoneNumber + ", gender = " + gender + ", age = " + age + ", department = " + department + ", ethnicity = " + ethnicity + ", isHealth = " + isHealth + ", province = " + province + ", city = " + city + ", county = " + county + ", locationName = " + locationName + ", checkInDate = " + checkInDate + ", diseaseTypeName = " + diseaseTypeName + "}";
     }
 }

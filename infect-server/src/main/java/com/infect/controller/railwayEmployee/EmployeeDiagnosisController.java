@@ -40,7 +40,7 @@ public class EmployeeDiagnosisController {
     @PostMapping("/result")
     public Result saveDiagnosis(@RequestBody AllDiagnosisAndResultDTO allDiagnosisAndResultDTO) {
         System.out.println(allDiagnosisAndResultDTO);
-        myDiagnosisService.saveDiagnosis(BaseContext.getCurrentId(),allDiagnosisAndResultDTO, DiagnosisResultsEnumConstants.SUBMISSION_USER_TYPE_RAILWAY_EMPLOYEE);
+        myDiagnosisService.saveDiagnosis(BaseContext.getCurrentId(), BaseContext.getCurrentId(),allDiagnosisAndResultDTO, DiagnosisResultsEnumConstants.SUBMISSION_USER_TYPE_RAILWAY_EMPLOYEE);
         return Result.success();
     }
 

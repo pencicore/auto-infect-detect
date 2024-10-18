@@ -150,6 +150,8 @@ public class WorkenvironmentinfoServiceImpl extends ServiceImpl<Workenvironmenti
         Page<Workenvironmentinfo> page = Page.of(environmentPageDTO.getPageNo(), environmentPageDTO.getPageSize());
         page.addOrder(new OrderItem("SubmissionTime",false));
 
+        System.out.println(haveTimeLimit);
+
         //分页查询
         Page<Workenvironmentinfo> p = lambdaQuery()
                 .like(workStationName!=null && !workStationName.isEmpty(), Workenvironmentinfo::getWorkStationName, workStationName)

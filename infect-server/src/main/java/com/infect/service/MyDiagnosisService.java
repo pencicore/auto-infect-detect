@@ -13,7 +13,7 @@ import java.util.Map;
 
 public interface MyDiagnosisService {
 
-    void saveDiagnosis(Integer userId, AllDiagnosisAndResultDTO allDiagnosisAndResultDTO, String userType);
+    void saveDiagnosis(Integer userId, Integer submissionUserId, AllDiagnosisAndResultDTO allDiagnosisAndResultDTO, String userType);
 
     Integer uploadReportFile(DiagnosisReportsDTO diagnosisReportsDTO);
 

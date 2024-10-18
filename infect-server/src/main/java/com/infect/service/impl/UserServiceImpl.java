@@ -166,6 +166,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         //获取excel表sheet1页的用户数据
         List<List<String>> lists = ExcelUtil.readExcelFile(file, 0);
 
+        System.out.println(lists);
+
         //将‘是’转换为 true, ‘否’转换为false
         for (List<String> list : lists) {
             int n = list.size();
@@ -192,6 +194,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         for (int i = 1; i < n; i++) {  // 跳过第一行标题
             User user = new User();
             List<String> list = lists.get(i);
+
+            if(list.get(0)==null || list.get(0).isEmpty()) {
+                break;
+            }
 
             if (list.get(1) != null && !list.get(1).isEmpty()) {
                 user.setUserType(list.get(1));  // UserType

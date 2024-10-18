@@ -27,10 +27,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -237,7 +234,7 @@ public class SymptomweightingServiceImpl extends ServiceImpl<SymptomweightingMap
         }
 
         //如果更新前和更新后的分数不同，则返回false
-        if(sumOld != sumNew) {
+        if(sumOld.equals(sumNew)) {
             return false;
         }
 

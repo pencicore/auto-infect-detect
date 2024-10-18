@@ -6,10 +6,12 @@
         UPDATE labtestfiles
         SET LabTestReportID = #{goalNum}
         WHERE LabTestReportID = #{labTestReportId}
-        AND FileID NOT IN
-        <foreach item="fileId" collection="fileIds" open="(" separator="," close=")">
-            #{fileId}
-        </foreach>
+        <if test="fileIds!=null and fileIds.size()!=0">
+            AND FileID NOT IN
+            <foreach item="fileId" collection="fileIds" open="(" separator="," close=")">
+                #{fileId}
+            </foreach>
+        </if>
     </update>
 
 </mapper>

@@ -33,8 +33,6 @@ public class Diagnosisexaminations implements Serializable {
                 '}';
     }
 
-    private static final long serialVersionUID = 1L;
-
     @TableId(value = "ExaminationID", type = IdType.AUTO)
     @ApiModelProperty(value = "检查项目ID", hidden = true)
     private Integer examinationId;

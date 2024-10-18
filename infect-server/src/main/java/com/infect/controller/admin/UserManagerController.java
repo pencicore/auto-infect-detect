@@ -30,6 +30,9 @@ public class UserManagerController {
     @ApiOperation(value = "系统管理员添加单个用户")
     public Result saveUserOne(@RequestBody UserPutDTO userPutDTO){
         User user= BeanUtil.copyProperties(userPutDTO,User.class);
+        if(user.getMedicalPersonnelType()!=null && user.getMedicalPersonnelType().isEmpty()) {
+            user.setMedicalPersonnelType(null);
+        }
         user.setPassword(user.getIdNumber().substring(12));
         userService.save(user);
         return Result.success();

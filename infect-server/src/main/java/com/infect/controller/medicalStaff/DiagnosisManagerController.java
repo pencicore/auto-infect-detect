@@ -59,8 +59,8 @@ public class DiagnosisManagerController {
 
     @PostMapping("/saveDiagnosis")
     @ApiOperation(value = "添加诊断信息")
-    public Result saveDiagnosis(@RequestBody AllDiagnosisAndResultDTO allDiagnosisAndResultDTO){
-        diagnosisService.saveDiagnosis(BaseContext.getCurrentId(), allDiagnosisAndResultDTO, DiagnosisResultsEnumConstants.SUBMISSION_USER_TYPE_ADMIN);
+    public Result saveDiagnosis(@RequestBody AllDiagnosisAndResultDTO allDiagnosisAndResultDTO, Integer userId){
+        diagnosisService.saveDiagnosis(userId, BaseContext.getCurrentId(), allDiagnosisAndResultDTO, DiagnosisResultsEnumConstants.SUBMISSION_USER_TYPE_ADMIN);
         return Result.success();
     }
 

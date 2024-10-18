@@ -20,7 +20,7 @@ public interface DiagnosisreportsMapper extends BaseMapper<Diagnosisreports> {
     @Select("update diagnosisreports set DiagnosisResultsID = #{diagnosisResultId} where ReportID = #{fileId}")
     void updateDiagnosisResultIdByFileId(Integer fileId, Integer diagnosisResultId);
 
-    @Select("select DiagnosisResultsID from diagnosisreports where FilePath=#{s}")
+    @Select("select ReportID from diagnosisreports where FilePath=#{s}")
     Integer selectIdByFilePath(String s);
 
     /**

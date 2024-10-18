@@ -140,7 +140,10 @@ public class LabtestreportServiceImpl extends ServiceImpl<LabtestreportMapper, L
     @Override
     public void updateLabTest(LabtestreportWirhFileList labtestreportWirhFileList) {
         Integer labTestReportId = labtestreportWirhFileList.getLabTestReportId();
-        List<Integer> fileIds = labtestreportWirhFileList.getFileIds();
+        List<Integer> fileIds = null;
+        if(labtestreportWirhFileList.getFileIds()!=null){
+            fileIds = labtestreportWirhFileList.getFileIds();
+        }
 
         //更新实验室检测报告表
         Labtestreport labtestreport = BeanUtil.copyProperties(labtestreportWirhFileList,Labtestreport.class);
@@ -151,8 +154,10 @@ public class LabtestreportServiceImpl extends ServiceImpl<LabtestreportMapper, L
         labtestfilesMapper.updateLabTestReportIdByFileIds(0,labTestReportId,fileIds);
 
         //将id为labTestReportId且id不在fileIds中的数据的labTestReportId设置为labTestReportId
-        for (Integer fileId:labtestreportWirhFileList.getFileIds()) {
-            labtestfilesMapper.updateLabTestReportIdByFileId(fileId,labTestReportId);
+        if (fileIds != null && !fileIds.isEmpty()) {
+            for (Integer fileId:fileIds) {
+                labtestfilesMapper.updateLabTestReportIdByFileId(fileId,labTestReportId);
+            }
         }
     }
 }

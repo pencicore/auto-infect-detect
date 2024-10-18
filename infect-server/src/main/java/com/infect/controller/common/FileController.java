@@ -50,6 +50,7 @@ public class FileController {
     @PostMapping("/saveDiagnosisReport")
     public Result<Integer> uploadReportFile(@ModelAttribute DiagnosisReportsDTO diagnosisReportsDTO){
         Integer reportId = diagnosisService.uploadReportFile(diagnosisReportsDTO);
+        System.out.println(reportId);
         return Result.success(reportId);
     }
 

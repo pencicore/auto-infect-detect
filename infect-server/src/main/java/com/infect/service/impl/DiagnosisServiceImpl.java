@@ -79,7 +79,7 @@ public class DiagnosisServiceImpl implements MyDiagnosisService {
     //将dto中诊断信息全部保存到
     @Override
     @Transactional
-    public void saveDiagnosis(Integer userId, AllDiagnosisAndResultDTO allDiagnosisAndResultDTO, String userType) {
+    public void saveDiagnosis(Integer userId, Integer submissionUserId, AllDiagnosisAndResultDTO allDiagnosisAndResultDTO, String userType) {
         //部分常量
         LocalDate nowTime = LocalDate.now();
 
@@ -89,7 +89,7 @@ public class DiagnosisServiceImpl implements MyDiagnosisService {
         //1.2 设置用户id，提交时间，提交用户id，提交用户类型
         diagnosisresults.setUserId(userId);
         diagnosisresults.setSubmissionUserType(userType);
-        diagnosisresults.setSubmissionUserId(userId);
+        diagnosisresults.setSubmissionUserId(submissionUserId);
         diagnosisresults.setSubmissionTime(nowTime);
         //1.3 查询数据库，通过用户id获取用户姓名
         String userName = userMapper.selectNameById(userId);
@@ -193,12 +193,14 @@ public class DiagnosisServiceImpl implements MyDiagnosisService {
         }
         String fileType = originalFileName.substring(index + 1);
 
+        //创建报告文件实体类
         Diagnosisreports diagnosisreports = new Diagnosisreports();
         diagnosisreports.setReportType(diagnosisReportsDTO.getReportType());
         diagnosisreports.setFileType(fileType);
         diagnosisreports.setFileName(originalFileName);
         diagnosisreports.setFilePath(saveDir + File.separator + uniqueFileName);
         diagnosisreports.setUploadDate(LocalDateTime.now());
+
         // 保存报告文件信息
         diagnosisreportsMapper.insert(diagnosisreports);
 

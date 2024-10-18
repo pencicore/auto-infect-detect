@@ -40,14 +40,6 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
-//    private final TokenBucketLimiter limiter;
-//    private final GlobalExceptionHandler globalExceptionHandler;
-//
-//    public UserController(TokenBucketLimiter limiter, GlobalExceptionHandler globalExceptionHandler) {
-//        this.limiter = limiter;
-//        this.globalExceptionHandler = globalExceptionHandler;
-//    }
-
     @ApiOperation(value = "员工注册")
     @PostMapping("/register")
     public Result register(@RequestBody UserRegisterDTO userRegisterDTO){

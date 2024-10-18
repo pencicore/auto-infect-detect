@@ -82,7 +82,7 @@ public class LabTestManagerController {
     }
 
     @GetMapping("/getUserInfo/{userId}")
-    @ApiOperation(value = "获取用户信息")
+    @ApiOperation(value = "获取")
     public Result<UserInfoVO> getUserInfo(@PathVariable Integer userId){
         User user = userService.getById(userId);
         UserInfoVO userInfoVO = BeanUtil.copyProperties(user, UserInfoVO.class);
