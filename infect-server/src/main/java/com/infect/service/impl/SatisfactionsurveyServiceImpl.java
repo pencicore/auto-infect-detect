@@ -1,8 +1,10 @@
 package com.infect.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.infect.entity.Satisfactionrating;
 import com.infect.entity.Satisfactionsurvey;
 import com.infect.enums.SatisfactionLevelEnumConstants;
 import com.infect.mapper.SatisfactionratingMapper;
@@ -11,6 +13,7 @@ import com.infect.result.PageResult;
 import com.infect.service.ISatisfactionsurveyService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.infect.temporary.SatisfactionPairTemp;
+import com.infect.vo.SatisfactionsurveyEmplyeeVO;
 import com.infect.vo.system.SatisfactionNumberInfoVO;
 import com.infect.vo.system.SatisfactionsurveyVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,6 +128,36 @@ public class SatisfactionsurveyServiceImpl extends ServiceImpl<Satisfactionsurve
         }
         satisfactionNumberInfoVO.setSatisfaction(getSatisfaction(satisfactionPairTemps));
         return satisfactionNumberInfoVO;
+    }
+
+    /**
+     * 查询是否需要填写满意度打分信息(否：返回null，是：返回调查表信息)
+     *
+     * @param userID
+     * @return
+     */
+    @Override
+    public SatisfactionsurveyEmplyeeVO getIsNeedRating(Integer userID) {
+        //获取开启的满意度调查
+        Satisfactionsurvey satisfactionsurvey = lambdaQuery().eq(Satisfactionsurvey::getIsOpen, true).one();
+
+        //若没有开启中的满意度调查，返回null
+        if(satisfactionsurvey == null){
+            return null;
+        }
+
+        //判断用户是否填写该调查
+        Long number = satisfactionratingMapper.selectCount(
+                new LambdaQueryWrapper<Satisfactionrating>()
+                        .eq(Satisfactionrating::getSurveyID, satisfactionsurvey.getSurveyID())
+                        .eq(Satisfactionrating::getUserID, userID)
+        );
+        if(number!=0) {
+            return null;
+        }
+
+        //返回
+        return BeanUtil.copyProperties(satisfactionsurvey, SatisfactionsurveyEmplyeeVO.class);
     }
 
     private Double getSatisfaction(List<SatisfactionPairTemp> map){

@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "满意度调查相关接口")
 @RestController
 @RequestMapping("/admin/satisfaction")
-public class SatisfactionController {
+public class SystemSatisfactionController {
 
     @Autowired
     private ISatisfactionsurveyService satisfactionsurveyService;

@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 @Api(tags = "用户管理-用户管理")
 @RestController
 @RequestMapping("/admin/userManager")
-public class UserManagerController {
+public class SystemUserManagerController {
 
     @Autowired
     private IUserService userService;

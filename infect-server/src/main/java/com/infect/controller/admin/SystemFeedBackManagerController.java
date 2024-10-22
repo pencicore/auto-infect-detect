@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 @Api(tags = "用户反馈相关接口")
 @RestController
 @RequestMapping("/admin/feedBackManager")
-public class FeedBackManagerController {
+public class SystemFeedBackManagerController {
 
     @Autowired
     private IUserfeedbackService userfeedbackService;

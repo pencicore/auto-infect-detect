@@ -3,6 +3,7 @@ package com.infect.service;
 import com.infect.entity.Satisfactionsurvey;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.infect.result.PageResult;
+import com.infect.vo.SatisfactionsurveyEmplyeeVO;
 import com.infect.vo.system.SatisfactionNumberInfoVO;
 import com.infect.vo.system.SatisfactionsurveyVO;
 
@@ -21,4 +22,6 @@ public interface ISatisfactionsurveyService extends IService<Satisfactionsurvey>
     boolean openSatisfaction(Integer surveyID);
 
     SatisfactionNumberInfoVO getNumberInfo(Integer surveyID);
+
+    SatisfactionsurveyEmplyeeVO getIsNeedRating(Integer userID);
 }
