@@ -30,4 +30,7 @@ public interface DiagnosisreportsMapper extends BaseMapper<Diagnosisreports> {
      */
     @Select("select ReportID from diagnosisreports where DiagnosisResultsID = #{diagnosisResultsID}")
     List<Integer> selectIdsByDiagnosisResultsID(Integer diagnosisResultsID);
+
+    @Update("update diagnosisreports set DiagnosisResultsID = #{i} where DiagnosisResultsID = #{diagnosisResultsId}")
+    void updateDiagnosisResultIdByDiagnosisResultId(Integer i, Integer diagnosisResultsId);
 }

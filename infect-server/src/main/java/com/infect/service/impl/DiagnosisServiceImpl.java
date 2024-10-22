@@ -3,6 +3,7 @@ package com.infect.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.lang.Pair;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.infect.dto.AllDiagnosisAndResultDTO;
 import com.infect.dto.DiagnosisReportsDTO;
 import com.infect.dto.system.DiseaseStatisticsDTO;
@@ -340,53 +341,147 @@ public class DiagnosisServiceImpl implements MyDiagnosisService {
      * @param allDiagnosis
      */
     @Override
+    @Transactional
     public void updateDiagnosis(AllDiagnosis allDiagnosis) {
         //更新诊断结果表
-        diagnosisresultsMapper.updateById(
-                allDiagnosis.getDiagnosisresults()
-        );
+        Diagnosisresults diagnosisresults = allDiagnosis.getDiagnosisresults();
+        diagnosisresultsMapper.updateById(diagnosisresults);
 
         //更新9张诊断信息表
-        diagnosisPersonalInfoMapper.updateById(
-                allDiagnosis.getDiagnosispersonalinfo()
-        );
+        Integer diagnosisResultsId = diagnosisresults.getDiagnosisResultsId();
 
-        diagnosisGeneralSymptomsMapper.updateById(
-                allDiagnosis.getDiagnosisgeneralsymptoms()
-        );
+        Diagnosispersonalinfo diagnosispersonalinfo = allDiagnosis.getDiagnosispersonalinfo();
+        if(diagnosispersonalinfo!=null){
+            int update = diagnosisPersonalInfoMapper.update(
+                    diagnosispersonalinfo,
+                    new LambdaQueryWrapper<Diagnosispersonalinfo>().eq(Diagnosispersonalinfo::getDiagnosisResultsId, diagnosisResultsId)
+            );
+            if(update == 0) {
+                diagnosispersonalinfo.setDiagnosisResultsId(diagnosisResultsId);
+                diagnosisPersonalInfoMapper.insert(allDiagnosis.getDiagnosispersonalinfo());
+            }
+        }
 
-        diagnosisRespiratorySymptomsMapper.updateById(
-                allDiagnosis.getDiagnosisrespiratorysymptoms()
-        );
+        Diagnosisgeneralsymptoms diagnosisgeneralsymptoms = allDiagnosis.getDiagnosisgeneralsymptoms();
+        if(diagnosisgeneralsymptoms!=null){
+            int update = diagnosisGeneralSymptomsMapper.update(
+                    diagnosisgeneralsymptoms,
+                    new LambdaQueryWrapper<Diagnosisgeneralsymptoms>().eq(Diagnosisgeneralsymptoms::getDiagnosisResultsId, diagnosisResultsId)
+            );
+            if(update == 0){
+                diagnosisgeneralsymptoms.setDiagnosisResultsId(diagnosisResultsId);
+                diagnosisGeneralSymptomsMapper.insert(diagnosisgeneralsymptoms);
+            }
+        }
 
-        diagnosisDigestiveSymptomsMapper.updateById(
-                allDiagnosis.getDiagnosisdigestivesymptoms()
-        );
+        Diagnosisrespiratorysymptoms diagnosisrespiratorysymptoms = allDiagnosis.getDiagnosisrespiratorysymptoms();
+        if(diagnosisrespiratorysymptoms!=null){
+            int update = diagnosisRespiratorySymptomsMapper.update(
+                    diagnosisrespiratorysymptoms,
+                    new LambdaQueryWrapper<Diagnosisrespiratorysymptoms>().eq(Diagnosisrespiratorysymptoms::getDiagnosisResultsId, diagnosisResultsId)
+            );
+            if(update == 0){
+                diagnosisrespiratorysymptoms.setDiagnosisResultsId(diagnosisResultsId);
+                diagnosisRespiratorySymptomsMapper.insert(diagnosisrespiratorysymptoms);
+            }
+        }
 
-        diagnosisCirculatorySymptomsMapper.updateById(
-                allDiagnosis.getDiagnosiscirculatorysymptoms()
-        );
+        Diagnosisdigestivesymptoms diagnosisdigestivesymptoms = allDiagnosis.getDiagnosisdigestivesymptoms();
+        if(diagnosisdigestivesymptoms!=null){
+            int update = diagnosisDigestiveSymptomsMapper.update(
+                    diagnosisdigestivesymptoms,
+                    new LambdaQueryWrapper<Diagnosisdigestivesymptoms>().eq(Diagnosisdigestivesymptoms::getDiagnosisResultsId, diagnosisResultsId)
+            );
+            if(update == 0){
+                diagnosisdigestivesymptoms.setDiagnosisResultsId(diagnosisResultsId);
+                diagnosisDigestiveSymptomsMapper.insert(diagnosisdigestivesymptoms);
+            }
+        }
 
-        diagnosisNeurologicalSymptomsMapper.updateById(
-                allDiagnosis.getDiagnosisneurologicalsymptoms()
-        );
+        Diagnosiscirculatorysymptoms diagnosiscirculatorysymptoms = allDiagnosis.getDiagnosiscirculatorysymptoms();
+        if(diagnosiscirculatorysymptoms!=null){
+            int update = diagnosisCirculatorySymptomsMapper.update(
+                    diagnosiscirculatorysymptoms,
+                    new LambdaQueryWrapper<Diagnosiscirculatorysymptoms>().eq(Diagnosiscirculatorysymptoms::getDiagnosisResultsId, diagnosisResultsId)
+            );
+            if(update == 0){
+                diagnosiscirculatorysymptoms.setDiagnosisResultsId(diagnosisResultsId);
+                diagnosisCirculatorySymptomsMapper.insert(diagnosiscirculatorysymptoms);
+            }
+        }
 
-        diagnosisLocalSymptomsMapper.updateById(
-                allDiagnosis.getDiagnosislocalsymptoms()
-        );
+        Diagnosisneurologicalsymptoms diagnosisneurologicalsymptoms = allDiagnosis.getDiagnosisneurologicalsymptoms();
+        if(diagnosisneurologicalsymptoms!=null){
+            int update = diagnosisNeurologicalSymptomsMapper.update(
+                    diagnosisneurologicalsymptoms,
+                    new LambdaQueryWrapper<Diagnosisneurologicalsymptoms>().eq(Diagnosisneurologicalsymptoms::getDiagnosisResultsId, diagnosisResultsId)
+            );
+            if(update == 0){
+                diagnosisneurologicalsymptoms.setDiagnosisResultsId(diagnosisResultsId);
+                diagnosisNeurologicalSymptomsMapper.insert(diagnosisneurologicalsymptoms);
+            }
+        }
 
-        diagnosisOtherSymptomsMapper.updateById(
-                allDiagnosis.getDiagnosisothersymptoms()
-        );
+        Diagnosislocalsymptoms diagnosislocalsymptoms = allDiagnosis.getDiagnosislocalsymptoms();
+        if(diagnosislocalsymptoms!=null){
+            int update = diagnosisLocalSymptomsMapper.update(
+                    diagnosislocalsymptoms,
+                    new LambdaQueryWrapper<Diagnosislocalsymptoms>().eq(Diagnosislocalsymptoms::getDiagnosisResultsId, diagnosisResultsId)
+            );
+            if(update == 0){
+                diagnosislocalsymptoms.setDiagnosisResultsId(diagnosisResultsId);
+                diagnosisLocalSymptomsMapper.insert(diagnosislocalsymptoms);
+            }
+        }
 
-        diagnosisComplicationsMapper.updateById(
-                allDiagnosis.getDiagnosiscomplications()
-        );
+        Diagnosisothersymptoms diagnosisothersymptoms = allDiagnosis.getDiagnosisothersymptoms();
+        if(diagnosisothersymptoms!=null){
+            int update = diagnosisOtherSymptomsMapper.update(
+                    diagnosisothersymptoms,
+                    new LambdaQueryWrapper<Diagnosisothersymptoms>().eq(Diagnosisothersymptoms::getDiagnosisResultsId, diagnosisResultsId)
+            );
+            if(update == 0){
+                diagnosisothersymptoms.setDiagnosisResultsId(diagnosisResultsId);
+                diagnosisOtherSymptomsMapper.insert(diagnosisothersymptoms);
+            }
+        }
+
+        Diagnosiscomplications diagnosiscomplications = allDiagnosis.getDiagnosiscomplications();
+        if(diagnosiscomplications!=null){
+            int update = diagnosisComplicationsMapper.update(
+                    diagnosiscomplications,
+                    new LambdaQueryWrapper<Diagnosiscomplications>().eq(Diagnosiscomplications::getDiagnosisResultsId, diagnosisResultsId)
+            );
+            if(update == 0){
+                diagnosiscomplications.setDiagnosisResultsId(diagnosisResultsId);
+                diagnosisComplicationsMapper.insert(diagnosiscomplications);
+            }
+        }
 
         //更新检查项目表
-        diagnosisexaminationsMapper.updateById(
-                allDiagnosis.getDiagnosisexaminations()
-        );
+        Diagnosisexaminations diagnosisexaminations = allDiagnosis.getDiagnosisexaminations();
+        if(diagnosisexaminations!=null){
+            int update = diagnosisexaminationsMapper.update(
+                    diagnosisexaminations,
+                    new LambdaQueryWrapper<Diagnosisexaminations>().eq(Diagnosisexaminations::getDiagnosisResultsId, diagnosisResultsId)
+            );
+            if(update == 0){
+                diagnosisexaminations.setDiagnosisResultsId(diagnosisResultsId);
+                diagnosisexaminationsMapper.insert(diagnosisexaminations);
+            }
+        }
+
+        //更新诊断文件
+        if(allDiagnosis.getFileIdList()!=null){
+            diagnosisreportsMapper.updateDiagnosisResultIdByDiagnosisResultId(0,diagnosisResultsId);
+
+            List<Integer> fileIdList = allDiagnosis.getFileIdList();
+            if(!fileIdList.isEmpty()){
+                for (Integer fileId:fileIdList){
+                    diagnosisreportsMapper.updateDiagnosisResultIdByFileId(fileId,diagnosisResultsId);
+                }
+            }
+        }
     }
 
     /**

@@ -18,6 +18,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.infect.vo.system.LabTestPageVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -138,6 +139,7 @@ public class LabtestreportServiceImpl extends ServiceImpl<LabtestreportMapper, L
      * @param labtestreportWirhFileList
      */
     @Override
+    @Transactional
     public void updateLabTest(LabtestreportWirhFileList labtestreportWirhFileList) {
         Integer labTestReportId = labtestreportWirhFileList.getLabTestReportId();
         List<Integer> fileIds = null;
