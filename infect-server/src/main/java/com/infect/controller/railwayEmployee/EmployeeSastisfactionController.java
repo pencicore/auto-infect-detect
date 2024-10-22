@@ -11,6 +11,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 @Api(tags = "满意度调查相关接口")
 @RestController
 @RequestMapping("/railwayemployee/satisfaction")
@@ -32,6 +34,7 @@ public class EmployeeSastisfactionController {
     @ApiOperation("提交满意度打分信息")
     @PostMapping("/submissionSatisfaction")
     public Result submissionSatisfaction(@RequestBody Satisfactionrating satisfactionrating){
+        satisfactionrating.setRatingTime(LocalDateTime.now());
         satisfactionratingService.save(satisfactionrating);
         return Result.success();
     }

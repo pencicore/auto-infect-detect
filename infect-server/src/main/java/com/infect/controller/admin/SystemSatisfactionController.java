@@ -16,6 +16,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 @Api(tags = "满意度调查相关接口")
 @RestController
 @RequestMapping("/admin/satisfaction")
@@ -30,6 +32,7 @@ public class SystemSatisfactionController {
     @PostMapping("/addSatisfactionSurvey")
     @ApiOperation("添加满意度调查")
     public Result addSatisfactionSurvey(@RequestBody Satisfactionsurvey satisfactionsurvey){
+        satisfactionsurvey.setCreateTime(LocalDateTime.now());
         satisfactionsurveyService.save(satisfactionsurvey);
         return Result.success();
     }
