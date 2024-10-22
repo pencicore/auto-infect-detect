@@ -2,6 +2,9 @@ package com.infect.mapper;
 
 import com.infect.entity.Symptomweighting;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SymptomweightingMapper extends BaseMapper<Symptomweighting> {
 
+    @Select("select * from symptomweighting where TableName=#{tableName}")
+    List<Symptomweighting> selectByTableName(String generalSymptoms);
+
+    @Select("select * from symptomweighting")
+    List<Symptomweighting> selectAll();
 }
