@@ -48,11 +48,11 @@ public class JwtTokenRailwayEmployeeInterceptor implements HandlerInterceptor {
         if(token.startsWith(UserEnumConstants.TOKEN_PREFIX) && !token.isEmpty()){
             token = token.substring(UserEnumConstants.TOKEN_PREFIX.length());
         }
-        System.out.println("token"+token);
+        System.out.println(jwtProperties.getTokenName()+":"+token);
         //2、校验令牌
         try {
             Claims claims = JwtUtil.parseJWT(jwtProperties.getRailwayEmployeeSecretKey(), token);
-            Integer userId = Integer.valueOf(claims.get(JwtConstant.UserId).toString());
+            Integer userId = Integer.valueOf(claims.get(JwtConstant.USER_ID).toString());
 
             /*
             2024/3/2 02-05

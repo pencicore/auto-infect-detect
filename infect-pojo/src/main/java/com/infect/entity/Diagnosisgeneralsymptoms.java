@@ -11,6 +11,66 @@ import io.swagger.annotations.ApiModelProperty;
 @TableName("diagnosisgeneralsymptoms")
 @ApiModel(value = "DiagnosisGeneralSymptoms对象", description = "诊断全身症状表")
 public class Diagnosisgeneralsymptoms implements Serializable {
+    public Diagnosisgeneralsymptoms() {
+    }
+
+    public Diagnosisgeneralsymptoms(Integer diagnosisGeneralSymptomId, Integer diagnosisResultsId, Boolean hasFever, BigDecimal highestTemperature, Integer feverDuration, Boolean hasChills, Boolean hasSweating, Boolean hasFatigue, Boolean hasHeadache, Boolean hasMusclePain, Boolean hasJointPain, Boolean hasLymphNodeSwelling, Boolean hasLymphNodeSwellingGroin, Boolean hasLymphNodeSwellingArmpit, Boolean hasLymphNodeSwellingSubclavian, Boolean hasLymphNodeSwellingNeck, Boolean hasLymphNodeSwellingElbow, Boolean hasLymphNodeSwellingPopliteal, Boolean hasCyanosis, Boolean hasSubcutaneousAndMucosalBleedingSpots, Boolean hasSevereAnemia, Boolean hasPainfulRedRash, Boolean hasBloodBlisters, Boolean hasSkinUlcer, Boolean hasSubcutaneousAndMucosalBleedingCavity, Boolean hasCongestiveOrPetechialRash, Boolean hasPressureInsensitiveRash, Boolean hasDehydration, String dehydrationSeverity, Boolean hasItchyRash, Boolean itchyRashOnFingers, Boolean itchyRashOnBackOfHands, Boolean itchyRashOnUpperLimbs, Boolean itchyRashOnLowerLimbs, Boolean itchyRashOnFeet, Boolean itchyRashOnFace, Boolean itchyRashOnOther, Boolean hasEdema, Boolean hasNightSweats, Boolean hasWeightLoss, Boolean hasExhaustion, Boolean hasWhiteBloodCells, Boolean hasBloodPressureDrop, Integer lowestBloodPressure, Boolean hasShockSyndrome, Boolean hasHighIntracranialPressure, Boolean hasTurbidCerebrospinalFluid, Boolean hasBleeding, Integer bleedingVolume, String bleedingCavity, Boolean hasPlasmaLeakage, Boolean hasOtherOrganDamage, Boolean hasKernigSign, Boolean hasBrudzinskiSign) {
+        this.diagnosisGeneralSymptomId = diagnosisGeneralSymptomId;
+        this.diagnosisResultsId = diagnosisResultsId;
+        this.hasFever = hasFever;
+        this.highestTemperature = highestTemperature;
+        this.feverDuration = feverDuration;
+        this.hasChills = hasChills;
+        this.hasSweating = hasSweating;
+        this.hasFatigue = hasFatigue;
+        this.hasHeadache = hasHeadache;
+        this.hasMusclePain = hasMusclePain;
+        this.hasJointPain = hasJointPain;
+        this.hasLymphNodeSwelling = hasLymphNodeSwelling;
+        this.hasLymphNodeSwellingGroin = hasLymphNodeSwellingGroin;
+        this.hasLymphNodeSwellingArmpit = hasLymphNodeSwellingArmpit;
+        this.hasLymphNodeSwellingSubclavian = hasLymphNodeSwellingSubclavian;
+        this.hasLymphNodeSwellingNeck = hasLymphNodeSwellingNeck;
+        this.hasLymphNodeSwellingElbow = hasLymphNodeSwellingElbow;
+        this.hasLymphNodeSwellingPopliteal = hasLymphNodeSwellingPopliteal;
+        this.hasCyanosis = hasCyanosis;
+        this.hasSubcutaneousAndMucosalBleedingSpots = hasSubcutaneousAndMucosalBleedingSpots;
+        this.hasSevereAnemia = hasSevereAnemia;
+        this.hasPainfulRedRash = hasPainfulRedRash;
+        this.hasBloodBlisters = hasBloodBlisters;
+        this.hasSkinUlcer = hasSkinUlcer;
+        this.hasSubcutaneousAndMucosalBleedingCavity = hasSubcutaneousAndMucosalBleedingCavity;
+        this.hasCongestiveOrPetechialRash = hasCongestiveOrPetechialRash;
+        this.hasPressureInsensitiveRash = hasPressureInsensitiveRash;
+        this.hasDehydration = hasDehydration;
+        this.dehydrationSeverity = dehydrationSeverity;
+        this.hasItchyRash = hasItchyRash;
+        this.itchyRashOnFingers = itchyRashOnFingers;
+        this.itchyRashOnBackOfHands = itchyRashOnBackOfHands;
+        this.itchyRashOnUpperLimbs = itchyRashOnUpperLimbs;
+        this.itchyRashOnLowerLimbs = itchyRashOnLowerLimbs;
+        this.itchyRashOnFeet = itchyRashOnFeet;
+        this.itchyRashOnFace = itchyRashOnFace;
+        this.itchyRashOnOther = itchyRashOnOther;
+        this.hasEdema = hasEdema;
+        this.hasNightSweats = hasNightSweats;
+        this.hasWeightLoss = hasWeightLoss;
+        this.hasExhaustion = hasExhaustion;
+        this.hasWhiteBloodCells = hasWhiteBloodCells;
+        this.hasBloodPressureDrop = hasBloodPressureDrop;
+        this.lowestBloodPressure = lowestBloodPressure;
+        this.hasShockSyndrome = hasShockSyndrome;
+        this.hasHighIntracranialPressure = hasHighIntracranialPressure;
+        this.hasTurbidCerebrospinalFluid = hasTurbidCerebrospinalFluid;
+        this.hasBleeding = hasBleeding;
+        this.bleedingVolume = bleedingVolume;
+        this.bleedingCavity = bleedingCavity;
+        this.hasPlasmaLeakage = hasPlasmaLeakage;
+        this.hasOtherOrganDamage = hasOtherOrganDamage;
+        this.hasKernigSign = hasKernigSign;
+        this.hasBrudzinskiSign = hasBrudzinskiSign;
+    }
+
     @Override
     public String toString() {
         return "Diagnosisgeneralsymptoms{" +
@@ -69,8 +129,6 @@ public class Diagnosisgeneralsymptoms implements Serializable {
                 ", hasBrudzinskiSign=" + hasBrudzinskiSign +
                 '}';
     }
-
-    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "全身症状ID", hidden = true)
     @TableId(value = "DiagnosisGeneralSymptomID", type = IdType.AUTO)
@@ -150,6 +208,9 @@ public class Diagnosisgeneralsymptoms implements Serializable {
 
     @ApiModelProperty(value = "皮疹：充血性或点状出血疹", example = "true", required = true)
     private Boolean hasCongestiveOrPetechialRash;
+
+    @ApiModelProperty(value = "皮疹：起初压之退色，后期压之不退，多见于四肢、躯干，面部一般没有", example = "false")
+    private Boolean hasPressureInsensitiveRash;
 
     @ApiModelProperty(value = "是否失水", example = "true", required = true)
     private Boolean hasDehydration;
@@ -654,5 +715,21 @@ public class Diagnosisgeneralsymptoms implements Serializable {
 
     public void setHasBrudzinskiSign(Boolean hasBrudzinskiSign) {
         this.hasBrudzinskiSign = hasBrudzinskiSign;
+    }
+
+    /**
+     * 获取
+     * @return hasPressureInsensitiveRash
+     */
+    public Boolean getHasPressureInsensitiveRash() {
+        return hasPressureInsensitiveRash;
+    }
+
+    /**
+     * 设置
+     * @param hasPressureInsensitiveRash
+     */
+    public void setHasPressureInsensitiveRash(Boolean hasPressureInsensitiveRash) {
+        this.hasPressureInsensitiveRash = hasPressureInsensitiveRash;
     }
 }

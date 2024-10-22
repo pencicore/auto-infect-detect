@@ -23,8 +23,6 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value="Symptomweighting对象", description="")
 public class Symptomweighting implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
     @TableId(value = "SymptomWeightingID", type = IdType.AUTO)
     private Integer symptomWeightingId;
 
@@ -38,51 +36,116 @@ public class Symptomweighting implements Serializable {
 
     private BigDecimal weightScore;
 
+
+    public Symptomweighting() {
+    }
+
+    public Symptomweighting(Integer symptomWeightingId, Integer diseaseTypeId, String diseaseTypeName, String tableName, String symptomFieldName, BigDecimal weightScore) {
+        this.symptomWeightingId = symptomWeightingId;
+        this.diseaseTypeId = diseaseTypeId;
+        this.diseaseTypeName = diseaseTypeName;
+        this.tableName = tableName;
+        this.symptomFieldName = symptomFieldName;
+        this.weightScore = weightScore;
+    }
+
+    /**
+     * 获取
+     * @return symptomWeightingId
+     */
     public Integer getSymptomWeightingId() {
         return symptomWeightingId;
     }
 
+    /**
+     * 设置
+     * @param symptomWeightingId
+     */
     public void setSymptomWeightingId(Integer symptomWeightingId) {
         this.symptomWeightingId = symptomWeightingId;
     }
 
+    /**
+     * 获取
+     * @return diseaseTypeId
+     */
     public Integer getDiseaseTypeId() {
         return diseaseTypeId;
     }
 
+    /**
+     * 设置
+     * @param diseaseTypeId
+     */
     public void setDiseaseTypeId(Integer diseaseTypeId) {
         this.diseaseTypeId = diseaseTypeId;
     }
 
+    /**
+     * 获取
+     * @return diseaseTypeName
+     */
     public String getDiseaseTypeName() {
         return diseaseTypeName;
     }
 
+    /**
+     * 设置
+     * @param diseaseTypeName
+     */
     public void setDiseaseTypeName(String diseaseTypeName) {
         this.diseaseTypeName = diseaseTypeName;
     }
 
+    /**
+     * 获取
+     * @return tableName
+     */
     public String getTableName() {
         return tableName;
     }
 
+    /**
+     * 设置
+     * @param tableName
+     */
     public void setTableName(String tableName) {
         this.tableName = tableName;
     }
 
+    /**
+     * 获取
+     * @return symptomFieldName
+     */
     public String getSymptomFieldName() {
         return symptomFieldName;
     }
 
+    /**
+     * 设置
+     * @param symptomFieldName
+     */
     public void setSymptomFieldName(String symptomFieldName) {
         this.symptomFieldName = symptomFieldName;
     }
 
+    /**
+     * 获取
+     * @return weightScore
+     */
     public BigDecimal getWeightScore() {
         return weightScore;
     }
 
+    /**
+     * 设置
+     * @param weightScore
+     */
     public void setWeightScore(BigDecimal weightScore) {
         this.weightScore = weightScore;
+    }
+
+    public String toString() {
+        return "Symptomweighting{symptomWeightingId = " + symptomWeightingId + ", diseaseTypeId = " + diseaseTypeId + ", diseaseTypeName = " + diseaseTypeName + ", tableName = " + tableName + ", symptomFieldName = " + symptomFieldName + ", weightScore = " + weightScore + "}";
     }
 }

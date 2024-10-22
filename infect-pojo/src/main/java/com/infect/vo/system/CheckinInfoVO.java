@@ -8,6 +8,10 @@ import java.time.LocalDate;
 @ApiModel(value = "用户签到信息VO")
 public class CheckinInfoVO {
 
+    private Integer statusId;
+
+    private Integer userId;
+
     @ApiModelProperty(value = "用户类型", required = true, example = "铁路职工")
     private String userType;
 
@@ -51,6 +55,24 @@ public class CheckinInfoVO {
     }
 
     public CheckinInfoVO(String userType, String name, String phoneNumber, String gender, Integer age, String department, Boolean isHealth, String province, String city, String county, String locationName, LocalDate checkInDate, String diseaseTypeName) {
+        this.userType = userType;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.gender = gender;
+        this.age = age;
+        this.department = department;
+        this.isHealth = isHealth;
+        this.province = province;
+        this.city = city;
+        this.county = county;
+        this.locationName = locationName;
+        this.checkInDate = checkInDate;
+        this.diseaseTypeName = diseaseTypeName;
+    }
+
+    public CheckinInfoVO(Integer statusId, Integer userId, String userType, String name, String phoneNumber, String gender, Integer age, String department, Boolean isHealth, String province, String city, String county, String locationName, LocalDate checkInDate, String diseaseTypeName) {
+        this.statusId = statusId;
+        this.userId = userId;
         this.userType = userType;
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -276,5 +298,37 @@ public class CheckinInfoVO {
 
     public String toString() {
         return "CheckinInfoVO{userType = " + userType + ", name = " + name + ", phoneNumber = " + phoneNumber + ", gender = " + gender + ", age = " + age + ", department = " + department + ", isHealth = " + isHealth + ", province = " + province + ", city = " + city + ", county = " + county + ", locationName = " + locationName + ", checkInDate = " + checkInDate + ", diseaseTypeName = " + diseaseTypeName + "}";
+    }
+
+    /**
+     * 获取
+     * @return statusId
+     */
+    public Integer getStatusId() {
+        return statusId;
+    }
+
+    /**
+     * 设置
+     * @param statusId
+     */
+    public void setStatusId(Integer statusId) {
+        this.statusId = statusId;
+    }
+
+    /**
+     * 获取
+     * @return userId
+     */
+    public Integer getUserId() {
+        return userId;
+    }
+
+    /**
+     * 设置
+     * @param userId
+     */
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }
