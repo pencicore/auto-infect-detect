@@ -41,7 +41,7 @@ public class EmployeeDiagnosisController {
     @ApiOperation(value = "铁路工人提交诊断结果和所有诊断症状信息")
     @PostMapping("/result")
     public Result saveDiagnosis(@RequestBody AllDiagnosisAndResultDTO allDiagnosisAndResultDTO) {
-        myDiagnosisService.saveDiagnosis(BaseContext.getCurrentId(), allDiagnosisAndResultDTO,
+        myDiagnosisService.saveDiagnosis(BaseContext.getCurrentId(),BaseContext.getCurrentId(), allDiagnosisAndResultDTO,
                 DiagnosisResultsEnumConstants.SUBMISSION_USER_TYPE_RAILWAY_EMPLOYEE);
         return Result.success();
     }
