@@ -188,4 +188,24 @@ public class LabTestServiceImpl implements MyLabTestService {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public LabTestReportDTO getReportFile(String date, Integer currentId) {
+        List<Labtestreport> labtestreport = labtestreportMapper.getReportFile(date, currentId);
+        if (labtestreport.isEmpty()) {
+            return null;
+        }
+        List<Integer> integers = new ArrayList<>();
+        for (Labtestreport labtestreport1 : labtestreport) {
+            integers.add(labtestreport1.getLabTestReportId());
+        }
+        LabTestReportDTO labTestReportDTO = new LabTestReportDTO();
+        labTestReportDTO.setLabTestFileIds(integers);
+        labTestReportDTO.setIsVirusAntigenTestDone(labtestreport.get(0).getIsVirusAntigenTestDone());
+        labTestReportDTO.setIsVirusCultureIsolationDone(labtestreport.get(0).getIsVirusCultureIsolationDone());
+        labTestReportDTO.setIsVirusNucleicAcidTestDone(labtestreport.get(0).getIsVirusNucleicAcidTestDone());
+        labTestReportDTO.setPathogenicTestResults(labtestreport.get(0).getPathogenicTestResults());
+        labTestReportDTO.setIsSerologicalTestDone(labtestreport.get(0).getIsSerologicalTestDone());
+        return labTestReportDTO;
+    }
 }

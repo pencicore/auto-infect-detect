@@ -33,6 +33,9 @@ build/
 .vscode/
 
 ### my file ###
-diagnosisReports
-labTestFilePath
+/diagnosisReports/
+/labTestFilePath/
+/diseaseLearningMaterialPath/
 diseaseLearningMaterialPath
+labTestFilePath
+diagnosisReports
