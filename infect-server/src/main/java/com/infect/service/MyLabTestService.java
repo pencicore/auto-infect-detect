@@ -12,4 +12,6 @@ public interface MyLabTestService {
     Result saveLabTest(LabTestReportDTO labTestReportDTO, Integer userId);
 
     void getDetectionInformationExportFormExcel(HttpServletResponse response);
+
+    LabTestReportDTO getReportFile(String date, Integer currentId);
 }

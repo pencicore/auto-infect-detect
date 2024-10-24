@@ -3,6 +3,9 @@ package com.infect.mapper;
 import com.infect.dto.system.UpdateBatchWeightScoringDTO;
 import com.infect.entity.Symptomweighting;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -17,5 +20,11 @@ import java.util.List;
  */
 public interface SymptomweightingMapper extends BaseMapper<Symptomweighting> {
 
+    @Select("select * from symptomweighting where TableName=#{tableName}")
+    List<Symptomweighting> selectByTableName(String generalSymptoms);
+
+    @Select("select * from symptomweighting")
+    List<Symptomweighting> selectAll();
+    
     BigDecimal selectCountByUpdateDTOList(List<UpdateBatchWeightScoringDTO> updateDTOList);
 }

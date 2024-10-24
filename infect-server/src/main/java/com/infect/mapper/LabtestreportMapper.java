@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author author
@@ -19,6 +19,9 @@ public interface LabtestreportMapper extends BaseMapper<Labtestreport> {
 
     @Select("select LabTestReportID from labtestreport where UserID = #{userId} and UploadDate = #{now}")
     List<Integer> selectLabTestReportIdByUserIdAndDate(Integer userId, LocalDate now);
+
+    @Select("select * from labtestreport where UploadDate = #{date} and UserID = #{currentId}")
+    List<Labtestreport> getReportFile(String date, Integer currentId);
 
     /**
      * 根据实验报告id查询实验文件id列表

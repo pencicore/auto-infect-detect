@@ -26,4 +26,6 @@ public interface MyDiagnosisService {
     void updateDiagnosis(AllDiagnosis allDiagnosis);
 
     void getExcelClinicalInformationExportForm(HttpServletResponse response);
+
+    AllDiagnosisAndResultDTO getDiagnosis(String date, Integer currentId);
 }

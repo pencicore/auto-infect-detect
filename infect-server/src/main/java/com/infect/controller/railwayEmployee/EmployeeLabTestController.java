@@ -7,6 +7,7 @@ import com.infect.service.MyLabTestService;
 import com.infect.utils.BaseContext;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,4 +32,13 @@ public class EmployeeLabTestController {
         return labTestService.saveLabTest(labTestReportDTO, BaseContext.getCurrentId());
     }
 
+    @ApiOperation(value = "铁路工人获取当日的提交报告")
+    @PostMapping("/get/report")
+    public Result<LabTestReportDTO> getReportFile(
+            @ApiParam(value = "查询时间", required = true, example = "2024-08-29")
+            @RequestBody String date){
+        LabTestReportDTO labTestReportDTO = labTestService.getReportFile(date, BaseContext.getCurrentId());
+        System.out.println(labTestReportDTO);
+        return Result.success(labTestReportDTO);
+    }
 }

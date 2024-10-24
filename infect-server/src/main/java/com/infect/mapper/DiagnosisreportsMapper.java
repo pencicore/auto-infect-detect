@@ -5,11 +5,12 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.awt.*;
 import java.util.List;
 
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author author
@@ -23,8 +24,12 @@ public interface DiagnosisreportsMapper extends BaseMapper<Diagnosisreports> {
     @Select("select ReportID from diagnosisreports where FilePath=#{s}")
     Integer selectIdByFilePath(String s);
 
+    @Select("select ReportID from diagnosisreports where DiagnosisResultsID=#{userId}")
+    List selectFileIdsByDiagnosisResultId(Integer userId);
+
     /**
      * 根据诊断结果id查询诊断报告文件id列表
+     * 
      * @param diagnosisResultsID
      * @return
      */
